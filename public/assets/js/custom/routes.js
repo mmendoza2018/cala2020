@@ -1,0 +1,18 @@
+let ROUTES = {
+    PRODUCTS: `/admin/productos`,
+    PRODUCT_CATEGORY: `/admin/categoria-productos`,
+    COMPLAINTS_BOOK : `/admin/libro-reclamaciones`,
+    PRODUCT_BRAND: `/admin/marca-productos`,
+    PRODUCT_ATTRIBUTE: `/admin/variantes-productos`,
+    RAFFLES: `/admin/sorteos`,
+    REGISTER_PAGE: `/page/register`,
+    LOGIN_PAGE: `/page/login`,
+    SHOPPING_CART_PRODUCTS: `/shopping-cart-products`,
+    SHOPPING_CART_RAFFLES: `/shopping-cart-raffles`,
+    USER_PAGE: `/user`,
+    ORDERS: `/admin/ordenes`,
+    DASHBOARD: `/admin/dashboards`,
+    PDF: `/admin/pdf`,
+    TICKET_SALE: `/admin/venta-tickets`,
+    EXPORT_EXCEL: `/admin/exportar-excel`,
+};
