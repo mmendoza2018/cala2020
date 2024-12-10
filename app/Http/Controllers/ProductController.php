@@ -14,7 +14,6 @@ use App\Models\ProductBrand;
 use App\Models\ProductSize;
 use App\Models\ProductVariant;
 use App\Models\ProductVariantPrice;
-use App\Models\Raffle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -24,10 +23,8 @@ class ProductController extends Controller
 {
     public function create()
     {
-        $measurementUnits = MeasurementUnit::where('status', 1)->get();
         $productBrands = ProductBrand::where('status', 1)->get();
         $categoryProducts = CategoryProduct::where('status', 1)->get();
-        $raffles = Raffle::with(['winner', 'raffleCharasteristics'])->where('status', 1)->get();
         $attributeGroups = AttributeGroup::where('status', 1)
             ->whereHas('attributes', function ($query) {
                 $query->where('status', 1); // Filtro en la relación
@@ -39,7 +36,7 @@ class ProductController extends Controller
 
         return view(
             'admin.products.create',
-            compact('productBrands', 'measurementUnits', 'categoryProducts', 'attributeGroups', 'raffles')
+            compact('productBrands', 'categoryProducts', 'attributeGroups')
         );
     }
 
@@ -70,7 +67,6 @@ class ProductController extends Controller
         $measurementUnits = MeasurementUnit::where('status', 1)->get();
         $productBrands = ProductBrand::where('status', 1)->get();
         $categoryProducts = CategoryProduct::where('status', 1)->get();
-        $raffles = Raffle::with(['winner', 'raffleCharasteristics'])->where('status', 1)->get();
         $attributeGroups = AttributeGroup::where('status', 1) // Filtro en el modelo principal
             ->whereHas('attributes', function ($query) {
                 $query->where('status', 1); // Filtro en la relación
@@ -80,11 +76,11 @@ class ProductController extends Controller
             }])
             ->get();
 
-        $product = Product::with(['productAttributes.attributesCombination.attribute', 'raffle'])->find($id);
+        $product = Product::with(['productAttributes.attributesCombination.attribute'])->find($id);
 
         return view(
             'admin.products.edit',
-            compact('productBrands', 'measurementUnits', 'categoryProducts', 'attributeGroups', 'product', 'raffles')
+            compact('productBrands', 'measurementUnits', 'categoryProducts', 'attributeGroups', 'product')
         );
     }
 
@@ -105,7 +101,6 @@ class ProductController extends Controller
             'product_brand_id' => 'required|integer|exists:product_brands,id',
             "measurement_unit_id" => "required",
             "category_product_id" => "required",
-            "raffle_id"=> "",
             "digital_product"=> "",
         ];
 
@@ -123,7 +118,6 @@ class ProductController extends Controller
             'product_brand_id' => "Marca",
             "measurement_unit_id" => "Unidad de medida",
             "category_product_id" => "Categoria",
-            "raffle_id"=> "Sorteo",
             "digital_product"=> "Producto digital"
         ];
 
@@ -203,7 +197,6 @@ class ProductController extends Controller
             "product_brand_id" => $validatedData["product_brand_id"],
             "measurement_unit_id" => $validatedData["measurement_unit_id"],
             "category_product_id" => $validatedData["category_product_id"],
-            "raffle_id" => $validatedData["raffle_id"] ?? null,
             "digital_product" => $imageDigitalProductPath,
             "user_id" => Auth::guard('admin')->id()
         ]);
@@ -251,7 +244,6 @@ class ProductController extends Controller
             'product_brand_id' => 'required|integer|exists:product_brands,id',
             "measurement_unit_id" => "required",
             "category_product_id" => "required",
-            "raffle_id"=> "",
             "digital_product"=> "",
         ];
 
@@ -269,7 +261,6 @@ class ProductController extends Controller
             'product_brand_id' => "Marca",
             "measurement_unit_id" => "Unidad de medida",
             "category_product_id" => "Categoria",
-            "raffle_id"=> "Sorteo",
             "digital_product"=> "Producto digital"
         ];
 
@@ -397,10 +388,6 @@ class ProductController extends Controller
 
         if ($digitalProductPath !== null) {
             $productData["digital_product"] = $digitalProductPath;
-        }
-
-        if ($validatedData["raffle_id"] !== "") {
-            $productData["raffle_id"] = $validatedData["raffle_id"];
         }
 
         $product->update($productData);

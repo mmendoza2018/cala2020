@@ -8,7 +8,6 @@
 
             <x-side-li-submenu2 description="Dashboards">
                 <x-side-li-submenu description="Ventas" data-side_key="dashboard_view_sale"  url="dashboard.view_sale" />
-                <x-side-li-submenu description="Usuarios" data-side_key="dashboard_view_user"  url="dashboard.view_user" />
             </x-side-li-menu2>
 
             <x-side-li-submenu2 description="Productos">
@@ -50,9 +49,20 @@
 
         <x-side-li-menu description="Configuración del sistema">
 
-            <x-side-li-submenu description="Categorias Productos" data-side_key="product_category_index" url="product_category.index" />
-            <x-side-li-submenu description="Marcas Productos" data-side_key="product_brand_index" url="product_brand.index" />
-            <x-side-li-submenu description="Variantes de Productos" data-side_key="attribute_group_index" url="attribute_group.index" />
+            <x-side-li-submenu2 description="Productos">
+                <x-side-li-submenu description="Categorias" data-side_key="product_category_index" url="product_category.index" />
+                <x-side-li-submenu description="Marcas" data-side_key="product_brand_index" url="product_brand.index" />
+                <x-side-li-submenu description="Variantes" data-side_key="attribute_group_index" url="attribute_group.index" />
+                <x-side-li-submenu description="General" data-side_key="product_general_index" url="product_general.index" />
+            </x-side-li-menu2>
+
+            <x-side-li-submenu2 description="Tienda">
+                <x-side-li-submenu description="Numeros de atención" data-side_key="product_category_index" url="product_category.index" />
+                <x-side-li-submenu description="Redes sociales" data-side_key="product_category_index" url="product_category.index" />
+                <x-side-li-submenu description="Metodos de pago" data-side_key="product_brand_index" url="product_brand.index" />
+                <x-side-li-submenu description="Temas y colores" data-side_key="attribute_group_index" url="attribute_group.index" />
+                <x-side-li-submenu description="General" data-side_key="attribute_group_index" url="attribute_group.index" />
+            </x-side-li-menu2>
 
         </x-side-li-menu>
     </ul>

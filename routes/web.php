@@ -17,6 +17,7 @@ use App\Http\Controllers\ProductAttributeController;
 use App\Http\Controllers\ProductBrandController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductGeneralController;
 use App\Http\Controllers\ShoppingCartProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebPageController;
@@ -89,11 +90,18 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', CheckUserType:
     });
 
     Route::prefix('marca-productos')->group(function () {
-        Route::get('/create', [ProductBrandController::class, 'create'])->name('product_brand.create');
         Route::post('/store', [ProductBrandController::class, 'store'])->name('product_brand.store');
         Route::put('{id}', [ProductBrandController::class, 'update'])->name('product_brand.update');
         Route::get('/{id}', [ProductBrandController::class, 'show'])->name('product_brand.show');
         Route::get('/', [ProductBrandController::class, 'index'])->name('product_brand.index');
+    });
+
+    
+    Route::prefix('general-productos')->group(function () {
+        Route::post('/store', [ProductGeneralController::class, 'store'])->name('product_general.store');
+        Route::put('{id}', [ProductGeneralController::class, 'update'])->name('product_general.update');
+        Route::get('/{id}', [ProductGeneralController::class, 'show'])->name('product_general.show');
+        Route::get('/', [ProductGeneralController::class, 'index'])->name('product_general.index');
     });
 
     Route::prefix('libro-reclamaciones')->group(function () {

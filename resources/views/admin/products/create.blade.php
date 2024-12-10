@@ -30,15 +30,6 @@
                                     <p class="mt-0 text-sm text-red-500">{{ $message }}</p>
                                 @enderror
 
-                                <label class="inline-block text-base font-medium">Unidad de medida</label>
-                                <x-select name="measurement_unit_id" data-choices="" data-validate
-                                    name="measurement_unit_id">
-                                    <option value="">Selecciona una opción</option>
-                                    @foreach ($measurementUnits as $unit)
-                                        <option value="{{ $unit->id }}">{{ $unit->description }}</option>
-                                    @endforeach
-                                </x-select>
-
                                 <label class="inline-block text-base font-medium">Marca</label>
                                 <x-select data-choices="" name="product_brand_id" data-validate>
                                     <option value="">Selecciona una opción</option>
