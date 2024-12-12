@@ -29,9 +29,7 @@
                                 <th>Nombre</th>
                                 <th>Categoría</th>
                                 <th>Marca</th>
-                                <th>U. Medida</th>
                                 <th>Min. Stock</th>
-                                <th>Prod. Digital</th>
                                 <th>Website</th>
                                 <th>Opciones</th>
                             </tr>
@@ -51,16 +49,7 @@
                                     <td>{{ $product->title }}</td>
                                     <td>{{ $product->categoryProduct->description }}</td>
                                     <td>{{ $product->productBrand->description }}</td>
-                                    <td>{{ $product->measurementUnit->description }}</td>
                                     <td>{{ $product->min_stock }}</td>
-                                    <td style="text-align: center">
-                                        @if ($product->digital_product)
-                                            <a href="{{ asset('storage/uploads/' . $product->digital_product) }}"
-                                                download="{{ $product->digital_product }}">
-                                                <i class="ri-download-fill"></i>
-                                            </a>
-                                        @endif
-                                    </td>
                                     <td>
                                         <x-badge color="{{ $product->status_on_website ? 'success' : 'danger' }}"
                                             description="{{ $product->status_on_website ? 'Activo' : 'Inactivo' }}"

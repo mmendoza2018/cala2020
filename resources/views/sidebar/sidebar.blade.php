@@ -57,11 +57,11 @@
             </x-side-li-menu2>
 
             <x-side-li-submenu2 description="Tienda">
-                <x-side-li-submenu description="Numeros de atención" data-side_key="product_category_index" url="product_category.index" />
+                <x-side-li-submenu description="Numeros de atención" data-side_key="attention_number_index" url="attention_number.index" />
                 <x-side-li-submenu description="Redes sociales" data-side_key="product_category_index" url="product_category.index" />
                 <x-side-li-submenu description="Metodos de pago" data-side_key="product_brand_index" url="product_brand.index" />
                 <x-side-li-submenu description="Temas y colores" data-side_key="attribute_group_index" url="attribute_group.index" />
-                <x-side-li-submenu description="General" data-side_key="attribute_group_index" url="attribute_group.index" />
+                <x-side-li-submenu description="General" data-side_key="store_general_index" url="store_general.index" />
             </x-side-li-menu2>
 
         </x-side-li-menu>

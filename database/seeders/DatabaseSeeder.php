@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             AttributeGroupSeeder::class,
             AttributeSeeder::class,
             PriceTypesSeeder::class,
-            UserSeeder::class
+            UserSeeder::class,
+            GeneralSeeder::class
         ]);
     }
 }

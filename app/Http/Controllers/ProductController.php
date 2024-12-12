@@ -99,9 +99,7 @@ class ProductController extends Controller
             "status_on_website" => "required",
             "status_on_catalog" => "required",
             'product_brand_id' => 'required|integer|exists:product_brands,id',
-            "measurement_unit_id" => "required",
             "category_product_id" => "required",
-            "digital_product"=> "",
         ];
 
         // Definir los nombres amigables de los atributos
@@ -116,9 +114,7 @@ class ProductController extends Controller
             "status_on_website" => "Estado de la página web",
             "status_on_catalog" => "Estado del catalogo",
             'product_brand_id' => "Marca",
-            "measurement_unit_id" => "Unidad de medida",
             "category_product_id" => "Categoria",
-            "digital_product"=> "Producto digital"
         ];
 
         // Crear el validador manualmente
@@ -148,14 +144,6 @@ class ProductController extends Controller
 
         // Si la validación pasa, obtener los datos validados
         $validatedData = $validator->validated();
-
-        //guardamos el calendario digital si existe
-        $imageDigitalProductPath = null;
-        $imageDigitalProduct = $request->file('digital_product');
-        if ($imageDigitalProduct) {
-            $path = $imageDigitalProduct->store('uploads', 'public');
-            $imageDigitalProductPath = basename($path);
-        }
 
         $archivos = $request->file('productImages');
         $paths = [];
@@ -195,9 +183,7 @@ class ProductController extends Controller
             "status_on_website" => $validatedData["status_on_website"],
             "status_on_catalog" => $validatedData["status_on_catalog"],
             "product_brand_id" => $validatedData["product_brand_id"],
-            "measurement_unit_id" => $validatedData["measurement_unit_id"],
             "category_product_id" => $validatedData["category_product_id"],
-            "digital_product" => $imageDigitalProductPath,
             "user_id" => Auth::guard('admin')->id()
         ]);
 
@@ -272,15 +258,6 @@ class ProductController extends Controller
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
             return ApiResponse::error("Validation Error", $errors, 202);
-        }
-
-        //obtener el producto digital
-        $imageDigitalProduct = $request->file('digital_product');
-
-        if ($imageDigitalProduct && $imageDigitalProduct->isValid()) {
-            $digitalProductPath = basename($imageDigitalProduct->store('uploads', 'public'));
-        } else {
-            $digitalProductPath = null;
         }
 
         // Convertir el nuevo título a slug
@@ -385,10 +362,6 @@ class ProductController extends Controller
             "measurement_unit_id" => $validatedData["measurement_unit_id"],
             "category_product_id" => $validatedData["category_product_id"],
         ];
-
-        if ($digitalProductPath !== null) {
-            $productData["digital_product"] = $digitalProductPath;
-        }
 
         $product->update($productData);
 

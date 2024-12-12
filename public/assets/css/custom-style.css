@@ -2,7 +2,7 @@
                          LOADER
   ---------------------------------------------------------------- */
 
-  .section_loader {
+.section_loader {
     position: fixed;
     left: 0;
     top: 0;
@@ -72,3 +72,78 @@
 /* ----------------------------------------------------------------
                         END LOADER
   ---------------------------------------------------------------- */
+
+/* STYLES FOR DROPZONE  */
+.dropzone-container {
+    border: 2px dashed #007bff;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    margin: 10px auto;
+    max-width: 600px;
+}
+
+.dropzone-previews {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.dz-preview {
+    position: relative;
+    width: 150px;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dz-image {
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.dz-image img {
+    object-fit: contain !important;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 16;
+}
+
+.dz-remove-button {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 30px;
+    height: 30px;
+    color: white;
+    background-color: #dc3545;
+    border: none;
+    padding: 5px;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.dz-remove-button:hover {
+    background-color: #c82333;
+}
+    
+.primary-image-checkbox {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+.dz-filename {
+    white-space: nowrap !important;       
+    overflow: hidden !important;           
+    text-overflow: ellipsis !important;  
+    max-width: 145px !important; 
+}
+
+/* END STYLES FOR DROPZONE */

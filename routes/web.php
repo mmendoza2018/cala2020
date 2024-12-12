@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttentionNumberController;
 use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\AttributeGroupController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\AuthPage\RegisterPageController;
 use App\Http\Controllers\ComplaintsBookController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExportExcelController;
+use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\OrderSaleProductsController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\ProductAttributeController;
@@ -22,6 +24,7 @@ use App\Http\Controllers\ShoppingCartProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebPageController;
 use App\Http\Middleware\CheckUserType;
+use App\Models\AttentionNumber;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -95,13 +98,25 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', CheckUserType:
         Route::get('/{id}', [ProductBrandController::class, 'show'])->name('product_brand.show');
         Route::get('/', [ProductBrandController::class, 'index'])->name('product_brand.index');
     });
-
     
     Route::prefix('general-productos')->group(function () {
         Route::post('/store', [ProductGeneralController::class, 'store'])->name('product_general.store');
         Route::put('{id}', [ProductGeneralController::class, 'update'])->name('product_general.update');
         Route::get('/{id}', [ProductGeneralController::class, 'show'])->name('product_general.show');
         Route::get('/', [ProductGeneralController::class, 'index'])->name('product_general.index');
+    });
+
+    Route::prefix('general-tienda')->group(function () {
+        Route::put('{id}', [GeneralController::class, 'update'])->name('store_general.update');
+        Route::get('/{id}', [GeneralController::class, 'show'])->name('store_general.show');
+        Route::get('/', [GeneralController::class, 'index'])->name('store_general.index');
+    });
+
+    Route::prefix('numeros-atencion')->group(function () {
+        Route::post('/store', [AttentionNumberController::class, 'store'])->name('attention_number.store');
+        Route::put('{id}', [AttentionNumberController::class, 'update'])->name('attention_number.update');
+        Route::get('/{id}', [AttentionNumberController::class, 'show'])->name('attention_number.show');
+        Route::get('/', [AttentionNumberController::class, 'index'])->name('attention_number.index');
     });
 
     Route::prefix('libro-reclamaciones')->group(function () {

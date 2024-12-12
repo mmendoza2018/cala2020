@@ -21,29 +21,55 @@
             </div>
             <div class="card bg-white">
                 <div class="card-body">
-                    <div class="w-full md:w-2/4 mx-auto">
-                        <form id="formAddproductGeneral">
-                            <label class="inline-block mb-2 text-base font-medium">Razon social de la tienda</label>
-                            <x-input type="text" name="description" data-validate />
+                    <div class="w-full md:w-3/4 mx-auto">
+                        <form id="formAddGeneralConfig">
+                            <div class="flex flex-col md:flex-row justify-center w-full gap-5">
 
-                            <label class="inline-block mb-2 text-base font-medium">Correo Electronico</label>
-                            <x-input type="text" name="description" data-validate />
+                                <div class="w-full md:w-2/4 mx-auto">
+                                    <label class="inline-block mb-2 text-base font-medium">Razon social de la tienda</label>
+                                    <x-input type="text" name="business_name" id="business_name" data-validate/>
+                                    
+                                    <input type="hidden" name="id" id="id">
 
-                            <label class="inline-block mb-2 text-base font-medium">Titulo de la tienda</label>
-                            <x-input type="text" name="description" data-validate />
+                                    <label class="inline-block mb-2 text-base font-medium">Correo Electronico</label>
+                                    <x-input type="text" name="email" id="email" data-validate />
 
-                            <label class="inline-block mb-2 text-base font-medium">Dirección (en caso no tener dirección fisica dejar vacio)</label>
-                            <x-input type="text" name="description" data-validate />
+                                    <label class="inline-block mb-2 text-base font-medium">RUC</label>
+                                    <x-input type="text" name="ruc" id="ruc" data-validate/>
 
+                                    <label class="inline-block mb-2 text-base font-medium">Titulo de la tienda</label>
+                                    <x-input type="text" name="title" id="title" data-validate/>
 
-                            <hr>
+                                    <label class="inline-block mb-2 text-base font-medium">Dirección (en caso no tener
+                                        dirección
+                                        fisica dejar vacio)</label>
+                                    <x-input type="text" name="address" id="address" data-validate />
 
-                            
+                                    <label class="inline-block mb-2 text-base font-medium">Descripción</label>
+                                    <textarea
+                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                         rows="3" name="description" id="description"></textarea>
+                                </div>
+
+                                <div class="w-full md:w-2/4 mx-auto">
+                                    <label class="inline-block mb-2 text-base font-medium">Logo</label>
+
+                                    <div class="dropzone-container">
+                                        <div class="dropzoneAdd">
+                                            Arrastra tus imágenes aquí.
+                                        </div>
+                                        <div id="dropzone-preview" class="dropzone-previews"></div>
+                                    </div>
+
+                                </div>
+
+                            </div>
 
                             <div class="text-right">
                                 <x-button type="submit" color="primary" class="mt-3" description="Guardar"
                                     :outline="false" />
                             </div>
+
                         </form>
                         </class=>
                     </div>
@@ -52,11 +78,27 @@
             <!-- container-fluid -->
         </div>
         <!-- End Page-content -->
+
+        <!-- Template de Previsualización -->
+        <script type="text/template" id="preview-template">
+            <div class="dz-preview dz-file-preview">
+                <div class="dz-image">
+                    <img data-dz-thumbnail />
+                </div>
+                <div class="dz-details">
+                    <div class="dz-filename"><span data-dz-name></span></div>
+                    <div class="dz-size" data-dz-size></div>
+                </div>
+
+                <!--  <input type="checkbox" class="primary-image-checkbox" data-tooltip="default" data-tooltip-content="test tooltip"/> -->
+                <i class="ri-close-line dz-remove-button"></i>
+                    
+            </div>
+        </script>
     @endsection
 
+
     @section('script')
-        <script src="{{ URL::to('assets/js/datatables/jquery-3.7.0.js') }}"></script>
-        <script src="{{ URL::to('assets/js/datatables/data-tables.min.js') }}"></script>
-        <script src="{{ URL::to('assets/js/datatables/data-tables.tailwindcss.min.js') }}"></script>
-        <script src="{{ URL::to('assets/js/custom/productBrand.js') }}"></script>
+        <script src="{{ URL::to('assets/libs/dropzone/dropzone-min.js') }}"></script>
+        <script src="{{ URL::to('assets/js/custom/general.js') }}"></script>
     @endsection
