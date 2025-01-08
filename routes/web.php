@@ -21,6 +21,7 @@ use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductGeneralController;
 use App\Http\Controllers\ShoppingCartProductController;
+use App\Http\Controllers\SocialNetworkController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebPageController;
 use App\Http\Middleware\CheckUserType;
@@ -70,10 +71,6 @@ Route::prefix('shopping-cart-products')->group(function () {
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', CheckUserType::class . ':admin_panel']], function () {
 
-    Route::get('home', function () {
-        return view('dashboard.home');
-    })->name('admin.home');
-
     // Rutas de productos
     Route::prefix('productos')->group(function () {
         Route::get('/create', [ProductController::class, 'create'])->name('product.create');
@@ -98,7 +95,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', CheckUserType:
         Route::get('/{id}', [ProductBrandController::class, 'show'])->name('product_brand.show');
         Route::get('/', [ProductBrandController::class, 'index'])->name('product_brand.index');
     });
-    
+
     Route::prefix('general-productos')->group(function () {
         Route::post('/store', [ProductGeneralController::class, 'store'])->name('product_general.store');
         Route::put('{id}', [ProductGeneralController::class, 'update'])->name('product_general.update');
@@ -113,10 +110,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', CheckUserType:
     });
 
     Route::prefix('numeros-atencion')->group(function () {
-        Route::post('/store', [AttentionNumberController::class, 'store'])->name('attention_number.store');
         Route::put('{id}', [AttentionNumberController::class, 'update'])->name('attention_number.update');
         Route::get('/{id}', [AttentionNumberController::class, 'show'])->name('attention_number.show');
         Route::get('/', [AttentionNumberController::class, 'index'])->name('attention_number.index');
+    });
+
+    Route::prefix('redes-sociales')->group(function () {
+        Route::put('{id}', [SocialNetworkController::class, 'update'])->name('social_network.update');
+        Route::get('/{id}', [SocialNetworkController::class, 'show'])->name('social_network.show');
+        Route::get('/', [SocialNetworkController::class, 'index'])->name('social_network.index');
     });
 
     Route::prefix('libro-reclamaciones')->group(function () {
@@ -142,14 +144,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', CheckUserType:
 
 
     Route::prefix('dashboards')->group(function () {
-        Route::get('sales_by_mont',[DashboardController::class, 'salesByMonth'])->name('dashboard.salesByMonth');
-        Route::post('/ventas',[DashboardController::class, 'dataForChartsSales']);
-        Route::post('/usuarios',[DashboardController::class, 'dataForChartsUsers']);
-        Route::get('/ventas',[DashboardController::class, 'viewSale'])->name('dashboard.view_sale');
-        Route::get('/usuarios',[DashboardController::class, 'viewUser'])->name('dashboard.view_user');
-        Route::get('/',[DashboardController::class, 'index'])->name('dashboard.index');
+        Route::get('sales_by_mont', [DashboardController::class, 'salesByMonth'])->name('dashboard.salesByMonth');
+        Route::post('/ventas', [DashboardController::class, 'dataForChartsSales']);
+        Route::post('/usuarios', [DashboardController::class, 'dataForChartsUsers']);
+        Route::get('/ventas', [DashboardController::class, 'viewSale'])->name('dashboard.view_sale');
+        Route::get('/usuarios', [DashboardController::class, 'viewUser'])->name('dashboard.view_user');
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
     });
-    
+
     Route::prefix('ordenes')->group(function () {
         Route::get('/', [OrderSaleProductsController::class, 'index'])->name('orders.index');
         Route::get('/{id}', [OrderSaleProductsController::class, 'show'])->name('orders.show');

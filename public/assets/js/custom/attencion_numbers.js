@@ -1,15 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    agregarTemplate("templateAttencionNumbers", "containerAttencionNumbers");
+    //agregarTemplate("templateAttencionNumbers", "containerAttencionNumbers");
 
 })
 
 
 document.addEventListener("submit", async (e) => {
-    if (e.target.matches("#formAddproductBrand")) {
+    if (e.target.matches("#formActAttentionNumbers")) {
         e.preventDefault();
 
-        if (!FormValidate("formAddproductBrand")) {
+        if (!FormValidate("formActAttentionNumbers")) {
             toastAlert("Algunos campos son necesarios", "warning")
             return;
         }
@@ -17,68 +17,26 @@ document.addEventListener("submit", async (e) => {
         const formData = new FormData(e.target);
 
         try {
-            let response = await customFetch(
-                ROUTES.PRODUCT_BRAND + `/store`,
-                "POST",
-                formData
-            )
+            let rows = document.querySelectorAll("#containerAttencionNumbers tr");
+            let formData = new FormData();
+            let finalArray = [];
 
-            if (response.status === "success") {
-                boxAlert("Agregado con exito!", "success")
-                closeModal("modalAddProductBrand")
-                e.target.reset();
-                let data = response.data;
-                let btnActHTML = `<i class="ri-edit-box-fill ri-xl cursor-pointer" onclick="getProductBrand('${data.id}')"></i>`;
+            rows.forEach(tr => {
+                let obj = {
+                    phone: tr.querySelector(".phone").value,
+                    fullname: tr.querySelector(".fullname").value,
+                    id: tr.querySelector(".id").value
+                }
+                finalArray.push(obj);
+            });
 
-                let rowNode = dataTableBrandProduct.row.add([
-                    data.id,
-                    data.description,
-                    btnActHTML
-                ]).draw(false).node(); // Obtén el nodo DOM de la fila
+            formData.append('attentionNumbers', JSON.stringify(finalArray));
+            formData.append('_method', 'PUT');
 
-                let $row = $(rowNode);
-
-                $row.attr('data-table', data.id);
-            } else {
-                boxAlertValidation(response.errors)
-            }
-        } catch (error) {
-            console.error('Error de red:', error);
-        }
-    }
-
-    if (e.target.matches("#formActproductBrand")) {
-        e.preventDefault();
-
-        if (!FormValidate("formActproductBrand")) {
-            toastAlert("Algunos campos son necesarios", "warning")
-            return;
-        }
-
-        const formData = new FormData(e.target);
-        formData.append('_method', 'PUT');
-
-        try {
-            let response = await customFetch(
-                ROUTES.PRODUCT_BRAND + `/${e.target.id.value}`,
-                "POST",
-                formData
-            )
-
+            let url = ROUTES.ATTENTION_NUMBER + `/update`;
+            let response = await customFetch(url, "POST", formData)
             if (response.status === "success") {
                 boxAlert("Actualizado con exito!", "success")
-                closeModal("modalActProductBrand")
-                e.target.reset();
-                let data = response.data;
-                let trUpdatedElement = $('[data-table="' + data.id + '"]')[0];
-                const trUpdated = dataTableBrandProduct.row(trUpdatedElement);
-                let btnAct = trUpdatedElement.querySelector("i").outerHTML;
-
-                if (data.status == 0) return trUpdated.remove().draw(false);
-
-                trUpdated
-                    .data([data.id, data.description, btnAct])
-                    .draw(false);
             } else {
                 boxAlertValidation(response.errors)
             }
@@ -99,6 +57,7 @@ document.addEventListener("click", (e) => {
     }
 });
 
+
 const eliminarTrProducto = (elemento) => {
     let trPadre = elemento.parentNode.parentNode;
     let tBody = elemento.parentNode.parentNode.parentNode;
@@ -108,15 +67,15 @@ const eliminarTrProducto = (elemento) => {
 };
 
 const agregarTemplate = (idTemplate, idContainer) => {
-    let template = document.getElementById(idTemplate);
 
-    // Clonar el contenido del template
+    let template = document.getElementById(idTemplate);
     let templateClonado = template.content.cloneNode(true);
     let contenedor = document.getElementById(idContainer);
     let trs = contenedor.querySelectorAll("tr");
+
     if (trs.length >= 5) return;
     contenedor.appendChild(templateClonado);
-    //$(selectTemplate).select2();
+
 };
 
 const getProductBrand = async (id) => {

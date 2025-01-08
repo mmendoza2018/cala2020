@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attention_numbers', function (Blueprint $table) {
-            $table->id(); // ID autoincremental
-            $table->string('name'); // Nombre del contacto o servicio
-            $table->string('phone_number'); // Número de atención
-            $table->string('type')->nullable(); // Tipo de contacto (ej. soporte, ventas, etc.)
+        Schema::create('social_networks', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('icon_html');
+            $table->text('link');
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attention_numbers');
+        Schema::dropIfExists('social_networks');
     }
 };

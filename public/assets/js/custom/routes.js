@@ -13,4 +13,6 @@ let ROUTES = {
     PDF: `/admin/pdf`,
     GENERAL_STORE: `/admin/general-tienda`,
     EXPORT_EXCEL: `/admin/exportar-excel`,
+    ATTENTION_NUMBER: `/admin/numeros-atencion`,
+    SOCIAL_NETWORK: `/admin/redes-sociales`,
 };

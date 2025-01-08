@@ -11,6 +11,7 @@
     <!-- StarCode CSS -->
     <link rel="stylesheet" href="{{ URL::to('assets/css/starcode2.css') }}">
     <link rel="stylesheet" href="{{ URL::to('assets/css/custom-style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::to('assets/libs/select2/select2.min.css') }}">
     <!-- message toastr -->
     <link rel="stylesheet" href="{{ URL::to('assets/css/toastr.min.css') }}">
     <script src="{{ URL::to('assets/js/toastr_jquery.min.js') }}"></script>
@@ -496,6 +497,7 @@
     <script src="{{ URL::to('assets/js/starcode.bundle.js') }}"></script>
     <!-- Sweet Alerts js -->
     <script src="{{ URL::to('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script src="{{ URL::to('assets/libs/select2/select2.min.js') }}"></script>
 
     <!--sweet alert init js-->
     <script src="{{ URL::to('assets/js/pages/sweetalert.init.js') }}"></script>

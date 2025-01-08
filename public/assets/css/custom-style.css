@@ -147,3 +147,82 @@
 }
 
 /* END STYLES FOR DROPZONE */
+
+/* table responsive */
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  @media (max-width: 576px) {
+    .table-responsive-sm {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .table-responsive-md {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .table-responsive-lg {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+  
+  @media (max-width: 1200px) {
+    .table-responsive-xl {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+  
+  @media (max-width: 1400px) {
+    .table-responsive-xxl {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+
+  /* end table responsive */
+
+/* styles for icon attention numbers */
+
+.icon_attention_number {
+    background-color: #00000031;
+    padding: 5px;
+    border-radius: 100%;
+    height: 30px;
+    width: 30px;
+    margin-right: 5px;
+}
+
+/* Personaliza la caja principal de Select2 (el contenedor de selección) */
+
+.select2-selection.select2-selection--single {
+  height: 39px !important;
+  border-color: rgb(226, 232, 240) !important;
+  border-radius: 20px !important;
+  padding: 8px 12px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  line-height: 20px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  top: 5px !important;
+  right: 5px !important;
+}
+
+/* Cuando el select2 está enfocado (focus) */
+.select2-container .select2-selection--single:focus {
+  border-color: #0056b3;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}

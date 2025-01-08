@@ -7,7 +7,7 @@
         <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
             <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                 <div class="grow">
-                    <h5 class="text-16">Números de atención</h5>
+                    <h5 class="text-16">Redes sociales</h5>
                 </div>
                 <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                     <li
@@ -15,14 +15,14 @@
                         <a href="#!" class="text-slate-400 dark:text-zink-200">Dashboards</a>
                     </li>
                     <li class="text-slate-700 dark:text-zink-100">
-                        Números de atención
+                        Redes sociales
                     </li>
                 </ul>
             </div>
             <div class="card bg-white">
                 <div class="card-body">
                     <div class="w-full md:w-2/4 mx-auto">
-                        <form id="formActAttentionNumbers">
+                        <form id="formActSocialNetwork">
 
                             <div class="w-full mx-auto">
                                 <div class="text-end">
@@ -35,49 +35,17 @@
                                             <tr>
                                                 <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500"
                                                     style="min-width: 250px">
-                                                    Numero de celular</th>
+                                                    Icono</th>
                                                 <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500"
                                                     style="min-width: 250px">
-                                                    Nombre persona</th>
+                                                    Link</th>
                                                 <th
                                                     class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
                                                     -</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="containerAttencionNumbers">
-
-                                            @foreach ($attentionNumbers as $attentionNumber)
-                                                <tr>
-                                                    <td
-                                                        class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                        <div class="flex justify-center items-center">
-                                                            <span class="icon_attention_number">
-                                                                <i class="ri-phone-fill ri-lg"></i>
-                                                            </span>
-                                                            <x-input type="text" data-validate class="phone"
-                                                                value="{{ $attentionNumber->phone_number }}" />
-                                                        </div>
-                                                    </td>
-                                                    <td
-                                                        class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                        <div class="flex justify-center items-center">
-                                                            <span class="icon_attention_number">
-                                                                <i class="ri-customer-service-fill ri-lg"></i>
-                                                            </span>
-                                                            <x-input type="text" data-validate class="fullname"
-                                                                value="{{ $attentionNumber->name }}" />
-                                                            <input type="hidden" class="id"
-                                                                value="{{ $attentionNumber->id }}">
-                                                        </div>
-                                                    </td>
-                                                    <td
-                                                        class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                        <i class="ri-close-line ri-xl btnRemoveAttencionNumber text-red-500"
-                                                            style="cursor: pointer"></i>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-
+                                        <tbody id="containerSocialNetwork">
+                                            {{-- INNER HTML --}}
                                         </tbody>
                                     </table>
                                 </div>
@@ -97,22 +65,27 @@
         </div>
         <!-- End Page-content -->
 
-        <template id="templateAttencionNumbers">
+        <template id="templateSocialNetwork">
             <tr>
                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                     <div class="flex justify-center items-center">
-                        <span class="icon_attention_number">
-                            <i class="ri-phone-fill ri-lg"></i>
-                        </span>
-                        <x-input type="text" data-validate class="phone" />
+                        <select id="icon-select" class="socialSelect" style="width: 100%">
+                            <option></option>
+                            <option value="Facebook" data-icon="<i class='ri-phone-fill ri-lg'></i>">Facebook</option>
+                            <option value="Instagram" data-icon="<i class='ri-instagram-fill ri-lg'></i>">Instagram</option>
+                            <option value="LinkedIn" data-icon="<i class='ri-linkedin-box-fill ri-lg'></i>">LinkedIn</option>
+                            <option value="Telegram" data-icon="<i class='ri-telegram-fill ri-lg'></i>">Telegram</option>
+                            <option value="Tik Tok" data-icon="<i class='ri-tiktok-fill ri-lg'></i>">Tik Tok</option>
+                            <option value="Youtube" data-icon="<i class='ri-youtube-fill ri-lg'></i>">Youtube</option>
+                        </select>
                     </div>
                 </td>
                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                     <div class="flex justify-center items-center">
                         <span class="icon_attention_number">
-                            <i class="ri-customer-service-fill ri-lg"></i>
+                            <i class="ri-global-line ri-lg"></i>
                         </span>
-                        <x-input type="text" data-validate class="fullname" />
+                        <x-input type="text" data-validate class="link" />
                         <input type="hidden" class="id">
                     </div>
                 </td>
@@ -125,5 +98,5 @@
 
 
     @section('script')
-        <script src="{{ URL::to('assets/js/custom/attencion_numbers.js') }}"></script>
+        <script src="{{ URL::to('assets/js/custom/social_network.js') }}"></script>
     @endsection
