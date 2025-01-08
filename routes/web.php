@@ -14,6 +14,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExportExcelController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\OrderSaleProductsController;
+use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\ProductAttributeController;
 use App\Http\Controllers\ProductBrandController;
@@ -119,6 +120,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', CheckUserType:
         Route::put('{id}', [SocialNetworkController::class, 'update'])->name('social_network.update');
         Route::get('/{id}', [SocialNetworkController::class, 'show'])->name('social_network.show');
         Route::get('/', [SocialNetworkController::class, 'index'])->name('social_network.index');
+    });
+
+    Route::prefix('metodos-pago')->group(function () {
+        Route::put('{id}', [PaymentMethodController::class, 'update'])->name('payment_method.update');
+        Route::get('/{id}', [PaymentMethodController::class, 'show'])->name('payment_method.show');
+        Route::get('/', [PaymentMethodController::class, 'index'])->name('payment_method.index');
     });
 
     Route::prefix('libro-reclamaciones')->group(function () {

@@ -3,21 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ApiResponse;
-use App\Models\SocialNetwork;
+use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class SocialNetworkController extends Controller
+class PaymentMethodController extends Controller
 {
     public function index(Request $request)
     {
-        $socialNetworks = SocialNetwork::where("status", 1)->get();
+        $paymentMethods = PaymentMethod::where("status", 1)->get();
 
         if ($request->expectsJson()) {
-            return ApiResponse::success($socialNetworks, "Registro encontrado.");
+            return ApiResponse::success($paymentMethods, "Registro encontrado.");
         }
 
-        return view('admin.social_network.index', compact('socialNetworks'));
+        return view('admin.payment_method.index', compact('paymentMethods'));
     }
 
     public function update(Request $request)
@@ -62,7 +62,7 @@ class SocialNetworkController extends Controller
         foreach ($socialNetworks as $socialNetwork) {
             if (!empty($attentionNumber['id'])) {
                 // Actualizar el registro existente
-                $register = SocialNetwork::find($socialNetwork['id']);
+                $register = PaymentMethod::find($socialNetwork['id']);
                 $register->update([
                     'icon_html' => $socialNetwork['icon'],
                     'name' => $socialNetwork['description'],
@@ -71,7 +71,7 @@ class SocialNetworkController extends Controller
                 $activeIds[] = $socialNetwork['id'];
             } else {
                 // Crear un nuevo registro
-                $newRegister = SocialNetwork::create([
+                $newRegister = PaymentMethod::create([
                     'icon_html' => $socialNetwork['icon'],
                     'name' => $socialNetwork['description'],
                     'link' => $socialNetwork['link'], 
@@ -81,7 +81,7 @@ class SocialNetworkController extends Controller
         }
 
         // Cambiar a inactivo los registros que no están en la lista enviada
-        SocialNetwork::whereNotIn('id', $activeIds)->update(['status' => 0]);
+        PaymentMethod::whereNotIn('id', $activeIds)->update(['status' => 0]);
 
         return ApiResponse::success(null, "Registros actualizados correctamente", 202);
     }
