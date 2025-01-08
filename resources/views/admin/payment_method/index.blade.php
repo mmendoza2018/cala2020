@@ -34,10 +34,10 @@
                                         <thead class="ltr:text-left rtl:text-right">
                                             <tr>
                                                 <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500"
-                                                    style="min-width: 250px">
+                                                    style="width: 150px">
                                                     Imagen</th>
                                                 <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500"
-                                                    style="min-width: 250px">
+                                                    style="width: 350px">
                                                     Descripción</th>
                                                 <th
                                                     class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
@@ -71,7 +71,6 @@
                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                     <div class="dropzone-container">
                         <div class="dropzoneAdd">
-                            Arrastra tus imágenes aquí.
                         </div>
                         <div id="dropzone-preview" class="dropzone-previews"></div>
                     </div>

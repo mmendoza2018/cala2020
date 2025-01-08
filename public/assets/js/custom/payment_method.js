@@ -94,7 +94,7 @@ const agregarTemplate = (idTemplate, idContainer, data = null) => {
     if (trs.length >= 5) return;
     contenedor.appendChild(templateClonado);
 
-    createDropZone(dropzoneContainerElement);
+    createDropZone(dropzoneContainerElement, data);
 
     if (data) {
         linkInput.value = data.link;
@@ -105,28 +105,28 @@ const agregarTemplate = (idTemplate, idContainer, data = null) => {
 
 };
 
-const createDropZone = (element) => {
-    // ".dropzone-container, .dropzoneAdd"
+const createDropZone = (element, data) => {
     const zoneElement = element.querySelector(".dropzoneAdd");
     const previewElement = element.querySelector("#dropzone-preview");
     const previewTemplate = document.querySelector("#preview-template").innerHTML;
 
-    dropzoneAdd = new Dropzone(zoneElement, {
+    dropzoneAdd = new Dropzone(element, {
         url: "https://httpbin.org/post", // URL ficticia, no se usará aún
         method: "post",
         previewTemplate: previewTemplate,
         previewsContainer: previewElement,
-        clickable: zoneElement, // Click solo dentro del área de Dropzone
+        clickable: element, // Click solo dentro del área de Dropzone
         autoProcessQueue: false, // No subir automáticamente
         addRemoveLinks: false, // Usamos nuestro propio botón de eliminar
         maxFiles: 1, // Permitir solo un archivo
         acceptedFiles: "image/*", // Solo aceptar imágenes
     });
 
+    //Este evento se dispara automáticamente cuando Dropzone genera una miniatura
     dropzoneAdd.on("thumbnail", (file, dataUrl) => {
         const thumbnail = file.previewElement.querySelector("[data-dz-thumbnail]");
         if (thumbnail) {
-            thumbnail.style.objectFit = "contain";  
+            thumbnail.style.objectFit = "contain";
         }
     });
 
@@ -139,34 +139,24 @@ const createDropZone = (element) => {
             dropzoneAdd.removeFile(file);
         });
 
-        // Marcar imagen como principal
-        /*  const primaryCheckbox = file.previewElement.querySelector(".primary-image-checkbox");
-         primaryCheckbox.addEventListener("change", (e) => {
-             if (e.target.checked) {
-                 // Desmarcar todas las demás imágenes
-                 document
-                     .querySelectorAll(".primary-image-checkbox")
-                     .forEach((checkbox) => {
-                         if (checkbox !== e.target) checkbox.checked = false;
-                     });
-             }
-         }); */
     });
 
-    let mockFile = {
-        name: file.logo_file.name,
-        size: file.logo_file.size,
-        url: file.logo_file.url,
-        isMock: true
-    };
+    if (data) {
+        let mockFile = {
+            name: file.logo_file.name,
+            size: file.logo_file.size,
+            url: file.logo_file.url,
+            isMock: true
+        };
 
-    // Emitir los eventos de Dropzone para añadir el archivo
-    dropzoneAdd.emit("addedfile", mockFile);
-    dropzoneAdd.emit("thumbnail", mockFile, file.logo_file.url);
-    dropzoneAdd.emit("complete", mockFile);
+        // Emitir los eventos de Dropzone para añadir el archivo
+        dropzoneAdd.emit("addedfile", mockFile);
+        dropzoneAdd.emit("thumbnail", mockFile, file.logo_file.url);
+        dropzoneAdd.emit("complete", mockFile);
 
-    // Añadir el archivo a la lista de archivos de Dropzone
-    dropzoneAdd.files.push(mockFile);
+        // Añadir el archivo a la lista de archivos de Dropzone
+        dropzoneAdd.files.push(mockFile);
+    }
 
     dropzoneArray.push(dropzoneAdd);
 
