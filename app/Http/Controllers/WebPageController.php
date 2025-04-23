@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\CategoryProduct;
 use App\Models\ComplaintsBook;
+use App\Models\General;
 use App\Models\Product;
 use App\Models\ProductBrand;
 use App\Models\Raffle;
+use App\Models\Theme;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -145,6 +147,8 @@ class WebPageController extends Controller
         $categories = CategoryProduct::where("status", 1)->get();
         $brands = ProductBrand::where("status", 1)->get();
         $products = Product::where("status_on_website", 1)->where("status", 1)->paginate(4);
+        $generalInfo = General::first();
+        $themes = Theme::first();
 
         $productsQuery = $this->applyProductFilters($request);
 
@@ -159,7 +163,9 @@ class WebPageController extends Controller
             "products" => $products,
             "brands" => $brands,
             "categories" => $categories,
-            "activeScroll" => false
+            "activeScroll" => false,
+            "generalInfo" => $generalInfo,
+            "themes" => $themes
         ]);
     }
 
@@ -194,8 +200,13 @@ class WebPageController extends Controller
 
     public function home(Request $request)
     {
+        $generalInfo = General::first();
+        $themes = Theme::first();
+
         return view('webpage.home', [
             "activeScroll" => true,
+            "generalInfo" => $generalInfo,
+            "themes" => $themes,
         ]);
     }
 

@@ -12,6 +12,20 @@ class PaymentMethodController extends Controller
     public function index(Request $request)
     {
         $paymentMethods = PaymentMethod::where("status", 1)->get();
+        // Definir el directorio de imágenes
+        $imageDirectory = storage_path('app/public/uploads/');
+
+        foreach ($paymentMethods as $paymentMethod) {
+
+            $filePath = $imageDirectory . $paymentMethod->image;
+
+            if (file_exists($filePath)) {
+                $paymentMethod->size = filesize($filePath);
+            } else {
+                $paymentMethod->size = null;
+            }
+            
+        }
 
         if ($request->expectsJson()) {
             return ApiResponse::success($paymentMethods, "Registro encontrado.");
@@ -22,29 +36,25 @@ class PaymentMethodController extends Controller
 
     public function update(Request $request)
     {
+        //dd($request->all());
+        $paymentMethods = json_decode($request->paymentMethods, true);
 
-        $socialNetworks = json_decode($request->socialNetworks, true);
-
-        if (!$socialNetworks) {
+        if (!$paymentMethods) {
             return ApiResponse::error("Validation Error", ["El campo redes sociales debe ser un arreglo válido."], 202);
         }
 
         $rules = [
-            'socialNetworks' => 'required|array',
-            'socialNetworks.*.description' => 'required|string',
-            'socialNetworks.*.icon' => 'required|string|max:255',
-            'socialNetworks.*.link' => 'required|string',
-            'socialNetworks.*.id' => 'nullable|integer|exists:social_networks,id',
+            'paymentMethods' => 'required|array',
+            'paymentMethods.*.description' => 'required|string',
+            'paymentMethods.*.id' => 'nullable|integer|exists:payment_methods,id',
         ];
 
         $attributes = [
-            'socialNetworks.*.description' => 'Descripción',
-            'socialNetworks.*.icon' => 'Icono',
-            'socialNetworks.*.link' => 'URL',
-            'socialNetworks.*.id' => 'ID del registro',
+            'paymentMethods.*.description' => 'Descripción',
+            'paymentMethods.*.id' => 'ID del registro',
         ];
 
-        $validator = Validator::make(['socialNetworks' => $socialNetworks], $rules);
+        $validator = Validator::make(['paymentMethods' => $paymentMethods], $rules);
         $validator->setAttributeNames($attributes);
 
         if ($validator->fails()) {
@@ -54,30 +64,47 @@ class PaymentMethodController extends Controller
 
         // Obtener los datos validados
         $validatedData = $validator->validated();
-        $socialNetworks = $validatedData['socialNetworks'];
+        $uploadedImages = $request->file('images');
+        /* echo "<pre>";
+        var_dump($uploadedImages);
+        echo "<pre>"; */
+        $paymentMethods = $validatedData['paymentMethods'];
 
         // Obtener los IDs enviados para mantenerlos activos
         $activeIds = [];
+        $contador = 0;
 
-        foreach ($socialNetworks as $socialNetwork) {
-            if (!empty($attentionNumber['id'])) {
+        foreach ($paymentMethods as $paymentMethod) {
+            if (!empty($paymentMethod['id'])) {
                 // Actualizar el registro existente
-                $register = PaymentMethod::find($socialNetwork['id']);
+                $register = PaymentMethod::find($paymentMethod['id']);
+                $fileName = $register->image;
+                
+                if ($register->image != $uploadedImages[$contador]->getClientOriginalName()) {
+                    $newPath = $uploadedImages[$contador]->store('uploads', 'public');
+                    $fileName = basename($newPath);
+                }
+                
                 $register->update([
-                    'icon_html' => $socialNetwork['icon'],
-                    'name' => $socialNetwork['description'],
-                    'link' => $socialNetwork['link'],
+                    'image' => $fileName,
+                    'description' => $paymentMethod['description'],
                 ]);
-                $activeIds[] = $socialNetwork['id'];
+                
+                $activeIds[] = $paymentMethod['id'];
             } else {
                 // Crear un nuevo registro
+                $newPath = $uploadedImages[$contador]->store('uploads', 'public');
+                $fileName = basename($newPath);
+
                 $newRegister = PaymentMethod::create([
-                    'icon_html' => $socialNetwork['icon'],
-                    'name' => $socialNetwork['description'],
-                    'link' => $socialNetwork['link'], 
+                    'image' => $fileName,
+                    'description' => $paymentMethod['description'],
                 ]);
+
                 $activeIds[] = $newRegister->id;
             }
+
+            $contador ++;
         }
 
         // Cambiar a inactivo los registros que no están en la lista enviada

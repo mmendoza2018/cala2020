@@ -7,7 +7,7 @@
         <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
             <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                 <div class="grow">
-                    <h5 class="text-16">Marcas</h5>
+                    <h5 class="text-16">SubCategoria productos</h5>
                 </div>
                 <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                     <li
@@ -15,7 +15,7 @@
                         <a href="#!" class="text-slate-400 dark:text-zink-200">Dashboards</a>
                     </li>
                     <li class="text-slate-700 dark:text-zink-100">
-                        Marcas
+                        Categoria productos
                     </li>
                 </ul>
             </div>
@@ -24,24 +24,26 @@
                     <div class="flex flex-wrap gap-2">
                         <button onclick="openModalAdd()" type="button"
                             class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 mb-3">Registrar
-                            Marcas
-                        </button>
-                        <div id="modalAddProductBrand" modal-center=""
+                            SubCategoría</button>
+                        <div id="modalAddSubCategoryProduct" modal-center=""
                             class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show">
                             <div
                                 class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600 flex flex-col h-full">
                                 <div
                                     class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-zink-500">
                                     <h5 class="text-16">Registro</h5>
-                                    <button data-modal-close="modalAddProductBrand"
+                                    <button data-modal-close="modalAddSubCategoryProduct"
                                         class="transition-all duration-200 ease-linear text-slate-500 hover:text-red-500 dark:text-zink-200 dark:hover:text-red-500">
                                         <i data-lucide="x" class="size-5"></i>
                                     </button>
                                 </div>
                                 <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
-                                    <form id="formAddproductBrand">
+                                    <form id="formAddproductSubCategory">
                                         <label class="inline-block mb-2 text-base font-medium">descripcion</label>
                                         <x-input type="text" name="description" data-validate />
+
+                                        <label class="inline-block mb-2 text-base font-medium">Código</label>
+                                        <x-input type="text" name="code" data-validate />
 
                                         <div class="w-full mx-auto">
                                             <label class="inline-block mb-2 text-base font-medium">Imagen</label>
@@ -64,27 +66,29 @@
                     </div>
 
                     <div class="w-full md:w-2/4 mx-auto">
-                        <table id="tableProductBrand" class="display stripe group" style="width:100%">
+                        <table id="tableSubCategoryProduct" class="display stripe group" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Imagen</th>
                                     <th>Descripción</th>
+                                    <th>Código</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($productBrands as $productBrand)
-                                    <tr data-table={{ $productBrand->id }}>
-                                        <td>{{ $productBrand->id }}</td>
+                                @foreach ($subCategories as $subCategory)
+                                    <tr data-table={{ $subCategory->id }}>
+                                        <td>{{ $subCategory->id }}</td>
                                         <td>
-                                            <img src="{{ asset('storage/uploads/' . $productBrand->imagen) }}" alt=""
+                                            <img src="{{ asset('storage/uploads/' . $subCategory->imagen) }}" alt=""
                                                 class="h-10 h-16 rounded-md" style="width: 4rem">
                                         </td>
-                                        <td>{{ $productBrand->description }}</td>
+                                        <td>{{ $subCategory->description }}</td>
+                                        <td>{{ $subCategory->code }}</td>
                                         <td class="text-center">
                                             <i class="ri-edit-box-fill ri-xl cursor-pointer"
-                                                onclick="getProductBrand('{{ $productBrand->id }}')"></i>
+                                                onclick="getProductSubCategory('{{ $subCategory->id }}')"></i>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -98,20 +102,23 @@
         </div>
 
         <!-- Modal -->
-        <div id="modalActProductBrand" modal-center=""
+        <div id="modalActSubCategoryProduct" modal-center=""
             class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show">
             <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600 flex flex-col h-full">
                 <div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-zink-500">
                     <h5 class="text-16">Actualizar</h5>
-                    <button data-modal-close="modalActProductBrand"
+                    <button data-modal-close="modalActSubCategoryProduct"
                         class="transition-all duration-200 ease-linear text-slate-500 hover:text-red-500 dark:text-zink-200 dark:hover:text-red-500"><i
                             data-lucide="x" class="size-5"></i></button>
                 </div>
                 <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
-                    <form id="formActproductBrand">
+                    <form id="formActproductSubCategory">
                         <label class="inline-block mb-2 text-base font-medium">descripcion</label>
                         <x-input type="text" name="description" id="description" data-validate />
                         <input type="hidden" name="id" id="id">
+
+                        <label class="inline-block mb-2 text-base font-medium">Código</label>
+                        <x-input type="text" name="code" id="code" data-validate />
 
                         <div class="w-full mx-auto">
                             <label class="inline-block mb-2 text-base font-medium">Imagen</label>
@@ -165,5 +172,5 @@
     <script src="{{ URL::to('assets/js/datatables/jquery-3.7.0.js') }}"></script>
     <script src="{{ URL::to('assets/js/datatables/data-tables.min.js') }}"></script>
     <script src="{{ URL::to('assets/js/datatables/data-tables.tailwindcss.min.js') }}"></script>
-    <script src="{{ URL::to('assets/js/custom/productBrand.js') }}"></script>
+    <script src="{{ URL::to('assets/js/custom/productSubCategory.js') }}"></script>
 @endsection

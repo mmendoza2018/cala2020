@@ -50,3 +50,120 @@ document.addEventListener("DOMContentLoaded", () => {
         initializeClock("sectionLastRaffleHome", drawDateDetail.dataset.draw_date_detail);
     }
 });
+
+/* custom */
+console.log('(luismi):>> entreeeeeee');
+var splide = new Splide('#splidePrincipalBanner', {
+    type: 'loop',        // Este activa el bucle infinito
+    autoplay: true,         // Reproducción automática
+    interval: 5000,         // Tiempo entre slides (en ms)
+    pauseOnHover: false,      // No se detiene al pasar el mouse
+    pauseOnFocus: false,      // No se detiene si el carrusel gana el foco
+    speed: 800,          // Velocidad de transición (ms)
+    arrows: true,        // Oculta flechas si no las necesitas
+    pagination: false
+});
+splide.mount();
+
+/* drag categories */
+
+
+
+
+var splideCategories = new Splide('#splideCategories', {
+    type: 'loop',
+    drag: 'free',
+    perPage: 3,
+    autoplay: true,
+    interval: 2000, // ⏱ Tiempo entre movimientos en milisegundos (3000ms = 3s)
+    pauseOnHover: true, // pausa si el usuario pasa el mouse encima
+});
+
+splideCategories.mount();
+
+
+/* tabs */
+
+const tabButtonsContainer = document.querySelector('.custom-tabs__buttons');
+const leftArrow = document.querySelector('.custom-tabs__arrow.left');
+const rightArrow = document.querySelector('.custom-tabs__arrow.right');
+
+leftArrow.addEventListener('click', () => {
+    tabButtonsContainer.scrollBy({ left: -150, behavior: 'smooth' });
+});
+
+rightArrow.addEventListener('click', () => {
+    tabButtonsContainer.scrollBy({ left: 150, behavior: 'smooth' });
+});
+
+// El resto del JS de tabs sigue igual 👇
+const tabButtons = document.querySelectorAll('.custom-tabs__btn');
+const tabContents = document.querySelectorAll('.custom-tabs__content');
+
+tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+
+        button.classList.add('active');
+        document.getElementById(button.dataset.tab).classList.add('active');
+    });
+});
+
+
+new Splide('#splideOffers', {
+    type: 'loop',
+    perPage: 3,
+    gap: '1rem', // Espacio entre slides
+    breakpoints: {
+        768: {
+            perPage: 1,
+        },
+    },
+}).mount();
+
+
+
+new Splide('#splideBrands', {
+    type: 'loop',
+    perPage: 5,
+    autoplay: true,
+    interval: 1000,
+    gap: '2rem', // Espacio entre slides
+    breakpoints: {
+        768: {
+            perPage: 1,
+        },
+    },
+}).mount();
+
+
+/* nav */
+
+const nav = document.querySelector('#navbar');
+let lastScroll = 0;
+
+function handleNavVisibility() {
+    const currentScroll = window.scrollY;
+
+    if (currentScroll <= 0) {
+        nav.classList.add('hidden_hover');
+        nav.classList.remove('show_hover');
+    } else {
+        nav.classList.remove('hidden_hover');
+        nav.classList.add('show_hover');
+    }
+
+    lastScroll = currentScroll;
+}
+
+// Ejecutar al cargar la página
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    handleNavVisibility();
+})
+
+// Escuchar scroll
+window.addEventListener('scroll', handleNavVisibility);
+

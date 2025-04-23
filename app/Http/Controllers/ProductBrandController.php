@@ -20,6 +20,11 @@ class ProductBrandController extends Controller
     public function show(Request $request, $id)
     {
         $productBrand = ProductBrand::find($id);
+        $arrayImageDetails = [];
+        $imageDirectory = storage_path('app/public/uploads/');
+        $imageDetails = pathNameToFile($productBrand->imagen, $imageDirectory);
+        array_push($arrayImageDetails, $imageDetails);
+        $productBrand->imageDetail = $arrayImageDetails;
 
         if ($request->expectsJson()) {
             return ApiResponse::success($productBrand, "Registro encontrado.");
@@ -32,11 +37,13 @@ class ProductBrandController extends Controller
 
         $rules = [
             "description" => "required|string|min:2",
+            "imagen" => "nullable|file|mimetypes:image/jpeg,image/png,image/jpg,image/gif,image/svg+xml",
         ];
 
         // Definir los nombres amigables de los atributos
         $attributes = [
             "description" => "Descripción",
+            "imagen" => "Imagen",
         ];
 
         // Crear el validador manualmente
@@ -52,8 +59,13 @@ class ProductBrandController extends Controller
         // Si la validación pasa, obtener los datos validados
         $validatedData = $validator->validated();
 
+        $logo = $request->file('imagen');
+        $path = $logo->store('uploads', 'public');
+        $imagePath = basename($path);
+
         $productCategory = ProductBrand::create([
             "description" => $validatedData["description"],
+            "imagen" => $imagePath
         ]);
 
         $productCategory = ProductBrand::latest()->first();
@@ -66,6 +78,7 @@ class ProductBrandController extends Controller
 
         $rules = [
             "description" => "required|string|min:2",
+            "imagen" => "nullable|file|mimetypes:image/jpeg,image/png,image/jpg,image/gif,image/svg+xml",
             "status" => "required",
         ];
 
@@ -73,6 +86,7 @@ class ProductBrandController extends Controller
         $attributes = [
             "description" => "Descripción",
             "status" => "Estado",
+            "imagen" => "Imagen",
         ];
 
         // Crear el validador manualmente
@@ -90,8 +104,21 @@ class ProductBrandController extends Controller
 
         $productBrand = ProductBrand::findOrFail($id);
 
+        $imagePath = null;
+        $image = $request->file('imagen');
+        $imagePath = $image->getClientOriginalName();
+
+        // Si la imagen ya existe, actualiza su información
+        if ($imagePath != $productBrand->imagen) {
+            $path = $image->store('uploads', 'public');
+            $imagePath = basename($path);
+        } else {
+            $imagePath = $productBrand->imagen;
+        }
+
         $categoryData = [
             "description" => $validatedData["description"],
+            "imagen" => $imagePath,
             "status" => $validatedData["status"]
         ];
 

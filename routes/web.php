@@ -13,6 +13,7 @@ use App\Http\Controllers\ComplaintsBookController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExportExcelController;
 use App\Http\Controllers\GeneralController;
+use App\Http\Controllers\LegalityController;
 use App\Http\Controllers\OrderSaleProductsController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\PdfController;
@@ -23,6 +24,10 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductGeneralController;
 use App\Http\Controllers\ShoppingCartProductController;
 use App\Http\Controllers\SocialNetworkController;
+use App\Http\Controllers\SubcategoryProductController;
+use App\Http\Controllers\SubSubcategoryProductController;
+use App\Http\Controllers\ThemeController;
+use App\Http\Controllers\ThemesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebPageController;
 use App\Http\Middleware\CheckUserType;
@@ -90,6 +95,21 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', CheckUserType:
         Route::get('/', [ProductCategoryController::class, 'index'])->name('product_category.index');
     });
 
+    Route::prefix('subcategoria-productos')->group(function () {
+        Route::get('/create', [SubcategoryProductController::class, 'create'])->name('product_subcategory.create');
+        Route::post('/store', [SubcategoryProductController::class, 'store'])->name('product_subcategory.store');
+        Route::put('{id}', [SubcategoryProductController::class, 'update'])->name('product_subcategory.update');
+        Route::get('/{id}', [SubcategoryProductController::class, 'show'])->name('product_subcategory.show');
+        Route::get('/', [SubcategoryProductController::class, 'index'])->name('product_subcategory.index');
+    });
+
+    Route::prefix('terminos-condiciones')->group(function () {
+        Route::get('/', [LegalityController::class, 'terminosCondiciones'])->name('terms_conditions.index');
+    });
+    Route::prefix('politicas-reembolso')->group(function () {
+        Route::get('/', [LegalityController::class, 'politicasReembolso'])->name('refund_policies.index');
+    });
+
     Route::prefix('marca-productos')->group(function () {
         Route::post('/store', [ProductBrandController::class, 'store'])->name('product_brand.store');
         Route::put('{id}', [ProductBrandController::class, 'update'])->name('product_brand.update');
@@ -126,6 +146,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', CheckUserType:
         Route::put('{id}', [PaymentMethodController::class, 'update'])->name('payment_method.update');
         Route::get('/{id}', [PaymentMethodController::class, 'show'])->name('payment_method.show');
         Route::get('/', [PaymentMethodController::class, 'index'])->name('payment_method.index');
+    });
+
+    Route::prefix('temas-colores')->group(function () {
+        Route::put('{id}', [ThemeController::class, 'update'])->name('themes.update');
+        Route::get('/{id}', [ThemeController::class, 'show'])->name('themes.show');
+        Route::get('/', [ThemeController::class, 'index'])->name('themes.index');
     });
 
     Route::prefix('libro-reclamaciones')->group(function () {

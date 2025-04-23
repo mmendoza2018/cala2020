@@ -1,64 +1,729 @@
 @extends('layouts.webpage.master')
 
+@section('css')
+    <link rel="stylesheet" href="{{ URL::to('assets/css/webpage/home.css') }}">
+    <link rel="stylesheet" href="{{ URL::to('assets/libs/splide/dist/css/splide.min.css') }}">
+@endsection
+
 @section('content')
     <div>
-        <section class="relative pb-28 xl:pb-36 pt-44 xl:pt-52" id="home">
-            <div class="absolute top-0 left-0 size-64 bg-custom-500 opacity-10 blur-3xl"></div>
-            <div class="absolute bottom-0 right-0 size-64 bg-purple-500/10 blur-3xl"></div>
-            <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto">
-                <div class="grid items-center grid-cols-12 gap-5 2xl:grid-cols-12">
-                    <div class="col-span-12 xl:col-span-5 2xl:col-span-5">
-                        <h1 class="mb-4 !leading-normal lg:text-5xl 2xl:text-6xl dark:text-zinc-100 aos-init aos-animate"
-                            data-aos="fade-right" data-aos-delay="300">Exclusive Collections 2024</h1>
-                        <p class="text-lg mb-7 text-slate-500 dark:text-zinc-400 aos-init aos-animate" data-aos="fade-right"
-                            data-aos-delay="600">In 2024, metallics will be taking over the sneaker world. I love this trend
-                            because there are so many different ways to wear it. You can wear sequined sneakers, white
-                            sneakers with metallic accents, or all-over silver.</p>
-                        <div class="flex items-center gap-2 aos-init aos-animate" data-aos="fade-right"
-                            data-aos-delay="800">
-                            <button type="button"
-                                class="px-8 py-3 text-white border-0 text-15 btn bg-gradient-to-r from-custom-500 to-purple-500 hover:text-white hover:from-purple-500 hover:to-custom-500">Shop
-                                Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" data-lucide="shopping-cart"
-                                    class="lucide lucide-shopping-cart inline-block align-middle size-4 rtl:mr-1 ltr:ml-1">
-                                    <circle cx="8" cy="21" r="1"></circle>
-                                    <circle cx="19" cy="21" r="1"></circle>
-                                    <path
-                                        d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12">
-                                    </path>
-                                </svg></button>
+        {{-- <div class="background-container">
+            <img src="https://images.pexels.com/photos/5083217/pexels-photo-5083217.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                alt="Fondo" class="background-image">
+        </div> --}}
+        <section class="splide full-screen-carousel" id="splidePrincipalBanner" aria-label="Splide Basic HTML Example">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    <li class="splide__slide">
+                        <img src="https://images.pexels.com/photos/5083217/pexels-photo-5083217.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                            alt="Fondo" class="slide-img">
+                    </li>
+                    <li class="splide__slide">
+                        <img src="https://images.pexels.com/photos/5083217/pexels-photo-5083217.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                            alt="Fondo" class="slide-img">
+                    </li>
+                    <li class="splide__slide">
+                        <img src="https://images.pexels.com/photos/5083217/pexels-photo-5083217.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                            alt="Fondo" class="slide-img">
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="container mt-14 mb-16">
+            <div>
+                <h5 class="title-page mb-16">Categorias</h5>
+                <div>
+                    <div class="splide" id="splideCategories" aria-label="Splide Basic HTML Example">
+                        <div class="splide__track">
+                            <ul class="splide__list">
+                                <li class="splide__slide">
+                                    <figure class="effect-apollo">
+                                        <img src="https://wpbingo-hoppers.myshopify.com/cdn/shop/files/ins-2.jpg?v=1741073607"
+                                            alt="img18" />
+                                        <figcaption>
+                                            <p>Camisetas</p>
+                                        </figcaption>
+                                    </figure>
+                                </li>
+                                <li class="splide__slide">
+                                    <figure class="effect-apollo">
+                                        <img src="https://wpbingo-hoppers.myshopify.com/cdn/shop/files/ins-4.jpg?v=1741073607"
+                                            alt="img18" />
+                                        <figcaption>
+                                            <p>Camisetas</p>
+                                        </figcaption>
+                                    </figure>
+                                </li>
+                                <li class="splide__slide">
+                                    <figure class="effect-apollo">
+                                        <img src="https://images.pexels.com/photos/31492770/pexels-photo-31492770.jpeg?auto=compress&cs=tinysrgb&w=600"
+                                            alt="img18" />
+                                        <figcaption>
+                                            <p>Camisetas</p>
+                                        </figcaption>
+                                    </figure>
+                                </li>
+                                <li class="splide__slide">
+                                    <figure class="effect-apollo">
+                                        <img src="https://images.pexels.com/photos/11542516/pexels-photo-11542516.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                                            alt="img18" />
+                                        <figcaption>
+                                            <p>Camisetas</p>
+                                        </figcaption>
+                                    </figure>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="col-span-12 xl:col-span-7 2xl:col-start-8 2xl:col-span-6">
-                        <div class="relative mt-10 xl:mt-0">
-                            <div class="absolute text-center -top-20 xl:-right-40 lg:text-[10rem] 2xl:text-[14rem] text-slate-100 dark:text-zinc-800/60 font-tourney aos-init aos-animate"
-                                data-aos="zoom-in-down" data-aos-delay="1400">
-                                Unique Fashion
-                            </div>
-                            <img src="assets/images/offer.png" alt=""
-                                class="absolute h-40 left-10 xl:-left-10 top-32 aos-init aos-animate"
-                                data-aos="fade-down-right" data-aos-delay="900" data-aos-easing="linear">
-                            <div class="relative aos-init aos-animate" data-aos="zoom-in" data-aos-delay="500">
-                                <button data-tooltip="default" data-tooltip-content="$199.99"
-                                    class="absolute items-center justify-center hidden bg-white rounded-full size-8 xl:flex bottom-20 text-slate-800 left-20"><svg
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" data-lucide="plus" class="lucide lucide-plus">
-                                        <path d="M5 12h14"></path>
-                                        <path d="M12 5v14"></path>
-                                    </svg></button>
-                                <img src="assets/images/product-home.png" alt="" class="mx-auto">
-                            </div>
-                        </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="container mt-14 mb-16">
+            <div>
+                <h5 class="title-page mb-16">Productos</h5>
+            </div>
+            <div class="custom-tabs">
+                <div class="custom-tabs__scroll-wrapper">
+                    <button class="custom-tabs__arrow left" aria-label="Scroll left">
+                        <i class="ri-arrow-left-s-line"></i>
+                    </button>
+
+                    <div class="custom-tabs__buttons">
+                        <!-- Puedes tener hasta 20+ tabs aquí -->
+                        <button class="custom-tabs__btn active" data-tab="tab1">Overview</button>
+                        <button class="custom-tabs__btn" data-tab="tab2">Details</button>
+                        <button class="custom-tabs__btn" data-tab="tab3">Contact</button>
+                        <!-- Agrega más tabs según necesites -->
                     </div>
+
+                    <button class="custom-tabs__arrow right" aria-label="Scroll right">
+                        <i class="ri-arrow-right-s-line"></i>
+                    </button>
+                </div>
+
+                <!-- contenido como siempre -->
+                <div class="custom-tabs__content active" id="tab1">
+                    <div class="grid grid-cols-1 mt-5 md:grid-cols-2 [&.gridView]:grid-cols-1 xl:grid-cols-4 group [&.gridView]:xl:grid-cols-1 gap-x-5"
+                        id="cardGridView">
+                        <div class="card md:group-[.gridView]:flex relative">
+                            <div class="relative group-[.gridView]:static p-8 group-[.gridView]:p-5">
+                                <a href="#!"
+                                    class="absolute group/item toggle-button top-6 ltr:right-6 rtl:left-6 active"><i
+                                        data-lucide="heart"
+                                        class="size-5 text-slate-400 fill-slate-200 transition-all duration-150 ease-linear dark:text-zink-200 dark:fill-zink-600 group-[.active]/item:text-red-500 dark:group-[.active]/item:text-red-500 group-[.active]/item:fill-red-200 dark:group-[.active]/item:fill-red-500/20 group-hover/item:text-red-500 dark:group-hover/item:text-red-500 group-hover/item:fill-red-200 dark:group-hover/item:fill-red-500/20"></i></a>
+                                <div
+                                    class="group-[.gridView]:p-3 group-[.gridView]:bg-slate-100 dark:group-[.gridView]:bg-zink-600 group-[.gridView]:inline-block rounded-md">
+                                    <img src="assets/images/img-02.png" alt="" class="group-[.gridView]:h-16">
+                                </div>
+                            </div>
+                            <div
+                                class="card-body !pt-0 md:group-[.gridView]:flex group-[.gridView]:!p-5 group-[.gridView]:gap-3 group-[.gridView]:grow">
+                                <div class="group-[.gridView]:grow">
+                                    <h6
+                                        class="mb-1 truncate transition-all duration-200 ease-linear text-15 hover:text-custom-500">
+                                        <a href="apps-ecommerce-product-overview.html">Mesh Ergonomic Black Chair</a>
+                                    </h6>
+
+                                    <div class="flex items-center text-slate-500 dark:text-zink-200">
+                                        <div class="mr-1 text-yellow-500 shrink-0 text-15">
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-half-line"></i>
+                                        </div>
+                                        (198)
+                                    </div>
+                                    <h5 class="mt-4 text-16">$674.12 <small
+                                            class="font-normal line-through text-slate-500 dark:text-zink-200">784.99</small>
+                                    </h5>
+                                </div>
+
+                                <div class="flex items-center gap-2 mt-4 group-[.gridView]:mt-0 group-[.gridView]:self-end">
+                                    <button type="button"
+                                        class="w-full bg-white border-dashed text-slate-500 btn border-slate-500 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-600 focus:text-slate-600 focus:bg-slate-50 focus:border-slate-600 active:text-slate-600 active:bg-slate-50 active:border-slate-600 dark:bg-zink-700 dark:text-zink-200 dark:border-zink-400 dark:ring-zink-400/20 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:focus:bg-zink-600 dark:focus:text-zink-100 dark:active:bg-zink-600 dark:active:text-zink-100"><i
+                                            data-lucide="shopping-cart" class="inline-block w-3 h-3 leading-none"></i> <span
+                                            class="align-middle">Add to Cart</span></button>
+                                    <div class="relative float-right dropdown">
+                                        <button
+                                            class="flex items-center justify-center w-[38.39px] h-[38.39px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20"
+                                            id="productList1" data-bs-toggle="dropdown"><i data-lucide="more-horizontal"
+                                                class="w-3 h-3"></i></button>
+                                        <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600"
+                                            aria-labelledby="productList1">
+                                            <li>
+                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="apps-ecommerce-product-overview.html"><i data-lucide="eye"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Overview</span></a>
+                                            </li>
+                                            <li>
+                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="apps-ecommerce-product-create.html"><i data-lucide="file-edit"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Edit</span></a>
+                                            </li>
+                                            <li>
+                                                <a data-modal-target="deleteModal"
+                                                    class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="#!"><i data-lucide="trash-2"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Delete</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--end col & card-->
+                        <div class="card md:group-[.gridView]:flex relative">
+                            <div class="relative group-[.gridView]:static p-8 group-[.gridView]:p-5">
+                                <a href="#!"
+                                    class="absolute group/item toggle-button top-6 ltr:right-6 rtl:left-6"><i
+                                        data-lucide="heart"
+                                        class="size-5 text-slate-400 fill-slate-200 transition-all duration-150 ease-linear dark:text-zink-200 dark:fill-zink-600 group-[.active]/item:text-red-500 dark:group-[.active]/item:text-red-500 group-[.active]/item:fill-red-200 dark:group-[.active]/item:fill-red-500/20 group-hover/item:text-red-500 dark:group-hover/item:text-red-500 group-hover/item:fill-red-200 dark:group-hover/item:fill-red-500/20"></i></a>
+                                <div
+                                    class="group-[.gridView]:p-3 group-[.gridView]:bg-slate-100 dark:group-[.gridView]:bg-zink-600 group-[.gridView]:inline-block rounded-md">
+                                    <img src="assets/images/img-03.png" alt="" class="group-[.gridView]:h-16">
+                                </div>
+                            </div>
+                            <div
+                                class="card-body !pt-0 md:group-[.gridView]:flex group-[.gridView]:!p-5 group-[.gridView]:gap-3 group-[.gridView]:grow">
+                                <div class="group-[.gridView]:grow">
+                                    <h6
+                                        class="mb-1 truncate transition-all duration-200 ease-linear text-15 hover:text-custom-500">
+                                        <a href="apps-ecommerce-product-overview.html">Fastcolors Typography Men</a>
+                                    </h6>
+
+                                    <div class="flex items-center text-slate-500 dark:text-zink-200">
+                                        <div class="mr-1 text-yellow-500 shrink-0 text-15">
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-half-line"></i>
+                                        </div>
+                                        (1,150)
+                                    </div>
+                                    <h5 class="mt-4 text-16">$341.99 <small
+                                            class="font-normal line-through text-slate-500 dark:text-zink-200">784.99</small>
+                                    </h5>
+                                </div>
+
+                                <div
+                                    class="flex items-center gap-2 mt-4 group-[.gridView]:mt-0 group-[.gridView]:self-end">
+                                    <button type="button"
+                                        class="w-full bg-white border-dashed text-slate-500 btn border-slate-500 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-600 focus:text-slate-600 focus:bg-slate-50 focus:border-slate-600 active:text-slate-600 active:bg-slate-50 active:border-slate-600 dark:bg-zink-700 dark:text-zink-200 dark:border-zink-400 dark:ring-zink-400/20 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:focus:bg-zink-600 dark:focus:text-zink-100 dark:active:bg-zink-600 dark:active:text-zink-100"><i
+                                            data-lucide="shopping-cart" class="inline-block w-3 h-3 leading-none"></i>
+                                        <span class="align-middle">Add to Cart</span></button>
+                                    <div class="relative float-right dropdown">
+                                        <button
+                                            class="flex items-center justify-center w-[38.39px] h-[38.39px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20"
+                                            id="productList2" data-bs-toggle="dropdown"><i data-lucide="more-horizontal"
+                                                class="w-3 h-3"></i></button>
+                                        <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600"
+                                            aria-labelledby="productList2">
+                                            <li>
+                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="apps-ecommerce-product-overview.html"><i data-lucide="eye"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Overview</span></a>
+                                            </li>
+                                            <li>
+                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="apps-ecommerce-product-create.html"><i data-lucide="file-edit"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Edit</span></a>
+                                            </li>
+                                            <li>
+                                                <a data-modal-target="deleteModal"
+                                                    class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="#!"><i data-lucide="trash-2"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Delete</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--end col & card-->
+                        <div class="card md:group-[.gridView]:flex relative">
+                            <div class="relative group-[.gridView]:static p-8 group-[.gridView]:p-5">
+                                <a href="#!"
+                                    class="absolute group/item toggle-button top-6 ltr:right-6 rtl:left-6"><i
+                                        data-lucide="heart"
+                                        class="size-5 text-slate-400 fill-slate-200 transition-all duration-150 ease-linear dark:text-zink-200 dark:fill-zink-600 group-[.active]/item:text-red-500 dark:group-[.active]/item:text-red-500 group-[.active]/item:fill-red-200 dark:group-[.active]/item:fill-red-500/20 group-hover/item:text-red-500 dark:group-hover/item:text-red-500 group-hover/item:fill-red-200 dark:group-hover/item:fill-red-500/20"></i></a>
+                                <div
+                                    class="group-[.gridView]:p-3 group-[.gridView]:bg-slate-100 dark:group-[.gridView]:bg-zink-600 group-[.gridView]:inline-block rounded-md">
+                                    <img src="assets/images/img-04.png" alt="" class="group-[.gridView]:h-16">
+                                </div>
+                            </div>
+                            <div
+                                class="card-body !pt-0 md:group-[.gridView]:flex group-[.gridView]:!p-5 group-[.gridView]:gap-3 group-[.gridView]:grow">
+                                <div class="group-[.gridView]:grow">
+                                    <h6
+                                        class="mb-1 truncate transition-all duration-200 ease-linear text-15 hover:text-custom-500">
+                                        <a href="apps-ecommerce-product-overview.html">Mesh Ergonomic Green Chair</a>
+                                    </h6>
+
+                                    <div class="flex items-center text-slate-500 dark:text-zink-200">
+                                        <div class="mr-1 text-yellow-500 shrink-0 text-15">
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-half-line"></i>
+                                            <i class="ri-star-line"></i>
+                                        </div>
+                                        (29)
+                                    </div>
+                                    <h5 class="mt-4 text-16">$362.21 <small
+                                            class="font-normal line-through text-slate-500 dark:text-zink-200">599.99</small>
+                                    </h5>
+                                </div>
+
+                                <div
+                                    class="flex items-center gap-2 mt-4 group-[.gridView]:mt-0 group-[.gridView]:self-end">
+                                    <button type="button"
+                                        class="w-full bg-white border-dashed text-slate-500 btn border-slate-500 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-600 focus:text-slate-600 focus:bg-slate-50 focus:border-slate-600 active:text-slate-600 active:bg-slate-50 active:border-slate-600 dark:bg-zink-700 dark:text-zink-200 dark:border-zink-400 dark:ring-zink-400/20 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:focus:bg-zink-600 dark:focus:text-zink-100 dark:active:bg-zink-600 dark:active:text-zink-100"><i
+                                            data-lucide="shopping-cart" class="inline-block w-3 h-3 leading-none"></i>
+                                        <span class="align-middle">Add to Cart</span></button>
+                                    <div class="relative float-right dropdown">
+                                        <button
+                                            class="flex items-center justify-center w-[38.39px] h-[38.39px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20"
+                                            id="productList3" data-bs-toggle="dropdown"><i data-lucide="more-horizontal"
+                                                class="w-3 h-3"></i></button>
+                                        <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600"
+                                            aria-labelledby="productList3">
+                                            <li>
+                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="apps-ecommerce-product-overview.html"><i data-lucide="eye"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Overview</span></a>
+                                            </li>
+                                            <li>
+                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="apps-ecommerce-product-create.html"><i data-lucide="file-edit"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Edit</span></a>
+                                            </li>
+                                            <li>
+                                                <a data-modal-target="deleteModal"
+                                                    class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="#!"><i data-lucide="trash-2"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Delete</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--end col & card-->
+                        <div class="card md:group-[.gridView]:flex relative">
+                            <div class="relative group-[.gridView]:static p-8 group-[.gridView]:p-5">
+                                <a href="#!"
+                                    class="absolute group/item toggle-button top-6 ltr:right-6 rtl:left-6 active"><i
+                                        data-lucide="heart"
+                                        class="size-5 text-slate-400 fill-slate-200 transition-all duration-150 ease-linear dark:text-zink-200 dark:fill-zink-600 group-[.active]/item:text-red-500 dark:group-[.active]/item:text-red-500 group-[.active]/item:fill-red-200 dark:group-[.active]/item:fill-red-500/20 group-hover/item:text-red-500 dark:group-hover/item:text-red-500 group-hover/item:fill-red-200 dark:group-hover/item:fill-red-500/20"></i></a>
+                                <div
+                                    class="group-[.gridView]:p-3 group-[.gridView]:bg-slate-100 dark:group-[.gridView]:bg-zink-600 group-[.gridView]:inline-block rounded-md">
+                                    <img src="assets/images/img-05.png" alt="" class="group-[.gridView]:h-16">
+                                </div>
+                            </div>
+                            <div
+                                class="card-body !pt-0 md:group-[.gridView]:flex group-[.gridView]:!p-5 group-[.gridView]:gap-3 group-[.gridView]:grow">
+                                <div class="group-[.gridView]:grow">
+                                    <h6
+                                        class="mb-1 truncate transition-all duration-200 ease-linear text-15 hover:text-custom-500">
+                                        <a href="apps-ecommerce-product-overview.html">Techel Black Bluetooth Soundbar</a>
+                                    </h6>
+
+                                    <div class="flex items-center text-slate-500 dark:text-zink-200">
+                                        <div class="mr-1 text-yellow-500 shrink-0 text-15">
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-half-line"></i>
+                                        </div>
+                                        (1,324)
+                                    </div>
+                                    <h5 class="mt-4 text-16">$249.99 <small
+                                            class="font-normal line-through text-slate-500 dark:text-zink-200">399.99</small>
+                                    </h5>
+                                </div>
+
+                                <div
+                                    class="flex items-center gap-2 mt-4 group-[.gridView]:mt-0 group-[.gridView]:self-end">
+                                    <button type="button"
+                                        class="w-full bg-white border-dashed text-slate-500 btn border-slate-500 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-600 focus:text-slate-600 focus:bg-slate-50 focus:border-slate-600 active:text-slate-600 active:bg-slate-50 active:border-slate-600 dark:bg-zink-700 dark:text-zink-200 dark:border-zink-400 dark:ring-zink-400/20 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:focus:bg-zink-600 dark:focus:text-zink-100 dark:active:bg-zink-600 dark:active:text-zink-100"><i
+                                            data-lucide="shopping-cart" class="inline-block w-3 h-3 leading-none"></i>
+                                        <span class="align-middle">Add to Cart</span></button>
+                                    <div class="relative float-right dropdown">
+                                        <button
+                                            class="flex items-center justify-center w-[38.39px] h-[38.39px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20"
+                                            id="productList4" data-bs-toggle="dropdown"><i data-lucide="more-horizontal"
+                                                class="w-3 h-3"></i></button>
+                                        <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600"
+                                            aria-labelledby="productList4">
+                                            <li>
+                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="apps-ecommerce-product-overview.html"><i data-lucide="eye"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Overview</span></a>
+                                            </li>
+                                            <li>
+                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="apps-ecommerce-product-create.html"><i data-lucide="file-edit"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Edit</span></a>
+                                            </li>
+                                            <li>
+                                                <a data-modal-target="deleteModal"
+                                                    class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="#!"><i data-lucide="trash-2"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Delete</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--end col & card-->
+                        <div class="card md:group-[.gridView]:flex relative">
+                            <div class="relative group-[.gridView]:static p-8 group-[.gridView]:p-5">
+                                <a href="#!"
+                                    class="absolute group/item toggle-button top-6 ltr:right-6 rtl:left-6"><i
+                                        data-lucide="heart"
+                                        class="size-5 text-slate-400 fill-slate-200 transition-all duration-150 ease-linear dark:text-zink-200 dark:fill-zink-600 group-[.active]/item:text-red-500 dark:group-[.active]/item:text-red-500 group-[.active]/item:fill-red-200 dark:group-[.active]/item:fill-red-500/20 group-hover/item:text-red-500 dark:group-hover/item:text-red-500 group-hover/item:fill-red-200 dark:group-hover/item:fill-red-500/20"></i></a>
+                                <div
+                                    class="group-[.gridView]:p-3 group-[.gridView]:bg-slate-100 dark:group-[.gridView]:bg-zink-600 group-[.gridView]:inline-block rounded-md">
+                                    <img src="assets/images/img-06.png" alt="" class="group-[.gridView]:h-16">
+                                </div>
+                            </div>
+                            <div
+                                class="card-body !pt-0 md:group-[.gridView]:flex group-[.gridView]:!p-5 group-[.gridView]:gap-3 group-[.gridView]:grow">
+                                <div class="group-[.gridView]:grow">
+                                    <h6
+                                        class="mb-1 truncate transition-all duration-200 ease-linear text-15 hover:text-custom-500">
+                                        <a href="apps-ecommerce-product-overview.html">Bovet Fleurier AIFSQ029</a>
+                                    </h6>
+
+                                    <div class="flex items-center text-slate-500 dark:text-zink-200">
+                                        <div class="mr-1 text-yellow-500 shrink-0 text-15">
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-half-line"></i>
+                                        </div>
+                                        (2,195)
+                                    </div>
+                                    <h5 class="mt-4 text-16">$496.16</h5>
+                                </div>
+
+                                <div
+                                    class="flex items-center gap-2 mt-4 group-[.gridView]:mt-0 group-[.gridView]:self-end">
+                                    <button type="button"
+                                        class="w-full bg-white border-dashed text-slate-500 btn border-slate-500 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-600 focus:text-slate-600 focus:bg-slate-50 focus:border-slate-600 active:text-slate-600 active:bg-slate-50 active:border-slate-600 dark:bg-zink-700 dark:text-zink-200 dark:border-zink-400 dark:ring-zink-400/20 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:focus:bg-zink-600 dark:focus:text-zink-100 dark:active:bg-zink-600 dark:active:text-zink-100"><i
+                                            data-lucide="shopping-cart" class="inline-block w-3 h-3 leading-none"></i>
+                                        <span class="align-middle">Add to Cart</span></button>
+                                    <div class="relative float-right dropdown">
+                                        <button
+                                            class="flex items-center justify-center w-[38.39px] h-[38.39px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20"
+                                            id="productList5" data-bs-toggle="dropdown"><i data-lucide="more-horizontal"
+                                                class="w-3 h-3"></i></button>
+                                        <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600"
+                                            aria-labelledby="productList5">
+                                            <li>
+                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="apps-ecommerce-product-overview.html"><i data-lucide="eye"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Overview</span></a>
+                                            </li>
+                                            <li>
+                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="apps-ecommerce-product-create.html"><i data-lucide="file-edit"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Edit</span></a>
+                                            </li>
+                                            <li>
+                                                <a data-modal-target="deleteModal"
+                                                    class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="#!"><i data-lucide="trash-2"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Delete</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--end col & card-->
+                        <div class="card md:group-[.gridView]:flex relative">
+                            <div class="relative group-[.gridView]:static p-8 group-[.gridView]:p-5">
+                                <a href="#!"
+                                    class="absolute group/item toggle-button top-6 ltr:right-6 rtl:left-6 active"><i
+                                        data-lucide="heart"
+                                        class="size-5 text-slate-400 fill-slate-200 transition-all duration-150 ease-linear dark:text-zink-200 dark:fill-zink-600 group-[.active]/item:text-red-500 dark:group-[.active]/item:text-red-500 group-[.active]/item:fill-red-200 dark:group-[.active]/item:fill-red-500/20 group-hover/item:text-red-500 dark:group-hover/item:text-red-500 group-hover/item:fill-red-200 dark:group-hover/item:fill-red-500/20"></i></a>
+                                <div
+                                    class="group-[.gridView]:p-3 group-[.gridView]:bg-slate-100 dark:group-[.gridView]:bg-zink-600 group-[.gridView]:inline-block rounded-md">
+                                    <img src="assets/images/img-08.png" alt="" class="group-[.gridView]:h-16">
+                                </div>
+                            </div>
+                            <div
+                                class="card-body !pt-0 md:group-[.gridView]:flex group-[.gridView]:!p-5 group-[.gridView]:gap-3 group-[.gridView]:grow">
+                                <div class="group-[.gridView]:grow">
+                                    <h6
+                                        class="mb-1 truncate transition-all duration-200 ease-linear text-15 hover:text-custom-500">
+                                        <a href="apps-ecommerce-product-overview.html">Roar Twill Blue Baseball Cap</a>
+                                    </h6>
+
+                                    <div class="flex items-center text-slate-500 dark:text-zink-200">
+                                        <div class="mr-1 text-yellow-500 shrink-0 text-15">
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-half-line"></i>
+                                            <i class="ri-star-line"></i>
+                                            <i class="ri-star-line"></i>
+                                        </div>
+                                        (485)
+                                    </div>
+                                    <h5 class="mt-4 text-16">$674.12 <small
+                                            class="font-normal line-through text-slate-500 dark:text-zink-200">784.99</small>
+                                    </h5>
+                                </div>
+
+                                <div
+                                    class="flex items-center gap-2 mt-4 group-[.gridView]:mt-0 group-[.gridView]:self-end">
+                                    <button type="button"
+                                        class="w-full bg-white border-dashed text-slate-500 btn border-slate-500 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-600 focus:text-slate-600 focus:bg-slate-50 focus:border-slate-600 active:text-slate-600 active:bg-slate-50 active:border-slate-600 dark:bg-zink-700 dark:text-zink-200 dark:border-zink-400 dark:ring-zink-400/20 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:focus:bg-zink-600 dark:focus:text-zink-100 dark:active:bg-zink-600 dark:active:text-zink-100"><i
+                                            data-lucide="shopping-cart" class="inline-block w-3 h-3 leading-none"></i>
+                                        <span class="align-middle">Add to Cart</span></button>
+                                    <div class="relative float-right dropdown">
+                                        <button
+                                            class="flex items-center justify-center w-[38.39px] h-[38.39px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20"
+                                            id="productList6" data-bs-toggle="dropdown"><i data-lucide="more-horizontal"
+                                                class="w-3 h-3"></i></button>
+                                        <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600"
+                                            aria-labelledby="productList6">
+                                            <li>
+                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="apps-ecommerce-product-overview.html"><i data-lucide="eye"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Overview</span></a>
+                                            </li>
+                                            <li>
+                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="apps-ecommerce-product-create.html"><i data-lucide="file-edit"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Edit</span></a>
+                                            </li>
+                                            <li>
+                                                <a data-modal-target="deleteModal"
+                                                    class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="#!"><i data-lucide="trash-2"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Delete</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--end col & card-->
+                        <div class="card md:group-[.gridView]:flex relative">
+                            <div class="relative group-[.gridView]:static p-8 group-[.gridView]:p-5">
+                                <a href="#!"
+                                    class="absolute group/item toggle-button top-6 ltr:right-6 rtl:left-6"><i
+                                        data-lucide="heart"
+                                        class="size-5 text-slate-400 fill-slate-200 transition-all duration-150 ease-linear dark:text-zink-200 dark:fill-zink-600 group-[.active]/item:text-red-500 dark:group-[.active]/item:text-red-500 group-[.active]/item:fill-red-200 dark:group-[.active]/item:fill-red-500/20 group-hover/item:text-red-500 dark:group-hover/item:text-red-500 group-hover/item:fill-red-200 dark:group-hover/item:fill-red-500/20"></i></a>
+                                <div
+                                    class="group-[.gridView]:p-3 group-[.gridView]:bg-slate-100 dark:group-[.gridView]:bg-zink-600 group-[.gridView]:inline-block rounded-md">
+                                    <img src="assets/images/img-012.png" alt="" class="group-[.gridView]:h-16">
+                                </div>
+                            </div>
+                            <div
+                                class="card-body !pt-0 md:group-[.gridView]:flex group-[.gridView]:!p-5 group-[.gridView]:gap-3 group-[.gridView]:grow">
+                                <div class="group-[.gridView]:grow">
+                                    <h6
+                                        class="mb-1 truncate transition-all duration-200 ease-linear text-15 hover:text-custom-500">
+                                        <a href="apps-ecommerce-product-overview.html">Smartest Printed T-shirt</a>
+                                    </h6>
+
+                                    <div class="flex items-center text-slate-500 dark:text-zink-200">
+                                        <div class="mr-1 text-yellow-500 shrink-0 text-15">
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-half-line"></i>
+                                            <i class="ri-star-line"></i>
+                                        </div>
+                                        (5,321)
+                                    </div>
+                                    <h5 class="mt-4 text-16">$89.99</h5>
+                                </div>
+
+                                <div
+                                    class="flex items-center gap-2 mt-4 group-[.gridView]:mt-0 group-[.gridView]:self-end">
+                                    <button type="button"
+                                        class="w-full bg-white border-dashed text-slate-500 btn border-slate-500 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-600 focus:text-slate-600 focus:bg-slate-50 focus:border-slate-600 active:text-slate-600 active:bg-slate-50 active:border-slate-600 dark:bg-zink-700 dark:text-zink-200 dark:border-zink-400 dark:ring-zink-400/20 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:focus:bg-zink-600 dark:focus:text-zink-100 dark:active:bg-zink-600 dark:active:text-zink-100"><i
+                                            data-lucide="shopping-cart" class="inline-block w-3 h-3 leading-none"></i>
+                                        <span class="align-middle">Add to Cart</span></button>
+                                    <div class="relative float-right dropdown">
+                                        <button
+                                            class="flex items-center justify-center w-[38.39px] h-[38.39px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20"
+                                            id="productList7" data-bs-toggle="dropdown"><i data-lucide="more-horizontal"
+                                                class="w-3 h-3"></i></button>
+                                        <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600"
+                                            aria-labelledby="productList7">
+                                            <li>
+                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="apps-ecommerce-product-overview.html"><i data-lucide="eye"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Overview</span></a>
+                                            </li>
+                                            <li>
+                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="apps-ecommerce-product-create.html"><i data-lucide="file-edit"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Edit</span></a>
+                                            </li>
+                                            <li>
+                                                <a data-modal-target="deleteModal"
+                                                    class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="#!"><i data-lucide="trash-2"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Delete</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--end col & card-->
+                        <div class="card md:group-[.gridView]:flex relative">
+                            <div class="relative group-[.gridView]:static p-8 group-[.gridView]:p-5">
+                                <a href="#!"
+                                    class="absolute group/item toggle-button top-6 ltr:right-6 rtl:left-6 active"><i
+                                        data-lucide="heart"
+                                        class="size-5 text-slate-400 fill-slate-200 transition-all duration-150 ease-linear dark:text-zink-200 dark:fill-zink-600 group-[.active]/item:text-red-500 dark:group-[.active]/item:text-red-500 group-[.active]/item:fill-red-200 dark:group-[.active]/item:fill-red-500/20 group-hover/item:text-red-500 dark:group-hover/item:text-red-500 group-hover/item:fill-red-200 dark:group-hover/item:fill-red-500/20"></i></a>
+                                <div
+                                    class="group-[.gridView]:p-3 group-[.gridView]:bg-slate-100 dark:group-[.gridView]:bg-zink-600 group-[.gridView]:inline-block rounded-md">
+                                    <img src="assets/images/img-10.png" alt="" class="group-[.gridView]:h-16">
+                                </div>
+                            </div>
+                            <div
+                                class="card-body !pt-0 md:group-[.gridView]:flex group-[.gridView]:!p-5 group-[.gridView]:gap-3 group-[.gridView]:grow">
+                                <div class="group-[.gridView]:grow">
+                                    <h6
+                                        class="mb-1 truncate transition-all duration-200 ease-linear text-15 hover:text-custom-500">
+                                        <a href="apps-ecommerce-product-overview.html">Crop tops for Women western wear</a>
+                                    </h6>
+
+                                    <div class="flex items-center text-slate-500 dark:text-zink-200">
+                                        <div class="mr-1 text-yellow-500 shrink-0 text-15">
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-half-line"></i>
+                                        </div>
+                                        (1551)
+                                    </div>
+                                    <h5 class="mt-4 text-16">$145 <small
+                                            class="font-normal line-through text-slate-500 dark:text-zink-200">299.99</small>
+                                    </h5>
+                                </div>
+
+                                <div
+                                    class="flex items-center gap-2 mt-4 group-[.gridView]:mt-0 group-[.gridView]:self-end">
+                                    <button type="button"
+                                        class="w-full bg-white border-dashed text-slate-500 btn border-slate-500 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-600 focus:text-slate-600 focus:bg-slate-50 focus:border-slate-600 active:text-slate-600 active:bg-slate-50 active:border-slate-600 dark:bg-zink-700 dark:text-zink-200 dark:border-zink-400 dark:ring-zink-400/20 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:focus:bg-zink-600 dark:focus:text-zink-100 dark:active:bg-zink-600 dark:active:text-zink-100"><i
+                                            data-lucide="shopping-cart" class="inline-block w-3 h-3 leading-none"></i>
+                                        <span class="align-middle">Add to Cart</span></button>
+                                    <div class="relative float-right dropdown">
+                                        <button
+                                            class="flex items-center justify-center w-[38.39px] h-[38.39px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20"
+                                            id="productList8" data-bs-toggle="dropdown"><i data-lucide="more-horizontal"
+                                                class="w-3 h-3"></i></button>
+                                        <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600"
+                                            aria-labelledby="productList8">
+                                            <li>
+                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="apps-ecommerce-product-overview.html"><i data-lucide="eye"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Overview</span></a>
+                                            </li>
+                                            <li>
+                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="apps-ecommerce-product-create.html"><i data-lucide="file-edit"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Edit</span></a>
+                                            </li>
+                                            <li>
+                                                <a data-modal-target="deleteModal"
+                                                    class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
+                                                    href="#!"><i data-lucide="trash-2"
+                                                        class="inline-block w-3 h-3 ltr:mr-1 rtl:ml-1"></i> <span
+                                                        class="align-middle">Delete</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--end col & card-->
+                    </div><!--end grid-->
+                </div>
+                <div class="custom-tabs__content" id="tab2">...</div>
+                <div class="custom-tabs__content" id="tab3">...</div>
+            </div>
+
+        </section>
+        <section class="container mt-14 mb-16">
+            <div>
+                <h5 class="title-page mb-16">Ofertas</h5>
+            </div>
+            <div class="splide splide_offers" id="splideOffers">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        <li class="splide__slide">
+                            <img src="https://t3.ftcdn.net/jpg/02/77/69/26/360_F_277692680_b65wdSQDuWZRrKwIUmGQo0zwND6n0MZR.jpg" alt="Imagen 1" />
+                        </li>
+                        <li class="splide__slide">
+                            <img src="https://static6.depositphotos.com/1014014/641/i/450/depositphotos_6416346-stock-photo-special-offers-3d-illustration-design.jpg" alt="Imagen 2" />
+                        </li>
+                        <li class="splide__slide">
+                            <img src="https://www.shutterstock.com/image-vector/special-offer-banner-vector-template-260nw-2474802375.jpg" alt="Imagen 3" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="container mt-14 mb-16 py-10">
+            <div>
+                <h5 class="title-page mb-16">Marcas</h5>
+            </div>
+            <div class="splide splide_brands" id="splideBrands">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        <li class="splide__slide">
+                            <img src="https://t3.ftcdn.net/jpg/02/77/69/26/360_F_277692680_b65wdSQDuWZRrKwIUmGQo0zwND6n0MZR.jpg" alt="Imagen 1" />
+                        </li>
+                        <li class="splide__slide">
+                            <img src="https://static6.depositphotos.com/1014014/641/i/450/depositphotos_6416346-stock-photo-special-offers-3d-illustration-design.jpg" alt="Imagen 2" />
+                        </li>
+                        <li class="splide__slide">
+                            <img src="https://www.shutterstock.com/image-vector/special-offer-banner-vector-template-260nw-2474802375.jpg" alt="Imagen 3" />
+                        </li>
+                    </ul>
                 </div>
             </div>
         </section>
     </div>
 @endsection
+
 @section('scripts')
+    <script src="{{ URL::to('assets/libs/splide/dist/js/splide.min.js') }}"></script>
     <script src="{{ URL::to('assets/js/custom/webpage/home.js') }}"></script>
-    <script src="{{ URL::to('assets/js/custom/webpage/raffles.js') }}"></script>
-    <script src="{{ URL::to('assets/js/custom/webpage/products.js') }}"></script>
+    {{-- <script src="{{ URL::to('assets/js/custom/webpage/products.js') }}"></script> --}}
 @endsection

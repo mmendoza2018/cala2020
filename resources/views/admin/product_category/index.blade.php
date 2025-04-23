@@ -22,9 +22,9 @@
             <div class="card bg-white">
                 <div class="card-body">
                     <div class="flex flex-wrap gap-2">
-                        <button data-modal-target="modalAddCategoryProduct" type="button"
-                            class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 mb-3"
-                            >Registrar Categoría</button>
+                        <button onclick="openModalAdd()" type="button"
+                            class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 mb-3">Registrar
+                            Categoría</button>
                         <div id="modalAddCategoryProduct" modal-center=""
                             class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show">
                             <div
@@ -45,6 +45,16 @@
                                         <label class="inline-block mb-2 text-base font-medium">Código</label>
                                         <x-input type="text" name="code" data-validate />
 
+                                        <div class="w-full mx-auto">
+                                            <label class="inline-block mb-2 text-base font-medium">Imagen</label>
+                                            <div id="dropzoneContainerAdd" class="dropzone-container">
+                                                <div id="dropzoneAdd">
+                                                    Arrastra tus imágenes aquí.
+                                                </div>
+                                                <div id="dropzonePreviewAdd" class="dropzone-previews"></div>
+                                            </div>
+                                        </div>
+
                                         <div class="text-right">
                                             <x-button type="submit" color="primary" class="mt-3" description="Guardar"
                                                 :outline="false" />
@@ -60,6 +70,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Imagen</th>
                                     <th>Descripción</th>
                                     <th>Código</th>
                                     <th>Opciones</th>
@@ -69,10 +80,15 @@
                                 @foreach ($categories as $category)
                                     <tr data-table={{ $category->id }}>
                                         <td>{{ $category->id }}</td>
+                                        <td>
+                                            <img src="{{ asset('storage/uploads/' . $category->imagen) }}" alt=""
+                                                class="h-10 h-16 rounded-md" style="width: 4rem">
+                                        </td>
                                         <td>{{ $category->description }}</td>
                                         <td>{{ $category->code }}</td>
                                         <td class="text-center">
-                                            <i class="ri-edit-box-fill ri-xl cursor-pointer" onclick="getProductCategory('{{ $category->id }}')"></i>
+                                            <i class="ri-edit-box-fill ri-xl cursor-pointer"
+                                                onclick="getProductCategory('{{ $category->id }}')"></i>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -104,6 +120,16 @@
                         <label class="inline-block mb-2 text-base font-medium">Código</label>
                         <x-input type="text" name="code" id="code" data-validate />
 
+                        <div class="w-full mx-auto">
+                            <label class="inline-block mb-2 text-base font-medium">Imagen</label>
+                            <div id="dropzoneContainerAct" class="dropzone-container">
+                                <div id="dropzoneAct">
+                                    Arrastra tus imágenes aquí.
+                                </div>
+                                <div id="dropzonePreviewAct" class="dropzone-previews"></div>
+                            </div>
+                        </div>
+
                         <label class="inline-block mb-2 text-base font-medium">Estado</label>
                         <x-select name="status" id="status">
                             <option selected disabled>Selecciona una opción</option>
@@ -122,9 +148,27 @@
         <!-- container-fluid -->
     </div>
     <!-- End Page-content -->
+
+    <!-- Template de Previsualización -->
+    <script type="text/template" id="preview-template">
+        <div class="dz-preview dz-file-preview">
+            <div class="dz-image">
+                <img data-dz-thumbnail />
+            </div>
+            <div class="dz-details">
+                <div class="dz-filename"><span data-dz-name></span></div>
+                <div class="dz-size" data-dz-size></div>
+            </div>
+
+            <!--  <input type="checkbox" class="primary-image-checkbox" data-tooltip="default" data-tooltip-content="test tooltip"/> -->
+            <i class="ri-close-line dz-remove-button"></i>
+                
+        </div>
+    </script>
 @endsection
 
 @section('script')
+    <script src="{{ URL::to('assets/libs/dropzone/dropzone-min.js') }}"></script>
     <script src="{{ URL::to('assets/js/datatables/jquery-3.7.0.js') }}"></script>
     <script src="{{ URL::to('assets/js/datatables/data-tables.min.js') }}"></script>
     <script src="{{ URL::to('assets/js/datatables/data-tables.tailwindcss.min.js') }}"></script>

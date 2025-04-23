@@ -21,7 +21,9 @@ class DatabaseSeeder extends Seeder
             AttributeSeeder::class,
             PriceTypesSeeder::class,
             UserSeeder::class,
-            GeneralSeeder::class
+            GeneralSeeder::class,
+            ThemeSeeder::class,
+            LegalitySeeder::class
         ]);
     }
 }

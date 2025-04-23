@@ -13,6 +13,7 @@ class CategoryProduct extends Model
     protected $fillable = [
         "description",
         "code",
+        "imagen",
         "status"
     ];
 

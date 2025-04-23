@@ -15,7 +15,7 @@ const openModal = (idModal) => {
     document.getElementById("backDropDiv").classList.remove('hidden');
 }
 
-// Mostrar el loader
+/* // Mostrar el loader
 function showLoader() {
     const loader = document.getElementById('loaderGlobal');
     loader.classList.add("show_loader");
@@ -25,7 +25,7 @@ function showLoader() {
 function hideLoader() {
     const loader = document.getElementById('loaderGlobal');
     loader.classList.remove("show_loader");
-}
+} */
 // Ejemplo de uso
 const toastAlert = (
     title = "Toast por defecto",
@@ -221,5 +221,76 @@ const formatDate = (isoDate, dateTime = true) => {
         return `${year}-${month}-${day}`;
     }
 }
+
+/* animation for button whatsapp */
+
+window.addEventListener("load", () => {
+    $(".notificacion-whatsapp").animsition({
+        inClass: 'fade-in',
+        outClass: 'fade-out',
+        inDuration: 1000,
+        outDuration: 1000,
+        onLoadEvent: false,
+        overlay: false
+    });
+
+    $(".message-whatsapp").animsition({
+        inClass: 'fade-in',
+        outClass: 'fade-out',
+        inDuration: 1000,
+        outDuration: 1000,
+        onLoadEvent: false,
+        overlay: false
+    });
+
+    setTimeout(() => {
+        $(".notificacion-whatsapp").css("display", "block").animsition('in');
+
+        setTimeout(() => {
+            $(".notificacion-whatsapp").css("display", "none");
+            $(".message-whatsapp").css("display", "block").animsition('in');
+
+            setTimeout(() => {
+                $(".message-whatsapp").css("display", "none");
+                $(".notificacion-whatsapp").css("display", "block").animsition('in');
+
+                // 🟩 Mostrar caja de agentes después de 1 segundo
+                setTimeout(() => {
+                    const agentesBox = document.querySelector('.box-whatsapp-agentes');
+                    agentesBox.classList.add('show');
+                    agentesBox.classList.remove('hidden_box');
+
+                    // 🟥 Ocultar la caja después de 5 segundos
+                    setTimeout(() => {
+                        agentesBox.classList.remove('show');
+                        agentesBox.classList.add('hidden_box');
+                    }, 5000);
+
+                }, 1000);
+
+            }, 5000);
+
+        }, 3000);
+    }, 3000);
+});
+
+
+/* click para el cuadro de whatsapp */
+
+const btnWhatsapp = document.getElementById('btnWhatsappNumbers');
+const agentesBox = document.querySelector('.box-whatsapp-agentes');
+
+// Manejo manual del toggle al hacer clic en el botón
+btnWhatsapp.addEventListener('click', () => {
+    if (agentesBox.classList.contains('show')) {
+        agentesBox.classList.remove('show');
+        agentesBox.classList.add('hidden_box');
+    } else {
+        agentesBox.classList.remove('hidden_box');
+        agentesBox.classList.add('show');
+    }
+});
+
+
 
 

@@ -1,10 +1,8 @@
 let dropzoneArray = [];
 
 window.addEventListener("load", () => {
-    console.log("entre");
 
-    //agregarTemplate("templateAttencionNumbers", "containerAttencionNumbers");
-    //getSocialNetworks();
+    getPaymentMethods();
 
 })
 
@@ -19,33 +17,54 @@ document.addEventListener("submit", async (e) => {
         }
 
         try {
-            // Seleccionar todas las filas de la tabla
-            let rows = document.querySelectorAll("#containerSocialNetwork tr");
+            let rows = document.querySelectorAll("#containerPaymentMethods tr");
             let formData = new FormData();
             let finalArray = [];
+            console.log('dropzoneArray :>> ', dropzoneArray);
 
             // Iterar sobre cada fila para extraer datos
-            rows.forEach(tr => {
-                let selectElement = tr.querySelector(".socialSelect");
-                let selectedOption = $(selectElement).select2('data')[0];
+            for (const [index, tr] of rows.entries()) {
+                console.log("Procesando fila:", index + 1);
 
-                // Extraer datos del select y de otras columnas
+                // Obtener archivos aceptados de Dropzone
+                let acceptedFiles = dropzoneArray[index].getAcceptedFiles();
+                let instanciasDropzone = dropzoneArray[index].files;
+                console.log('instanciasDropzone :>> ', instanciasDropzone);
+
+                
+                // Solo permitimos un archivo por Dropzone, obtener el primero
+                let fileToUpload = instanciasDropzone[0];
+                
+                if (!fileToUpload) {
+                    console.log(`La imagen #${index + 1} no puede estar vacía`, "warning");
+                    continue; // Saltar esta iteración si no hay archivos
+                }
+
+                // Verificar si el archivo es un mock y convertirlo a File
+                if (!(fileToUpload instanceof File)) {
+                    const response = await fetch(fileToUpload.url);
+                    const blob = await response.blob();
+                    fileToUpload = new File([blob], fileToUpload.name, {
+                        type: blob.type
+                    });
+                }
+
+                // Agregar archivo al FormData
+                formData.append("images[]", fileToUpload);
+                console.log(`Archivo procesado (fila ${index + 1}):`, fileToUpload);
+
                 let obj = {
-                    description: selectedOption.id, // Valor del select
-                    icon: $(selectElement).find(`option[value="${selectedOption.id}"]`).data('icon'),
-                    link: tr.querySelector(".link").value,
+                    description: tr.querySelector(".description").value,
                     id: tr.querySelector(".id").value
                 };
-                finalArray.push(obj);
-            });
 
-            console.log('finalArray :>> ', finalArray);
+                finalArray.push(obj);
+            }
 
             // Añadir el array al FormData
-            formData.append('socialNetworks', JSON.stringify(finalArray));
+            formData.append('paymentMethods', JSON.stringify(finalArray));
             formData.append('_method', 'PUT');
-
-            let url = ROUTES.SOCIAL_NETWORK + `/update`;
+            let url = ROUTES.PAYMENT_METHOD + `/update`;
             let response = await customFetch(url, "POST", formData)
             if (response.status === "success") {
                 boxAlert("Actualizado con exito!", "success")
@@ -61,10 +80,10 @@ document.addEventListener("submit", async (e) => {
 
 document.addEventListener("click", (e) => {
     if (e.target.matches("#btnAddAttencionNumber")) {
-        agregarTemplate("templateSocialNetwork", "containerSocialNetwork")
+        agregarTemplate("templatePaymentMethods", "containerPaymentMethods")
     }
 
-    if (e.target.matches(".btnRemoveSocialNetwork")) {
+    if (e.target.matches(".btnRemovePaymentMethod")) {
         eliminarTrProducto(e.target);
     }
 });
@@ -72,8 +91,12 @@ document.addEventListener("click", (e) => {
 
 const eliminarTrProducto = (elemento) => {
     let trPadre = elemento.parentNode.parentNode;
-    let tBody = elemento.parentNode.parentNode.parentNode;
-    let trs = tBody.querySelectorAll("tr");
+    let tBody = trPadre.parentNode;
+    let trs = Array.from(tBody.querySelectorAll("tr")); // Convertir a array para usar indexOf
+    let posicion = trs.indexOf(trPadre); // Obtener posición en base 0
+    
+    dropzoneArray.splice(posicion, 1);
+
     if (trs.length <= 1) return;
     trPadre.remove();
 };
@@ -83,13 +106,10 @@ const agregarTemplate = (idTemplate, idContainer, data = null) => {
     let template = document.getElementById(idTemplate);
     let templateClonado = template.content.cloneNode(true);
     let contenedor = document.getElementById(idContainer);
-    let select = templateClonado.querySelector("select");
     let trs = contenedor.querySelectorAll("tr");
-    const socialSelect = templateClonado.querySelector(".socialSelect");
-    const linkInput = templateClonado.querySelector(".link");
+    const descripcionInput = templateClonado.querySelector(".description");
     const idInput = templateClonado.querySelector(".id");
-    const dropzoneContainerElement = templateClonado.querySelector(".dropzone-container");
-    console.log(dropzoneContainerElement);
+    const dropzoneContainerElement = templateClonado.querySelector(".dropzone-container-sm");
 
     if (trs.length >= 5) return;
     contenedor.appendChild(templateClonado);
@@ -97,11 +117,9 @@ const agregarTemplate = (idTemplate, idContainer, data = null) => {
     createDropZone(dropzoneContainerElement, data);
 
     if (data) {
-        linkInput.value = data.link;
+        descripcionInput.value = data.description;
         idInput.value = data.id;
-        $(socialSelect).val(data.name).trigger('change');
     }
-
 
 };
 
@@ -138,20 +156,21 @@ const createDropZone = (element, data) => {
             e.stopPropagation();
             dropzoneAdd.removeFile(file);
         });
-
     });
 
     if (data) {
+        console.log("entro a crear el mock");
+
         let mockFile = {
-            name: file.logo_file.name,
-            size: file.logo_file.size,
-            url: file.logo_file.url,
+            name: data.image,
+            size: data.size,
+            url: '/storage/uploads/' + data.image,
             isMock: true
         };
 
         // Emitir los eventos de Dropzone para añadir el archivo
         dropzoneAdd.emit("addedfile", mockFile);
-        dropzoneAdd.emit("thumbnail", mockFile, file.logo_file.url);
+        dropzoneAdd.emit("thumbnail", mockFile, '/storage/uploads/' + data.image);
         dropzoneAdd.emit("complete", mockFile);
 
         // Añadir el archivo a la lista de archivos de Dropzone
@@ -159,7 +178,6 @@ const createDropZone = (element, data) => {
     }
 
     dropzoneArray.push(dropzoneAdd);
-
 }
 
 const getProductBrand = async (id) => {
@@ -181,15 +199,15 @@ const getProductBrand = async (id) => {
     }
 }
 
-const getSocialNetworks = async (id) => {
+const getPaymentMethods = async (id) => {
     try {
-        let response = await customFetch(ROUTES.SOCIAL_NETWORK);
+        let response = await customFetch(ROUTES.PAYMENT_METHOD);
         if (response.status === "success") {
             console.log('response :>> ', response);
             let data = response.data;
 
-            data.forEach(element => {
-                agregarTemplate("templateSocialNetwork", "containerSocialNetwork", element)
+            data.forEach(paymentMethod => {
+                agregarTemplate("templatePaymentMethods", "containerPaymentMethods", paymentMethod)
             });
 
         } else {

@@ -36,15 +36,14 @@
                                                 <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500"
                                                     style="width: 150px">
                                                     Imagen</th>
-                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500"
-                                                    style="width: 350px">
+                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
                                                     Descripción</th>
                                                 <th
                                                     class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
                                                     -</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="containerSocialNetwork">
+                                        <tbody id="containerPaymentMethods">
                                             {{-- INNER HTML --}}
                                         </tbody>
                                     </table>
@@ -65,11 +64,11 @@
         </div>
         <!-- End Page-content -->
 
-        <template id="templateSocialNetwork">
+        <template id="templatePaymentMethods">
             <tr>
 
                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                    <div class="dropzone-container">
+                    <div class="dropzone-container-sm" style="width: 82px">
                         <div class="dropzoneAdd">
                         </div>
                         <div id="dropzone-preview" class="dropzone-previews"></div>
@@ -78,16 +77,13 @@
 
                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                     <div class="flex justify-center items-center">
-                        <span class="icon_attention_number">
-                            <i class="ri-global-line ri-lg"></i>
-                        </span>
-                        <x-input type="text" data-validate class="link" />
+                        <x-input type="text" data-validate class="description" />
                         <input type="hidden" class="id">
                     </div>
                 </td>
 
                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                    <i class="ri-close-line ri-xl btnRemoveAttencionNumber text-red-500" style="cursor: pointer"></i>
+                    <i class="ri-close-line ri-xl btnRemovePaymentMethod text-red-500" style="cursor: pointer"></i>
                 </td>
 
             </tr>
@@ -95,13 +91,13 @@
 
         <!-- Template de Previsualización -->
         <script type="text/template" id="preview-template">
-            <div class="dz-preview dz-file-preview">
+            <div class="dz-preview-sm dz-file-preview">
                 <div class="dz-image">
                     <img data-dz-thumbnail />
                 </div>
                 <div class="dz-details">
-                    <div class="dz-filename"><span data-dz-name></span></div>
-                    <div class="dz-size" data-dz-size></div>
+                     <!-- <div class="dz-filename"><span data-dz-name></span></div>
+                    <div class="dz-size" data-dz-size></div>-->
                 </div>
 
                 <!--  <input type="checkbox" class="primary-image-checkbox" data-tooltip="default" data-tooltip-content="test tooltip"/> -->

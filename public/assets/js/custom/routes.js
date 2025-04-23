@@ -1,6 +1,7 @@
 let ROUTES = {
     PRODUCTS: `/admin/productos`,
     PRODUCT_CATEGORY: `/admin/categoria-productos`,
+    PRODUCT_SUBCATEGORY: `/admin/subcategoria-productos`,
     COMPLAINTS_BOOK : `/admin/libro-reclamaciones`,
     PRODUCT_BRAND: `/admin/marca-productos`,
     PRODUCT_ATTRIBUTE: `/admin/variantes-productos`,
@@ -15,4 +16,6 @@ let ROUTES = {
     EXPORT_EXCEL: `/admin/exportar-excel`,
     ATTENTION_NUMBER: `/admin/numeros-atencion`,
     SOCIAL_NETWORK: `/admin/redes-sociales`,
+    PAYMENT_METHOD: `/admin/metodos-pago`,
+    THEMES: `/admin/temas-colores`,
 };
