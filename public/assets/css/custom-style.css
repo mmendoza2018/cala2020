@@ -349,7 +349,7 @@
   }
 
   to {
-    transform: translateY(-100%);
+    transform: translateY(-1000%);
     opacity: 0;
   }
 }
@@ -418,8 +418,8 @@
 
 /* Animación para mostrar */
 .container-whatsapp .box-whatsapp-agentes.show {
-  animation: slideDown 0.6s ease-in-out forwards;
-}
+  animation: slideDown 0.6s ease-in-out forwards; 
+} 
 
 /* Al ocultar */
 .container-whatsapp .box-whatsapp-agentes.hidden_box {
