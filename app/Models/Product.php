@@ -53,4 +53,9 @@ class Product extends Model
     {
         return $this->belongsTo(Raffle::class, 'raffle_id');
     }
+
+    public function productImages()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
 }

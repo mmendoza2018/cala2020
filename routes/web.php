@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthPage\LoginPageController;
 use App\Http\Controllers\AuthPage\RegisterPageController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ComplaintsBookController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExportExcelController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\ProductBrandController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductGeneralController;
+use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\ShoppingCartProductController;
 use App\Http\Controllers\SocialNetworkController;
 use App\Http\Controllers\SubcategoryProductController;
@@ -93,6 +95,22 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', CheckUserType:
         Route::put('{id}', [ProductCategoryController::class, 'update'])->name('product_category.update');
         Route::get('/{id}', [ProductCategoryController::class, 'show'])->name('product_category.show');
         Route::get('/', [ProductCategoryController::class, 'index'])->name('product_category.index');
+    });
+
+    Route::prefix('banners')->group(function () {
+        Route::get('/create', [BannerController::class, 'create'])->name('banner.create');
+        Route::post('/store', [BannerController::class, 'store'])->name('banner.store');
+        Route::put('{id}', [BannerController::class, 'update'])->name('banner.update');
+        Route::get('/{id}', [BannerController::class, 'show'])->name('banner.show');
+        Route::get('/', [BannerController::class, 'index'])->name('banner.index');
+    });
+
+    Route::prefix('promotions')->group(function () {
+        Route::get('/create', [PromotionController::class, 'create'])->name('promotion.create');
+        Route::post('/store', [PromotionController::class, 'store'])->name('promotion.store');
+        Route::put('{id}', [PromotionController::class, 'update'])->name('promotion.update');
+        Route::get('/{id}', [PromotionController::class, 'show'])->name('promotion.show');
+        Route::get('/', [PromotionController::class, 'index'])->name('promotion.index');
     });
 
     Route::prefix('subcategoria-productos')->group(function () {

@@ -16,13 +16,11 @@
             </x-side-li-menu2>
 
             <x-side-li-submenu2 description="Banners">
-                <x-side-li-submenu description="Registro" data-side_key="product_create"  url="product.create" />
-                <x-side-li-submenu description="Historial" data-side_key="product_index" url="product.index" />
+                <x-side-li-submenu description="Banners" data-side_key="banner"  url="banner.index" />
             </x-side-li-menu2>
 
             <x-side-li-submenu2 description="Promociones">
-                <x-side-li-submenu description="Registro" data-side_key="product_create"  url="product.create" />
-                <x-side-li-submenu description="Historial" data-side_key="product_index" url="product.index" />
+                <x-side-li-submenu description="Promociones" data-side_key="promotion_index" url="promotion.index" />
             </x-side-li-menu2>
 
             {{-- <x-side-li-submenu2 description="clientes">

@@ -409,7 +409,7 @@
   background-color: white;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
   transform: translateY(-100%);
   opacity: 0;
   z-index: 999;
@@ -418,8 +418,8 @@
 
 /* Animación para mostrar */
 .container-whatsapp .box-whatsapp-agentes.show {
-  animation: slideDown 0.6s ease-in-out forwards; 
-} 
+  animation: slideDown 0.6s ease-in-out forwards;
+}
 
 /* Al ocultar */
 .container-whatsapp .box-whatsapp-agentes.hidden_box {
@@ -440,7 +440,8 @@
 
 /* Cuerpo de agentes */
 .container-whatsapp .box-whatsapp-agentes strong {
-  display: none; /* Lo ocultamos porque usamos el ::before */
+  display: none;
+  /* Lo ocultamos porque usamos el ::before */
 }
 
 .box-whatsapp-agentes .asesor {
@@ -451,7 +452,7 @@
   padding: 8px;
   border-radius: 6px;
   margin: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .box-whatsapp-agentes .info {
@@ -491,13 +492,84 @@
     transform: translateY(-100%);
     opacity: 0;
   }
+
   to {
     transform: translateY(0%);
     opacity: 1;
   }
 }
+
 /* ----------------------------------------------------------------
                         WHATSAPP BUTTON
+  ---------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------
+                        DROPDOWN
+  ---------------------------------------------------------------- */
+
+  .custom-dropdown {
+    position: relative;
+    width: 280px;
+  }
+  
+  .custom-dropdown__input {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #000;
+    font-size: .9375rem;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+  }
+  
+  .custom-dropdown__input:hover,
+  .custom-dropdown.open .custom-dropdown__input {
+    border-color: var(--custom-primary-color); 
+  }
+  
+  .custom-dropdown__list {
+    list-style: none;
+    position: absolute;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 6px;
+    overflow: hidden;
+    padding: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
+  
+  .custom-dropdown__item {
+    padding: 8px 12px;
+    color: #000;
+    font-size: .9375rem;
+    cursor: pointer;
+    transition: background 0.25s;
+  }
+  
+  .custom-dropdown__item:hover {
+    background-color: color-mix(in srgb, var(--custom-primary-color) 20%, transparent);
+  }
+  
+  .custom-dropdown.open .custom-dropdown__list {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    border-color: var(--custom-primary-color); 
+  }
+  
+  
+
+/* ----------------------------------------------------------------
+                       END DROPDOWN
   ---------------------------------------------------------------- */
 
 /* STYLES FOR DROPZONE  */
@@ -723,7 +795,7 @@
 .effect-link-nav {
   position: relative;
   display: inline-block;
-  color: white; 
+  color: white;
   text-decoration: none;
   padding-bottom: 4px;
   font-weight: bold;
@@ -744,4 +816,29 @@
 .effect-link-nav:hover::after {
   width: 100%;
   left: 50%;
+}
+
+/* Personaliza la caja principal de Select2 (el contenedor de selección) */
+
+.select2-selection.select2-selection--single {
+  height: 39px !important;
+  border-color: rgb(226, 232, 240) !important;
+  border-radius: 20px !important;
+  padding: 8px 12px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  line-height: 20px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  top: 5px !important;
+  right: 5px !important;
+}
+
+/* Cuando el select2 está enfocado (focus) */
+.select2-container .select2-selection--single:focus,
+.select2-container .select2-selection--single:active {
+  border-color: #0056b3 !important;
+  box-shadow: none !important;
 }

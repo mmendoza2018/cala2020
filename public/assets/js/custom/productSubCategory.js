@@ -159,6 +159,8 @@ const initDropzone = (container, element, dropzonePreviewElement, files = false)
         addRemoveLinks: false, // Usamos nuestro propio botón de eliminar
         maxFiles: 1, // Permitir solo un archivo
         acceptedFiles: "image/*", // Solo aceptar imágenes
+        thumbnailWidth: null,
+        thumbnailHeight: null,
     });
 
     dropzoneGlobal.on("thumbnail", (file, dataUrl) => {

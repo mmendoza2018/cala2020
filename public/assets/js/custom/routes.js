@@ -18,4 +18,6 @@ let ROUTES = {
     SOCIAL_NETWORK: `/admin/redes-sociales`,
     PAYMENT_METHOD: `/admin/metodos-pago`,
     THEMES: `/admin/temas-colores`,
+    BANNERS: `/admin/banners`,
+    PROMOTIONS: `/admin/promotions`,
 };

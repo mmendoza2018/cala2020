@@ -291,6 +291,27 @@ btnWhatsapp.addEventListener('click', () => {
     }
 });
 
+/* dropdown */
+const dropdown = document.querySelector('.custom-dropdown');
+const input = dropdown.querySelector('.custom-dropdown__input');
+const options = dropdown.querySelectorAll('.custom-dropdown__item');
 
+input.addEventListener('click', (e) => {
+  e.stopPropagation();
+  dropdown.classList.toggle('open');
+});
+
+options.forEach(option => {
+  option.addEventListener('click', (e) => {
+    e.stopPropagation();
+    input.value = option.textContent;
+    dropdown.classList.remove('open');
+  });
+});
+
+// Cerrar al hacer clic fuera
+document.addEventListener('click', () => {
+  dropdown.classList.remove('open');
+});
 
 

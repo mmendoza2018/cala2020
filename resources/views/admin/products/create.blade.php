@@ -30,24 +30,32 @@
                                     <p class="mt-0 text-sm text-red-500">{{ $message }}</p>
                                 @enderror
 
-                                <label class="inline-block text-base font-medium">Marca</label>
-                                <x-select data-choices="" name="product_brand_id" data-validate>
+                                <label class="inline-block mb-2 text-base font-medium">Marca</label>
+                                <x-select data-custom_select2 name="product_brand_id" data-validate>
                                     <option value="">Selecciona una opción</option>
                                     @foreach ($productBrands as $brand)
                                         <option value="{{ $brand->id }}">{{ $brand->description }}</option>
                                     @endforeach
                                 </x-select>
 
-                                <label class="inline-block text-base font-medium">Categoría</label>
-                                <x-select data-choices="" name="category_product_id" data-validate>
+                                <label class="inline-block mb-2 text-base font-medium">Categoría</label>
+                                <x-select data-custom_select2 name="category_product_id" data-validate>
                                     <option value="">Selecciona una opción</option>
                                     @foreach ($categoryProducts as $category)
                                         <option value="{{ $category->id }}">{{ $category->description }}</option>
                                     @endforeach
                                 </x-select>
 
+                                <label class="inline-block mb-2 text-base font-medium">Sub Categoría</label>
+                                <x-select data-custom_select2 name="category_product_id" data-validate>
+                                    <option value="">Selecciona una opción</option>
+                                    @foreach ($subCategoryProducts as $subcategory)
+                                        <option value="{{ $subcategory->id }}">{{ $subcategory->description }}</option>
+                                    @endforeach
+                                </x-select>
+
                                 <div id="containerFile">
-                                    
+
                                 </div>
 
                             </div>
@@ -57,21 +65,13 @@
                                 <x-input type="number" name="min_stock" placeholder="2" class="mb-3" data-validate />
 
                                 <h6 class="mb-4 text-15">Imagenes</h6>
-                                <div
-                                    class="flex items-center justify-center border rounded-md cursor-pointer bg-slate-100 dropzoneAdd border-slate-200 dark:bg-zink-600 dark:border-zink-500">
-                                    <div class="fallback">
-                                        <input type="file" data-validate id="imagesMultiple" multiple="multiple">
+                                <div id="dropzoneContainerAdd" class="dropzone-container" style="max-width: 1000px">
+                                    <div id="dropzoneAdd">
+                                        Arrastra tus imágenes aquí.
                                     </div>
-                                    <div class="w-full py-5 text-lg text-center dz-message needsclick">
-                                        <div class="mb-3">
-                                            <i data-lucide="upload-cloud"
-                                                class="block mx-auto size-12 text-slate-500 fill-slate-200 dark:text-zink-200 dark:fill-zink-500"></i>
-                                        </div>
-
-                                        <h5 class="mb-0 font-normal text-slate-500 text-15">Inserta tu imagenes aquí</h5>
-                                    </div>
+                                    <div id="dropzonePreviewAdd" class="dropzone-previews"></div>
                                 </div>
-                                <ul class="mb-0" id="dropzone-preview">
+                                {{-- <ul class="mb-0" id="dropzone-preview">
                                     <li class="mt-2" id="dropzone-preview-list">
                                         <!-- This is used as the file preview template -->
                                         <div class="border rounded border-slate-200 dark:border-zink-500">
@@ -98,7 +98,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                </ul>
+                                </ul> --}}
                                 <div class="flex flex-wrap gap-2 mt-3">
                                     <div class="flex items-center gap-2">
                                         <input id="checkboxDefault24"
@@ -173,13 +173,12 @@
                         <div class="text-right">
                             <x-button type="submit" color="primary" class="mt-3" description="Guardar"
                                 :outline="false" />
-                        </div>  
+                        </div>
                         <template id="templateProductVariants">
                             <tr>
                                 @foreach ($attributeGroups as $attributeGroup)
                                     <td class="px-3.5 py-2.5 border-y border-custom-200 dark:border-custom-900">
-                                        <x-select name="variant"
-                                            id="choices-single-default">
+                                        <x-select name="variant" id="choices-single-default">
                                             <option value="" selected disabled>Seleccione</option>
                                             @foreach ($attributeGroup->attributes as $attribute)
                                                 <option value="{{ $attribute->id }}">{{ $attribute->description }}</option>
@@ -188,19 +187,20 @@
                                     </td>
                                 @endforeach
                                 <td class="px-3.5 py-2.5 font-semibold border-b border-custom-200 dark:border-custom-900">
-                                    <x-input type="text" name="reference" placeholder="2" class=""
-                                        data-validate />
+                                    <x-input type="text" name="reference" placeholder="2" class="" data-validate />
                                 </td>
                                 <td class="px-3.5 py-2.5 font-semibold border-b border-custom-200 dark:border-custom-900">
-                                    <x-input type="number" step="0.01" name="default_price" placeholder="2" class=""
-                                        data-validate />
+                                    <x-input type="number" step="0.01" name="default_price" placeholder="2"
+                                        class="" data-validate />
                                 </td>
                                 <td class="px-3.5 py-2.5 font-semibold border-b border-custom-200 dark:border-custom-900">
                                     <x-input type="number" name="stock" placeholder="2" class=""
                                         data-validate />
                                 </td>
-                                <td class="px-3.5 py-2.5 font-semibold border-b border-custom-200 dark:border-custom-900 text-center">
-                                    <input type="radio" name="is_default" value="1" class="radio-default-variant">
+                                <td
+                                    class="px-3.5 py-2.5 font-semibold border-b border-custom-200 dark:border-custom-900 text-center">
+                                    <input type="radio" name="is_default" value="1"
+                                        class="radio-default-variant">
                                 </td>
                                 <td class="px-3.5 py-2.5 border-y border-custom-200 dark:border-custom-900">
                                     <a href="#!"
@@ -218,6 +218,23 @@
         <!-- container-fluid -->
     </div>
     <!-- End Page-content -->
+
+    <!-- Template de Previsualización -->
+    <script type="text/template" id="preview-template">
+        <div class="dz-preview dz-file-preview">
+            <div class="dz-image">
+                <img data-dz-thumbnail />
+            </div>
+            <div class="dz-details">
+                <div class="dz-filename"><span data-dz-name></span></div>
+                <div class="dz-size" data-dz-size></div>
+            </div>
+
+            <input type="radio" name="check_main_image" class="primary-image-checkbox" data-tooltip="default" data-tooltip-content="test tooltip"/>
+            <i class="ri-close-line dz-remove-button"></i>
+                
+        </div>
+    </script>
 @endsection
 
 @section('script')

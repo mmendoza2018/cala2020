@@ -14,6 +14,7 @@ use App\Models\ProductBrand;
 use App\Models\ProductSize;
 use App\Models\ProductVariant;
 use App\Models\ProductVariantPrice;
+use App\Models\SubcategoryProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -25,6 +26,7 @@ class ProductController extends Controller
     {
         $productBrands = ProductBrand::where('status', 1)->get();
         $categoryProducts = CategoryProduct::where('status', 1)->get();
+        $subCategoryProducts = SubcategoryProduct::where('status', 1)->get();
         $attributeGroups = AttributeGroup::where('status', 1)
             ->whereHas('attributes', function ($query) {
                 $query->where('status', 1); // Filtro en la relación
@@ -36,7 +38,7 @@ class ProductController extends Controller
 
         return view(
             'admin.products.create',
-            compact('productBrands', 'categoryProducts', 'attributeGroups')
+            compact('productBrands', 'categoryProducts', 'attributeGroups', 'subCategoryProducts')
         );
     }
 
@@ -54,7 +56,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::with(['productBrand', 'measurementUnit', 'categoryProduct'])
+        $products = Product::with(['productBrand', 'measurementUnit', 'categoryProduct', 'productImages'])
             ->where('status', 1)
             ->get();
         return view('admin.products.index', [
@@ -87,13 +89,12 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-
         $rules = [
             "title" => "required|string|min:5",
             "description" => "required",
-            "productImages" => "required",
-            "imageDescriptions" => "required",
-            "imageStatus" => "required",
+            "imagenes" => "nullable|array",
+            "is_main" => "nullable|array",
+            "imagenes.*" => "file|image|mimes:jpeg,png,jpg,gif,svg",
             "productVariants" => "required|json",
             "min_stock" => "required",
             "status_on_website" => "required",
@@ -106,9 +107,8 @@ class ProductController extends Controller
         $attributes = [
             "title" => "Titulo",
             "description" => "Descripción",
-            "ProductImages" => "Imagenes",
-            "imageDescriptions" => "Descripción de imagen",
-            "imageStatus" => "Estado de la imagen",
+            "imagenes" => "imagenes",
+            "is_main" => "imagen activa",
             "productVariants" => "Variantes del producto",
             "min_stock" => "Minimo de Stock",
             "status_on_website" => "Estado de la página web",
@@ -127,7 +127,7 @@ class ProductController extends Controller
             return ApiResponse::error("Validation Error", $errors, 202);
         }
 
-        $slug = Str::slug($request->input('title')); // Utiliza la función helper de Laravel para convertir a slug
+        $slug = Str::slug($request->input('title'));
 
         // Verificar si el slug ya existe en la base de datos
         $existingSlug = Product::where('slug', $slug)->first();
@@ -145,40 +145,13 @@ class ProductController extends Controller
         // Si la validación pasa, obtener los datos validados
         $validatedData = $validator->validated();
 
-        $archivos = $request->file('productImages');
-        $paths = [];
-
-        foreach ($archivos as $archivo) {
-            $path = $archivo->store('uploads', 'public');
-            $fileName = basename($path);
-            $paths[] = $fileName;
-        }
-
-        // Crear el arreglo asociativo
-        $arrayImgs = [];
-
-        foreach ($paths as $index => $path) {
-            $arrayImgs[] = [
-                'path' => $path,
-                'description' => isset($validatedData["imageDescriptions"][$index]) ? $validatedData["imageDescriptions"][$index] : '', // Usa una cadena vacía si no hay descripción
-                'status' => isset($validatedData["imageStatus"][$index]) ? $validatedData["imageStatus"][$index] : false // Usa 'desconocido' si no hay estado
-            ];
-        }
-        usort($arrayImgs, function ($a, $b) {
-            // Convertir los valores de 'status' a booleanos
-            $statusA = filter_var($a['status'], FILTER_VALIDATE_BOOLEAN);
-            $statusB = filter_var($b['status'], FILTER_VALIDATE_BOOLEAN);
-
-            // Ordenar de modo que los elementos con 'status' => true estén primero
-            return $statusB - $statusA;
-        });
-
+        // Crear producto
         $product = Product::create([
             "title" => $validatedData["title"],
             "code" => "XX_PRODUCT",
             "description" => $validatedData["description"],
             "slug" => $slug,
-            "images" => json_encode($arrayImgs),
+            "images" => json_encode([]),
             "min_stock" => $validatedData["min_stock"],
             "status_on_website" => $validatedData["status_on_website"],
             "status_on_catalog" => $validatedData["status_on_catalog"],
@@ -186,6 +159,19 @@ class ProductController extends Controller
             "category_product_id" => $validatedData["category_product_id"],
             "user_id" => Auth::guard('admin')->id()
         ]);
+
+        // Guardar imágenes
+        $archivos = $request->file('imagenes');
+        foreach ($archivos as $index => $archivo) {
+            $path = $archivo->store('uploads', 'public');
+            $fileName = basename($path);
+
+            $product->productImages()->create([
+                'image_name' => $fileName,
+                'description' => '-',
+                'is_main' => $validatedData["is_main"][$index] === "true" ? 1 : 0,
+            ]);
+        }
 
         $arrayProductVariants = json_decode($validatedData["productVariants"], true);
 
@@ -230,7 +216,7 @@ class ProductController extends Controller
             'product_brand_id' => 'required|integer|exists:product_brands,id',
             "measurement_unit_id" => "required",
             "category_product_id" => "required",
-            "digital_product"=> "",
+            "digital_product" => "",
         ];
 
         $attributes = [
@@ -247,7 +233,7 @@ class ProductController extends Controller
             'product_brand_id' => "Marca",
             "measurement_unit_id" => "Unidad de medida",
             "category_product_id" => "Categoria",
-            "digital_product"=> "Producto digital"
+            "digital_product" => "Producto digital"
         ];
 
         // Crear el validador manualmente
@@ -420,9 +406,7 @@ class ProductController extends Controller
             ProductAttribute::whereIn('id', $attributesToDelete)->delete();
         }
 
-        $product = Product::latest()->first();
-
-        return ApiResponse::success($product, "Actualizado con exito");
+        return ApiResponse::success($product->fresh(), "Actualizado con exito");
     }
 
     private function updateVariantPrices($variantId, $variantData)

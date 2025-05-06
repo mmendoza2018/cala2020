@@ -124,7 +124,7 @@ class ProductBrandController extends Controller
 
         $productBrand->update($categoryData);
 
-        $productBrand = ProductBrand::latest()->first();
+        $productBrand = $productBrand->fresh();
 
         return ApiResponse::success($productBrand, "Agregado con exito");
     }

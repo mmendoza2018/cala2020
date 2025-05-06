@@ -1,12 +1,12 @@
-let dataTableCategoryProduct = null;
+let dataTableBanner = null;
 let dropzoneGlobal = null;
 
 window.addEventListener("load", () => {
-    dataTableCategoryProduct = $("#tableCategoryProduct").DataTable({
+    dataTableBanner = $("#tableCategoryProduct").DataTable({
         info: false,
         columnDefs: [
             {
-                targets: 4, // Índice de la columna del botón
+                targets: [2, 1], // Índice de la columna del botón
                 className: 'text-center' // Aplica clase a toda la columna (si es necesario)
             }
         ]
@@ -14,10 +14,10 @@ window.addEventListener("load", () => {
 });
 
 document.addEventListener("submit", async (e) => {
-    if (e.target.matches("#formAddproductCategory")) {
+    if (e.target.matches("#formAddBanner")) {
         e.preventDefault();
 
-        if (!FormValidate("formAddproductCategory")) {
+        if (!FormValidate("formAddBanner")) {
             toastAlert("Algunos campos son necesarios", "warning")
             return;
         }
@@ -30,24 +30,22 @@ document.addEventListener("submit", async (e) => {
 
         try {
             let response = await customFetch(
-                ROUTES.PRODUCT_CATEGORY + `/store`,
+                ROUTES.BANNERS + `/store`,
                 "POST",
                 formData
             )
 
             if (response.status === "success") {
                 boxAlert("Agregado con exito!", "success")
-                closeModal("modalAddCategoryProduct")
+                closeModal("modalAddBanner")
                 e.target.reset();
                 let data = response.data;
-                let btnActHTML = `<i class="ri-edit-box-fill ri-xl cursor-pointer" onclick="getProductCategory('${data.id}')"></i>`;
-                let img = `<img src="${baseUrl}/storage/uploads/${data.imagen}" class="h-10 h-16 rounded-md" style="width: 4rem">`;
+                let btnActHTML = `<i class="ri-edit-box-fill ri-xl cursor-pointer" onclick="getBanner('${data.id}')"></i>`;
+                let img = `<img src="${baseUrl}/storage/uploads/${data.image_name}" class="h-10 h-16 rounded-md" style="width: 6rem">`;
 
-                let rowNode = dataTableCategoryProduct.row.add([
+                let rowNode = dataTableBanner.row.add([
                     data.id,
                     img,
-                    data.description,
-                    data.code,
                     btnActHTML
                 ]).draw(false).node(); // Obtén el nodo DOM de la fila
 
@@ -55,17 +53,17 @@ document.addEventListener("submit", async (e) => {
 
                 $row.attr('data-table', data.id);
             } else {
-                boxAlertValidation(result.errors)
+                boxAlertValidation(response.errors)
             }
         } catch (error) {
             console.error('Error de red:', error);
         }
     }
 
-    if (e.target.matches("#formActproductCategory")) {
+    if (e.target.matches("#formActBanner")) {
         e.preventDefault();
 
-        if (!FormValidate("formActproductCategory")) {
+        if (!FormValidate("formActBanner")) {
             toastAlert("Algunos campos son necesarios", "warning")
             return;
         }
@@ -79,28 +77,28 @@ document.addEventListener("submit", async (e) => {
 
         try {
             let response = await customFetch(
-                ROUTES.PRODUCT_CATEGORY + `/${e.target.id.value}`,
+                ROUTES.BANNERS + `/${e.target.id.value}`,
                 "POST",
                 formData
             )
 
             if (response.status === "success") {
                 boxAlert("Actualizado con exito!", "success")
-                closeModal("modalActCategoryProduct")
+                closeModal("modalActBanner")
                 e.target.reset();
                 let data = response.data;
                 let trUpdatedElement = $('[data-table="' + data.id + '"]')[0];
-                const trUpdated = dataTableCategoryProduct.row(trUpdatedElement);
+                const trUpdated = dataTableBanner.row(trUpdatedElement);
                 let btnAct = trUpdatedElement.querySelector("i").outerHTML;
-                let img = `<img src="${baseUrl}/storage/uploads/${data.imagen}" class="h-10 h-16 rounded-md" style="width: 4rem">`;
+                let img = `<img src="${baseUrl}/storage/uploads/${data.image_name}" class="h-10 h-16 rounded-md" style="width: 6rem">`;
 
                 if (data.status == 0) return trUpdated.remove().draw(false);
 
                 trUpdated
-                    .data([data.id,img, data.description, data.code, btnAct])
+                    .data([data.id, img, btnAct])
                     .draw(false);
             } else {
-                boxAlertValidation(result.errors)
+                boxAlertValidation(response.errors)
             }
         } catch (error) {
             console.error('Error de red:', error);
@@ -109,21 +107,19 @@ document.addEventListener("submit", async (e) => {
 
 });
 
-const getProductCategory = async (id) => {
+const getBanner = async (id) => {
     try {
-        openModal("modalActCategoryProduct");
+        openModal("modalActBanner");
 
-        let response = await customFetch(ROUTES.PRODUCT_CATEGORY + `/${id}`);
+        let response = await customFetch(ROUTES.BANNERS + `/${id}`);
         if (response.status === "success") {
             let data = response.data;
             console.log('(luismi): response.data :>> ', response.data);
-            initDropzone('dropzoneContainerAct','dropzoneAct','dropzonePreviewAct', data.imageDetail);
+            initDropzone('dropzoneContainerAct', 'dropzoneAct', 'dropzonePreviewAct', data.imageDetail);
             document.getElementById("id").value = data.id;
-            document.getElementById("description").value = data.description;
-            document.getElementById("code").value = data.code;
             document.getElementById("status").value = data.status;
         } else {
-            boxAlertValidation(result.errors)
+            boxAlertValidation(response.errors)
         }
     } catch (error) {
         console.log('error :>> ', error);
@@ -132,15 +128,15 @@ const getProductCategory = async (id) => {
 
 const openModalAdd = () => {
 
-    openModal('modalAddCategoryProduct');
-    initDropzone('dropzoneContainerAdd','dropzoneAdd','dropzonePreviewAdd', false);
+    openModal('modalAddBanner');
+    initDropzone('dropzoneContainerAdd', 'dropzoneAdd', 'dropzonePreviewAdd', false);
 
 }
 
 const initDropzone = (container, element, dropzonePreviewElement, files = false) => {
     const dropzoneSelector = `#${container}, #${element}`;
-     // 🔴 1. Destruir instancia previa si existe
-     Dropzone.instances.forEach((dz) => {
+    // 🔴 1. Destruir instancia previa si existe
+    Dropzone.instances.forEach((dz) => {
         if (dz.element.matches(dropzoneSelector)) {
             dz.destroy();
         }
@@ -173,7 +169,6 @@ const initDropzone = (container, element, dropzonePreviewElement, files = false)
     });
 
     dropzoneGlobal.on("addedfile", (file) => {
-        console.log('(luismi):>> fdsfds');
         // Elimina anteriores si hay más de uno
         if (dropzoneGlobal.files.length > 1) {
             const filesToRemove = dropzoneGlobal.files.filter(f => f !== file);

@@ -116,22 +116,22 @@ document.addEventListener("submit", async (e) => {
     if (e.target.matches("#formAddProducts")) {
         e.preventDefault();
 
-        if (!FormValidate("formAddProducts")) {
-            toastAlert("Algunos campos son necesarios", "warning")
-            return;
-        }
+        /*   if (!FormValidate("formAddProducts")) {
+              toastAlert("Algunos campos son necesarios", "warning")
+              return;
+          } */
 
         const formData = new FormData(e.target);
-
-        let validateCheckboxs = validateSingleCheckbox();
-        if (!validateCheckboxs[0]) {
-            return toastAlert(validateCheckboxs[1], "warning")
-        }
-
-        let validateRadioVariants = validateUniqueRadio();
-        if (!validateRadioVariants[0]) {
-            return toastAlert(validateRadioVariants[1], "warning")
-        } 
+        
+                let validateCheckboxs = validateSingleCheckbox();
+                if (!validateCheckboxs[0]) {
+                    return toastAlert(validateCheckboxs[1], "warning")
+                }
+        
+         let validateRadioVariants = validateUniqueRadio();
+         if (!validateRadioVariants[0]) {
+             return toastAlert(validateRadioVariants[1], "warning")
+         } 
 
         let editorElement = document.querySelector(".ck-editor__editable");
         let contenido = editorElement.innerHTML;
@@ -164,22 +164,15 @@ document.addEventListener("submit", async (e) => {
             });
         });
 
+        const { filesFinal, filesChecks } = await getImageDropzone();
+        console.log('(luismi): filesFinal :>> ', filesFinal);
+        console.log('(luismi): filesChecks :>> ', filesChecks);
+
+        filesFinal.forEach(image => formData.append("imagenes[]", image));
+        filesChecks.forEach(check => formData.append("is_main[]", check));
         formData.append("productVariants", JSON.stringify(variants));
         formData.append("description", contenido);
-
-        dropzoneAdd.files.forEach(file => {
-            // Encuentra el input de descripción asociado
-            const descriptionInput = file.previewElement.querySelector('.description-input');
-            const StatusImage = file.previewElement.querySelector('.status-image');
-            if (descriptionInput) {
-                // Añade la descripción al FormData junto con el archivo
-                formData.append("imageDescriptions[]", descriptionInput.value);
-                formData.append("imageStatus[]", StatusImage.checked);
-            }
-            // Añade el archivo al FormData
-            formData.append("productImages[]", file);
-        });
-
+        
         try {
             let response = await customFetch(
                 ROUTES.PRODUCTS + `/store`,
@@ -211,7 +204,7 @@ const eliminarTrProducto = (elemento) => {
 
 function validateSingleCheckbox() {
     // Obtener todos los checkboxes con la clase especificada
-    const checkboxes = document.querySelectorAll('.status-image');
+    const checkboxes = document.querySelectorAll('[name="check_main_image"]');
     // Filtrar los checkboxes que están marcados
     const checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
     let message = "";
@@ -232,7 +225,7 @@ function validateSingleCheckbox() {
 
 function validateUniqueRadio() {
     const radios = document.querySelectorAll('.radio-default-variant');
-    
+
     const isChecked = Array.from(radios).some(radio => {
         return radio.checked;
     });
@@ -249,16 +242,105 @@ function validateUniqueRadio() {
 }
 
 
-const selectRaffle = (element) => {
-    
-    const containerFile = document.getElementById("containerFile");
-    const inputFile = `<label class="inline-block text-base font-medium">Calendario digital</label>
-                        <input type="file" accept="image/*,application/pdf" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" name="digital_product">`;
+const initDropzone = (container, element, dropzonePreviewElement, files = false) => {
+    const dropzoneSelector = `#${container}, #${element}`;
+    // 🔴 1. Destruir instancia previa si existe
+    Dropzone.instances.forEach((dz) => {
+        if (dz.element.matches(dropzoneSelector)) {
+            dz.destroy();
+        }
+    });
 
-    if (element.value === "") {
-        containerFile.innerHTML = "";
-    } else {
-        containerFile.innerHTML = inputFile;
+    dropzoneGlobal = null;
+
+    const previewTemplate = document.querySelector("#preview-template").innerHTML;
+    // Destruye instancias anteriores si existen
+
+    dropzoneGlobal = new Dropzone(`#${container}, #${element}`, {
+        url: "https://httpbin.org/post", // URL ficticia, no se usará aún
+        method: "post",
+        previewTemplate: previewTemplate,
+        previewsContainer: `#${dropzonePreviewElement}`,
+        clickable: `#${container}, #${element}`, // Click solo dentro del área de Dropzone
+        autoProcessQueue: false, // No subir automáticamente
+        addRemoveLinks: false, // Usamos nuestro propio botón de eliminar
+        maxFiles: 5, // Permitir solo un archivo
+        acceptedFiles: "image/*", // Solo aceptar imágenes
+        thumbnailWidth: null,
+        thumbnailHeight: null,
+    });
+
+    dropzoneGlobal.on("thumbnail", (file, dataUrl) => {
+        const thumbnail = file.previewElement.querySelector("[data-dz-thumbnail]");
+        if (thumbnail) {
+            thumbnail.style.objectFit = "contain";
+        }
+    });
+
+    dropzoneGlobal.on("addedfile", (file) => {
+        console.log('(luismi):>> fdsfds');
+        // Elimina anteriores si hay más de uno
+        /* if (dropzoneGlobal.files.length > 1) {
+            const filesToRemove = dropzoneGlobal.files.filter(f => f !== file);
+            filesToRemove.forEach(f => dropzoneGlobal.removeFile(f));
+        } */
+
+        const removeButton = file.previewElement.querySelector(`#${container} .dz-remove-button`);
+        if (removeButton) {
+            removeButton.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropzoneGlobal.removeFile(file);
+            });
+        }
+    });
+
+    if (files) {
+        files.forEach(file => {
+            const mockFile = {
+                name: file.name,
+                size: file.size,
+                url: file.url,
+                isMock: true
+            };
+
+            dropzoneGlobal.emit("addedfile", mockFile);
+            dropzoneGlobal.emit("thumbnail", mockFile, file.url);
+            dropzoneGlobal.emit("complete", mockFile);
+
+            dropzoneGlobal.files.push(mockFile);
+        });
+    }
+}
+
+initDropzone('dropzoneContainerAdd', 'dropzoneAdd', 'dropzonePreviewAdd', false);
+
+const getImageDropzone = async () => {
+    const filesToUpload = dropzoneGlobal.files;
+    const filesFinal = [];
+    const filesChecks = [];
+
+    for (const file of filesToUpload) {
+        const statusImage = file.previewElement.querySelector("[name='check_main_image']");
+        filesChecks.push(statusImage.checked);
+
+        if (file instanceof File) {
+            // Archivo real, simplemente lo agregamos
+            filesFinal.push(file);
+        } else if (file.url) {
+            // Mock file: convertir a File desde URL
+            try {
+                const response = await fetch(file.url);
+                const blob = await response.blob();
+                const realFile = new File([blob], file.name, {
+                    type: blob.type,
+                });
+                filesFinal.push(realFile);
+            } catch (err) {
+                console.error("Error al convertir mock a File:", err);
+            }
+        }
     }
 
-}
+    return { filesFinal, filesChecks };
+};

@@ -3,30 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ApiResponse;
-use App\Models\CategoryProduct;
+use App\Models\Banner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class ProductCategoryController extends Controller
+class BannerController extends Controller
 {
     function index()
     {
-        $categories = CategoryProduct::where("status", 1)->get();
-        return view('admin.product_category.index', [
-            "categories" => $categories
+        $banners = Banner::where("status", 1)->get();
+        return view('admin.banners.index', [
+            "banners" => $banners
         ]);
-    }
+    }   
 
     public function show(Request $request, $id)
     {
-        $categories = CategoryProduct::find($id);
+        $banners = Banner::find($id);
         $arrayImageDetails = [];
         $imageDirectory = storage_path('app/public/uploads/');
-        $imageDetails = pathNameToFile($categories->imagen, $imageDirectory);
+        $imageDetails = pathNameToFile($banners->image_name, $imageDirectory);
         array_push($arrayImageDetails, $imageDetails);
-        $categories->imageDetail = $arrayImageDetails;
+        $banners->imageDetail = $arrayImageDetails;
         if ($request->expectsJson()) {
-            return ApiResponse::success($categories, "Registro encontrado.");
+            return ApiResponse::success($banners, "Registro encontrado.");
         }
         //return view();
     }
@@ -35,15 +35,11 @@ class ProductCategoryController extends Controller
     {
 
         $rules = [
-            "description" => "required|string|min:2",
-            "code" => "required",
             "imagen" => "nullable|file|mimetypes:image/jpeg,image/png,image/jpg,image/gif,image/svg+xml",
         ];
 
         // Definir los nombres amigables de los atributos
         $attributes = [
-            "description" => "Descripción",
-            "code" => "Código",
             'imagen' => 'Imagen'
         ];
 
@@ -57,38 +53,31 @@ class ProductCategoryController extends Controller
             return ApiResponse::error("Validation Error", $errors, 202);
         }
 
-        // Si la validación pasa, obtener los datos validados
-        $validatedData = $validator->validated();
-
         $logo = $request->file('imagen');
         //$imageName = $logo->getClientOriginalName();
         $path = $logo->store('uploads', 'public');
         $imagePath = basename($path);
 
-        $productCategory = CategoryProduct::create([
-            "description" => $validatedData["description"],
-            "code" => $validatedData["code"],
-            "imagen" => $imagePath
+        $banner = Banner::create([
+            "image_name" => $imagePath
         ]);
 
-        $productCategory = CategoryProduct::latest()->first();
+        $banner = Banner::latest()->first();
 
-        return ApiResponse::success($productCategory, "Agregado con exito");
+        return ApiResponse::success($banner, "Agregado con exito");
     }
 
     public function update(Request $request, $id)
     {
 
         $rules = [
-            "description" => "required|string|min:2",
-            "code" => "required",
+            "imagen" => "nullable|file|mimetypes:image/jpeg,image/png,image/jpg,image/gif,image/svg+xml",
             "status" => "required",
         ];
 
         // Definir los nombres amigables de los atributos
         $attributes = [
-            "description" => "Descripción",
-            "code" => "Código",
+            "imagen" => "Imagen",
             "status" => "Estado",
         ];
 
@@ -105,31 +94,29 @@ class ProductCategoryController extends Controller
         // Si la validación pasa, obtener los datos validados
         $validatedData = $validator->validated();
 
-        $productCategory = CategoryProduct::findOrFail($id);
+        $banner = Banner::findOrFail($id);
 
         $imagePath = null;
         $image = $request->file('imagen');
         $imagePath = $image->getClientOriginalName();
 
         // Si la imagen ya existe, actualiza su información
-        if ($imagePath != $productCategory->imagen) {
+        if ($imagePath != $banner->image_name) {
             $path = $image->store('uploads', 'public');
             $imagePath = basename($path);
         } else {
-            $imagePath = $productCategory->imagen;
+            $imagePath = $banner->image_name;
         }
 
         $categoryData = [
-            "description" => $validatedData["description"],
-            "code" => $validatedData["code"],
-            "imagen" => $imagePath,
+            "image_name" => $imagePath,
             "status" => $validatedData["status"]
         ];
 
-        $productCategory->update($categoryData);
+        $banner->update($categoryData);
 
-        $productCategory = $productCategory->fresh();
+        $banner = $banner->fresh();
 
-        return ApiResponse::success($productCategory, "Agregado con exito");
+        return ApiResponse::success($banner, "Agregado con exito");
     }
 }

@@ -383,6 +383,23 @@ const destroyChoices = (choicesInstances) => {
     choicesInstances.forEach(instance => instance.destroy());
 }
 
+const initializeSelect2 = () => {
+    const $elements = $('[data-custom_select2]');
+    if ($elements.length !== 0) {
+        $elements.select2({
+            placeholder: 'Selecciona una opción',
+            allowClear: true
+        });
+    }
+};
+
+const resetSelect2 = () => {
+    // Selecciona todos los select2 y restablece su valor a vacío
+    $('[data-custom_select2]').each(function () {
+        $(this).val(null).select2('destroy').select2(); // Esto asegura que se reinicia correctamente
+    });
+};
+
 
 window.addEventListener("load", () => {
     activarItemSidebar();
@@ -403,3 +420,8 @@ const formatDate = (isoDate, dateTime = true) => {
         return `${year}-${month}-${day}`;
     }
 }
+
+window.addEventListener("load", () => {
+    activarItemSidebar();
+    initializeSelect2();
+})

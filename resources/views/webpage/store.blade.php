@@ -89,7 +89,7 @@
 
 
     </div> --}}
-    <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto" style="margin-top: 100px; background-color: #f9fafb" >
+    <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto" style="margin-top: 100px; background-color: #f9fafb">
         <div>
             <h5 class="title-page mb-16">Marcas</h5>
         </div>
@@ -447,33 +447,16 @@
                 <div class="flex flex-wrap items-center gap-2">
                     <p class="grow">Showing all <b>7,410</b> items results</p>
                     <div class="flex gap-2 shrink-0 items-cente">
-                        <div class="relative dropdown">
-                            <a href="#!"
-                                class="bg-white text-custom-500 btn border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:bg-zink-700 dark:hover:bg-custom-500 dark:ring-custom-400/20 dark:focus:bg-custom-500 dropdown-toggle"
-                                id="dropdownMenuLink" data-bs-toggle="dropdown">Sort by: <b class="font-medium">Highest
-                                    Price</b> <i data-lucide="chevron-down"
-                                    class="inline-block size-4 ltr:ml-1 rtl:mr-1"></i></a>
-
-                            <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600"
-                                aria-labelledby="dropdownMenuButton">
-                                <li>
-                                    <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                        href="#!">Lowest Price</a>
-                                </li>
-                                <li>
-                                    <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                        href="#!">Highest Price</a>
-                                </li>
-                                <li>
-                                    <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                        href="#!">Hight to Low</a>
-                                </li>
-                                <li class="pt-2 mt-2 border-t dark:border-zink-300/50">
-                                    <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                        href="#!">Low to High</a>
-                                </li>
+                        
+                        <div class="custom-dropdown">
+                            <input type="text" class="custom-dropdown__input" placeholder="Select option" readonly>
+                            <ul class="custom-dropdown__list">
+                              <li class="custom-dropdown__item">Option 1</li>
+                              <li class="custom-dropdown__item">Option 2</li>
+                              <li class="custom-dropdown__item">Option 3</li>
+                              <li class="custom-dropdown__item">Option 4</li>
                             </ul>
-                        </div>
+                          </div>
                     </div>
                 </div>
 

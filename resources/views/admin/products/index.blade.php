@@ -39,12 +39,11 @@
                                 <tr data-table={{ $product->id }}>
                                     <td>{{ $product->id }}</td>
                                     <td>
-                                        @php
-                                            $images = json_decode($product->images, true);
-                                            $imageUrl = asset('storage/uploads/' . $images[0]['path']);
-                                        @endphp
-                                        <img src="{{ $imageUrl }}" alt="" class="h-10 h-16 rounded-md"
-                                            style="width: 4rem">
+                                        @foreach ($product->productImages as $image)
+                                            @if ($image->is_main)
+                                                <img src="{{ asset('storage/uploads/' . $image->image_name) }}" class="h-10 h-16 rounded-md" style="width: 4rem">
+                                            @endif
+                                        @endforeach
                                     </td>
                                     <td>{{ $product->title }}</td>
                                     <td>{{ $product->categoryProduct->description }}</td>
