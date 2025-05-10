@@ -44,8 +44,17 @@ class ProductController extends Controller
 
     public function show($id, Request $request)
     {
-        $product = Product::with(['productBrand', 'measurementUnit', 'categoryProduct'])
+        $product = Product::with(['productBrand', 'measurementUnit', 'categoryProduct', 'productImages'])
             ->where('status', 1)->findOrFail($id);
+        $arrayImageDetails = [];
+        $imageDirectory = storage_path('app/public/uploads/');
+        //dd($product);
+        foreach ($product->productImages as $image) {
+            $imageDetails = pathNameToFile($image->image_name, $imageDirectory);
+            array_push($arrayImageDetails, $imageDetails);
+        }
+
+        $product->imageDetail = $arrayImageDetails;
 
         if ($request->expectsJson()) {
             return ApiResponse::success($product, "Registro encontrado");
@@ -69,6 +78,7 @@ class ProductController extends Controller
         $measurementUnits = MeasurementUnit::where('status', 1)->get();
         $productBrands = ProductBrand::where('status', 1)->get();
         $categoryProducts = CategoryProduct::where('status', 1)->get();
+        $subCategoryProducts = SubCategoryProduct::where('status', 1)->get();
         $attributeGroups = AttributeGroup::where('status', 1) // Filtro en el modelo principal
             ->whereHas('attributes', function ($query) {
                 $query->where('status', 1); // Filtro en la relación
@@ -82,7 +92,7 @@ class ProductController extends Controller
 
         return view(
             'admin.products.edit',
-            compact('productBrands', 'measurementUnits', 'categoryProducts', 'attributeGroups', 'product')
+            compact('productBrands', 'measurementUnits', 'categoryProducts','subCategoryProducts', 'attributeGroups', 'product')
         );
     }
 

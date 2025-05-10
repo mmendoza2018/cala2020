@@ -6,7 +6,7 @@
 }
 
 .bg_secondary_global_page {
-  background-color: var(----custom-secondary-color) !important;
+  background-color: var(--custom-secondary-color) !important;
 }
 
 .color_primary_global_page {
@@ -14,7 +14,7 @@
 }
 
 .color_secondary_global_page {
-  color: var(----custom-secondary-color) !important;
+  color: var(--custom-secondary-color) !important;
 }
 
 .border_primary_global_page {
@@ -22,8 +22,25 @@
 }
 
 .border_secondary_global_page {
-  border: 1px solid var(----custom-secondary-color) !important;
+  border: 1px solid var(--custom-secondary-color) !important;
 }
+
+.border_color_primary_global_page {
+  border-color: var(--custom-primary-color) !important;
+}
+
+.bg_whatsapp_global_page {
+  background-color: #1B8755 !important;
+}
+
+.color_whatsapp_global_page {
+  color: #1B8755 !important;
+}
+
+.border_color_whatsapp_global_page {
+  border-color: #1B8755 !important;
+}
+
 
 /* texts */
 

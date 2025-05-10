@@ -26,6 +26,7 @@ class Product extends Model
         "product_brand_id",
         "measurement_unit_id",
         "category_product_id",
+        "subcategory_product_id",
         "user_id"
     ];
 
@@ -42,6 +43,11 @@ class Product extends Model
     public function categoryProduct()
     {
         return $this->belongsTo(CategoryProduct::class, 'category_product_id');
+    }
+
+    public function subcategoryProduct()
+    {
+        return $this->belongsTo(SubcategoryProduct::class, 'subcategory_product_id');
     }
 
     public function productAttributes()

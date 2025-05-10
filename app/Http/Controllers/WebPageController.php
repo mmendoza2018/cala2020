@@ -42,8 +42,11 @@ class WebPageController extends Controller
 
     public function product(Product $product)
     {
+        /* luismi */
         $product->load(['productAttributes.attributesCombination', 'productBrand']);
         $defaultProductAttribute = $product->productAttributes->firstWhere('is_default', 1);
+        $generalInfo = General::first();
+        $themes = Theme::first();
 
         $groupedAttributes = [];
         $defaultAttributes = []; // Para almacenar la combinación por defecto, si existe
@@ -97,7 +100,9 @@ class WebPageController extends Controller
             "activeScroll" => false,
             "finalGroupedAttributes" => $finalGroupedAttributes,
             "defaultAttributes" => $defaultAttributes,
-            "defaultProductAttribute" => $defaultProductAttribute
+            "defaultProductAttribute" => $defaultProductAttribute,
+            "generalInfo" => $generalInfo,
+            "themes" => $themes
         ]);
     }
 
@@ -158,7 +163,6 @@ class WebPageController extends Controller
 
             return view('webpage.components.products', compact('products'))->render();
         }
-
         return view('webpage.store', [
             "products" => $products,
             "brands" => $brands,

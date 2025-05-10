@@ -46,6 +46,7 @@ function initializeClock(id, endtime) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    console.log('(luismi):>> entre');
     let cardsWithDrawDate = document.querySelectorAll("[data-draw_date]");
     if (cardsWithDrawDate.length > 0) {
         cardsWithDrawDate.forEach(e => {

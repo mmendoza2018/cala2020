@@ -1,4 +1,4 @@
-const offCanvasShoppingCartProduct = new bootstrap.Offcanvas('#offCanvasShoppingCartProduct');
+//const offCanvasShoppingCartProduct = new bootstrap.Offcanvas('#offCanvasShoppingCartProduct');
 
 document.addEventListener("change", async (e) => {
 
@@ -39,6 +39,7 @@ document.addEventListener("change", async (e) => {
 })
 
 document.addEventListener('DOMContentLoaded', function () {
+    console.log('(luismi):>> ahora si');
     if (document.querySelector(".splideProducts") !== null) {
 
         var main = new Splide('#main-carousel', {
@@ -123,7 +124,7 @@ const addProductToShoppingCart = async () => {
             let data = response.data;
             console.log('data :>> ', data);
             renderProductShoppingCartModal(data);
-            offCanvasShoppingCartProduct.show();
+            //offCanvasShoppingCartProduct.show();
             $('.js-panel-cart').addClass('show-header-cart');
             //renderProductsCart(data);
         } else {

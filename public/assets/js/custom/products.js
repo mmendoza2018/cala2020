@@ -1,7 +1,8 @@
 let dataTableProducts = null;
 let choicesInstances = [];  // Array para almacenar todas las instancias
+let dropzoneGlobal = null;
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     if (document.getElementById("tableProducts") !== null) {
         dataTableProducts = $("#tableProducts").DataTable({
             info: false,
@@ -13,8 +14,33 @@ document.addEventListener("DOMContentLoaded", () => {
             ]
         });
     }
-    initializeChoices();
+
+    if (document.querySelector(`[data-page_edit]`) !== null) {
+        await getProduct();
+    } else {
+        agregarTemplate("templateProductVariants", "containerProductVariants");
+        initDropzone('dropzoneContainerAdd', 'dropzoneAdd', 'dropzonePreviewAdd', false);
+    }
+
 });
+
+const getProduct = async () => {
+    try {
+        const partes = window.location.pathname.split('/').filter(p => p);
+        const idProduct = partes[partes.length - 2];
+        let response = await customFetch(ROUTES.PRODUCTS + `/${idProduct}`);
+        if (response.status === "success") {
+            let data = response.data;
+            console.log('(luismi): response.data :>> ', response.data);
+            initDropzone('dropzoneContainerAct', 'dropzoneAct', 'dropzonePreviewAct', data.imageDetail);
+        } else {
+            boxAlertValidation(response.errors)
+        }
+    } catch (error) {
+        console.log('error :>> ', error);
+    }
+}
+
 const agregarTemplate = (idTemplate, idContainer) => {
     let template = document.getElementById(idTemplate);
 
@@ -37,31 +63,6 @@ document.addEventListener("click", (e) => {
         eliminarTrProducto(e.target);
     }
 });
-
-let dropzoneAdd = null;
-if (document.querySelector(".dropzoneAdd") !== null) {
-
-    agregarTemplate("templateProductVariants", "containerProductVariants");
-
-    let dropzonePreviewNode = document.querySelector("#dropzone-preview-list");
-    dropzonePreviewNode.id = "";
-    let previewTemplate = dropzonePreviewNode.parentNode.innerHTML;
-    dropzonePreviewNode.parentNode.removeChild(dropzonePreviewNode);
-
-    dropzoneAdd = new Dropzone(".dropzoneAdd", {
-        url: 'https://httpbin.org/post',
-        method: "post",
-        previewTemplate: previewTemplate,
-        previewsContainer: "#dropzone-preview",
-        clickable: ".dropzoneAdd", // Asegúrate de que solo el área de dropzone sea clicable
-    });
-
-    dropzoneAdd.on("addedfile", (file) => {
-        let inpoutsToUpload = generateInpoutsToUpload();
-        file.previewElement.appendChild(inpoutsToUpload);
-    });
-
-}
 
 const generateInpoutsToUpload = (description = '', status = false) => {
     const container = document.createElement('div');
@@ -116,22 +117,22 @@ document.addEventListener("submit", async (e) => {
     if (e.target.matches("#formAddProducts")) {
         e.preventDefault();
 
-        /*   if (!FormValidate("formAddProducts")) {
-              toastAlert("Algunos campos son necesarios", "warning")
-              return;
-          } */
+        if (!FormValidate("formAddProducts")) {
+            toastAlert("Algunos campos son necesarios", "warning")
+            return;
+        }
 
         const formData = new FormData(e.target);
-        
-                let validateCheckboxs = validateSingleCheckbox();
-                if (!validateCheckboxs[0]) {
-                    return toastAlert(validateCheckboxs[1], "warning")
-                }
-        
-         let validateRadioVariants = validateUniqueRadio();
-         if (!validateRadioVariants[0]) {
-             return toastAlert(validateRadioVariants[1], "warning")
-         } 
+
+        let validateCheckboxs = validateSingleCheckbox();
+        if (!validateCheckboxs[0]) {
+            return toastAlert(validateCheckboxs[1], "warning")
+        }
+
+        let validateRadioVariants = validateUniqueRadio();
+        if (!validateRadioVariants[0]) {
+            return toastAlert(validateRadioVariants[1], "warning")
+        }
 
         let editorElement = document.querySelector(".ck-editor__editable");
         let contenido = editorElement.innerHTML;
@@ -165,14 +166,12 @@ document.addEventListener("submit", async (e) => {
         });
 
         const { filesFinal, filesChecks } = await getImageDropzone();
-        console.log('(luismi): filesFinal :>> ', filesFinal);
-        console.log('(luismi): filesChecks :>> ', filesChecks);
 
         filesFinal.forEach(image => formData.append("imagenes[]", image));
         filesChecks.forEach(check => formData.append("is_main[]", check));
         formData.append("productVariants", JSON.stringify(variants));
         formData.append("description", contenido);
-        
+
         try {
             let response = await customFetch(
                 ROUTES.PRODUCTS + `/store`,
@@ -185,6 +184,103 @@ document.addEventListener("submit", async (e) => {
                 location.reload();
             } else {
                 boxAlertValidation(response.errors)
+            }
+        } catch (error) {
+            console.error('Error de red:', error);
+        }
+
+    }
+
+    if (e.target.matches("#formActProducts")) {
+        e.preventDefault();
+
+        if (!FormValidate("formActProducts")) {
+            toastAlert("Algunos campos son necesarios", "warning")
+            return;
+        }
+
+        const formData = new FormData(e.target);
+
+        let editorElement = document.querySelector(".ck-editor__editable");
+        let contenido = editorElement.innerHTML;
+
+        let validateCheckboxs = validateSingleCheckbox();
+        if (!validateCheckboxs[0]) {
+            return toastAlert(validateCheckboxs[1], "warning")
+        }
+
+        let validateRadioVariants = validateUniqueRadio();
+        if (!validateRadioVariants[0]) {
+            return toastAlert(validateRadioVariants[1], "warning")
+        }
+
+        // Verifica todos los checkboxes
+        e.target.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            if (!checkbox.checked) {
+                // Añade el checkbox desmarcado con valor 0
+                formData.append(checkbox.name, '0');
+            }
+        });
+
+        const variants = []; // Array para almacenar todas las variantes
+
+        // Seleccionamos todas las filas de combinaciones
+        const rows = document.querySelectorAll('#containerProductVariants tr');
+
+        rows.forEach(row => {
+            const attributes = [];
+
+            // Capturamos los atributos de cada grupo
+            const selects = row.querySelectorAll('select[name="variant"]');
+            selects.forEach(select => {
+                const attributeId = select
+                    .value; // ID del atributo seleccionado
+                const description = select.options[select.selectedIndex]
+                    .text; // Descripción del atributo
+                if (attributeId) {
+                    attributes.push({
+                        id: attributeId,
+                        description: description
+                    });
+                }
+            });
+
+            // Creamos un objeto para la variante actual
+            variants.push({
+                attributes,
+                idProductAttribute: row.querySelector(
+                    'input[name="idProductAttribute"]').value,
+                reference: row.querySelector('input[name="reference"]')
+                    .value,
+                default_price: row.querySelector(
+                    'input[name="default_price"]').value,
+                stock: row.querySelector('input[name="stock"]').value,
+                is_default: row.querySelector(
+                    'input[name="is_default"]:checked') ? true :
+                    false
+            });
+        });
+
+        formData.append("description", contenido);
+        formData.append("productVariants", JSON.stringify(variants));
+
+        const { filesFinal, filesChecks } = await getImageDropzone();
+
+        filesFinal.forEach(image => formData.append("imagenes[]", image));
+        filesChecks.forEach(check => formData.append("is_main[]", check));
+        formData.append('_method', 'PUT');
+
+        try {
+            let response = await customFetch(
+                ROUTES.PRODUCTS + `/${e.target.id.value}`,
+                "POST",
+                formData
+            );
+            console.log('response :>> ', response);
+            if (response.status) {
+                boxAlert("Actualizado con exito!", "success")
+            } else {
+                boxAlertValidation(result.errors)
             }
         } catch (error) {
             console.error('Error de red:', error);
@@ -312,8 +408,6 @@ const initDropzone = (container, element, dropzonePreviewElement, files = false)
         });
     }
 }
-
-initDropzone('dropzoneContainerAdd', 'dropzoneAdd', 'dropzonePreviewAdd', false);
 
 const getImageDropzone = async () => {
     const filesToUpload = dropzoneGlobal.files;
