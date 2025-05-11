@@ -47,14 +47,17 @@ class ProductController extends Controller
         $product = Product::with(['productBrand', 'measurementUnit', 'categoryProduct', 'productImages'])
             ->where('status', 1)->findOrFail($id);
         $arrayImageDetails = [];
+        $arrayImageActive = [];
         $imageDirectory = storage_path('app/public/uploads/');
         //dd($product);
         foreach ($product->productImages as $image) {
             $imageDetails = pathNameToFile($image->image_name, $imageDirectory);
             array_push($arrayImageDetails, $imageDetails);
+            array_push($arrayImageActive, $image->is_main);
         }
 
         $product->imageDetail = $arrayImageDetails;
+        $product->imageChecks = $arrayImageActive;
 
         if ($request->expectsJson()) {
             return ApiResponse::success($product, "Registro encontrado");
@@ -92,7 +95,7 @@ class ProductController extends Controller
 
         return view(
             'admin.products.edit',
-            compact('productBrands', 'measurementUnits', 'categoryProducts','subCategoryProducts', 'attributeGroups', 'product')
+            compact('productBrands', 'measurementUnits', 'categoryProducts', 'subCategoryProducts', 'attributeGroups', 'product')
         );
     }
 
@@ -108,7 +111,6 @@ class ProductController extends Controller
             "productVariants" => "required|json",
             "min_stock" => "required",
             "status_on_website" => "required",
-            "status_on_catalog" => "required",
             'product_brand_id' => 'required|integer|exists:product_brands,id',
             "category_product_id" => "required",
         ];
@@ -122,7 +124,6 @@ class ProductController extends Controller
             "productVariants" => "Variantes del producto",
             "min_stock" => "Minimo de Stock",
             "status_on_website" => "Estado de la página web",
-            "status_on_catalog" => "Estado del catalogo",
             'product_brand_id' => "Marca",
             "category_product_id" => "Categoria",
         ];
@@ -164,7 +165,6 @@ class ProductController extends Controller
             "images" => json_encode([]),
             "min_stock" => $validatedData["min_stock"],
             "status_on_website" => $validatedData["status_on_website"],
-            "status_on_catalog" => $validatedData["status_on_catalog"],
             "product_brand_id" => $validatedData["product_brand_id"],
             "category_product_id" => $validatedData["category_product_id"],
             "user_id" => Auth::guard('admin')->id()
@@ -215,35 +215,28 @@ class ProductController extends Controller
     {
         $rules = [
             "title" => "required|string|min:5",
-            "description" => "",
-            "productImages" => "required",
-            "imageDescriptions" => "required",
-            "imageStatus" => "required",
+            "description" => "required",
+            "imagenes" => "nullable|array",
+            "is_main" => "nullable|array",
+            "imagenes.*" => "file|image|mimes:jpeg,png,jpg,gif,svg",
             "productVariants" => "required|json",
-            "doc_paths" => "",
             "min_stock" => "required",
             "status_on_website" => "required",
             'product_brand_id' => 'required|integer|exists:product_brands,id',
-            "measurement_unit_id" => "required",
             "category_product_id" => "required",
-            "digital_product" => "",
         ];
 
+        // Definir los nombres amigables de los atributos
         $attributes = [
             "title" => "Titulo",
             "description" => "Descripción",
-            "ProductImages" => "Imagenes",
-            "imageDescriptions" => "Descripción de imagen",
-            "imageStatus" => "Estado de la imagen",
+            "imagenes" => "imagenes",
+            "is_main" => "imagen activa",
             "productVariants" => "Variantes del producto",
-            "doc_paths" => "Documentos",
             "min_stock" => "Minimo de Stock",
             "status_on_website" => "Estado de la página web",
-            "status_on_catalog" => "Estado del catalogo",
             'product_brand_id' => "Marca",
-            "measurement_unit_id" => "Unidad de medida",
             "category_product_id" => "Categoria",
-            "digital_product" => "Producto digital"
         ];
 
         // Crear el validador manualmente
@@ -276,87 +269,73 @@ class ProductController extends Controller
         // Si la validación pasa, obtener los datos validados
         $validatedData = $validator->validated();
 
-        // Obtener el producto desde la base de datos
         $product = Product::findOrFail($id);
 
-        // Obtener las imágenes actuales del producto
-        $productImages = json_decode($product->images, true);
-        // Obtener las nuevas imágenes enviadas en la solicitud
-        $uploadedImages = $request->file('productImages');
+        $uploadedImages = $request->file('imagenes');
+        $checks = $request->input('is_main'); // ['true', 'false', 'false', ...]
 
-        // Convertir las imágenes actuales en un array asociativo con el nombre como clave
-        $existingImages = [];
-        foreach ($productImages as $image) {
-            $existingImages[$image['path']] = $image;
-        }
+        // Obtener todas las imágenes existentes relacionadas
+        $currentImages = $product->productImages()->get()->keyBy('image_name');
 
-        // Crear arrays para imágenes nuevas y a eliminar
-        $imagesToUpdate = [];
-        $imagesToDelete = [];
+        // Obtener nombres originales de imágenes subidas
         $uploadedImageNames = [];
-
-        // Comparar imágenes nuevas con las existentes
-        $index = 0;
         foreach ($uploadedImages as $uploadedImage) {
-            $path = $uploadedImage->getClientOriginalName();
-            $uploadedImageNames[] = $path;
-
-            // Si la imagen ya existe, actualiza su información
-            if (array_key_exists($path, $existingImages)) {
-                $existingImage = $existingImages[$path];
-                $existingImage['description'] = $request->imageDescriptions[$index];
-                $existingImage['status'] = $request->imageStatus[$index];
-                $imagesToUpdate[] = $existingImage;
-            } else {
-                // Si la imagen es nueva, agrégala
-                $newPath = $uploadedImage->store('uploads', 'public');
-                $fileName = basename($newPath);
-
-                $imagesToUpdate[] = [
-                    "path" => $fileName,
-                    "description" => $request->imageDescriptions[$index],
-                    "status" => $request->imageStatus[$index]
-                ];
-            }
-
-            $index++;
+            $uploadedImageNames[] = $uploadedImage->getClientOriginalName();
         }
 
-        // Convertir los valores de 'status' a booleanos
-        usort($imagesToUpdate, function ($a, $b) {
-            $statusA = filter_var($a['status'], FILTER_VALIDATE_BOOLEAN);
-            $statusB = filter_var($b['status'], FILTER_VALIDATE_BOOLEAN);
-            return $statusB - $statusA;
-        });
+        // Desactivar imagen principal previamente marcada
+        $product->productImages()->update(['is_main' => false]);
 
-        // Determinar qué imágenes se deben eliminar
-        foreach ($existingImages as $path => $image) {
-            if (!in_array($path, $uploadedImageNames)) {
-                // La imagen no está en el nuevo conjunto de imágenes, por lo que debe ser eliminada
-                $imagesToDelete[] = $path;
-            }
-        }
+        // Marcar como inactivas (status = 0) las imágenes que ya no están
+        foreach ($currentImages as $imageName => $image) {
+            if (!in_array($imageName, $uploadedImageNames)) {
+                // Desactivar el registro
+                $image->update(['status' => 0]);
 
-        //Eliminar físicamente las imágenes no deseadas del almacenamiento
-        if (!empty($imagesToDelete)) {
-            foreach ($imagesToDelete as $path) {
-                $filePath = storage_path('app/public/uploads/' . $path);
+                // Eliminar archivo físico
+                $filePath = storage_path('app/public/uploads/' . $image->image_name);
                 if (file_exists($filePath)) {
                     unlink($filePath);
                 }
             }
         }
+
+        // Procesar archivos subidos
+        foreach ($uploadedImages as $index => $uploadedImage) {
+            $originalName = $uploadedImage->getClientOriginalName();
+            $isMain = $checks[$index] === "true" ? 1 : 0;
+
+            if ($currentImages->has($originalName)) {
+                // Actualizar imagen existente
+                $currentImages[$originalName]->update([
+                    'is_main' => $isMain,
+                    'status' => 1 // Reactivar en caso esté en 0
+                ]);
+            } else {
+                // Guardar imagen nueva
+                $newPath = $uploadedImage->store('uploads', 'public');
+                $fileName = basename($newPath);
+
+                $product->productImages()->create([
+                    'image_name' => $fileName,
+                    'description' => '-', // Ajusta si es necesario
+                    'is_main' => $isMain,
+                    'status' => 1
+                ]);
+            }
+        }
+
         $productData = [
             "title" => $validatedData["title"],
             "code" => "XX_PRODUCT",
             "description" => $validatedData["description"],
-            "images" => json_encode($imagesToUpdate),
             "slug" => $slug,
+            "images" => json_encode([]),
             "min_stock" => $validatedData["min_stock"],
-            "status_on_website" => intval($validatedData["status_on_website"]),
+            "status_on_website" => $validatedData["status_on_website"],
             "product_brand_id" => $validatedData["product_brand_id"],
-            "measurement_unit_id" => $validatedData["measurement_unit_id"],
             "category_product_id" => $validatedData["category_product_id"],
+            "user_id" => Auth::guard('admin')->id()
         ];
 
         $product->update($productData);

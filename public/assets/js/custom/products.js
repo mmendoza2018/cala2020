@@ -32,7 +32,7 @@ const getProduct = async () => {
         if (response.status === "success") {
             let data = response.data;
             console.log('(luismi): response.data :>> ', response.data);
-            initDropzone('dropzoneContainerAct', 'dropzoneAct', 'dropzonePreviewAct', data.imageDetail);
+            initDropzone('dropzoneContainerAct', 'dropzoneAct', 'dropzonePreviewAct', data.imageDetail, data.imageChecks);
         } else {
             boxAlertValidation(response.errors)
         }
@@ -280,7 +280,7 @@ document.addEventListener("submit", async (e) => {
             if (response.status) {
                 boxAlert("Actualizado con exito!", "success")
             } else {
-                boxAlertValidation(result.errors)
+                boxAlertValidation(response.errors)
             }
         } catch (error) {
             console.error('Error de red:', error);
@@ -338,7 +338,8 @@ function validateUniqueRadio() {
 }
 
 
-const initDropzone = (container, element, dropzonePreviewElement, files = false) => {
+const initDropzone = (container, element, dropzonePreviewElement, files = false, checks = false) => {
+    console.log('(luismi): checks :>> ', checks);
     const dropzoneSelector = `#${container}, #${element}`;
     // 🔴 1. Destruir instancia previa si existe
     Dropzone.instances.forEach((dz) => {
@@ -374,13 +375,6 @@ const initDropzone = (container, element, dropzonePreviewElement, files = false)
     });
 
     dropzoneGlobal.on("addedfile", (file) => {
-        console.log('(luismi):>> fdsfds');
-        // Elimina anteriores si hay más de uno
-        /* if (dropzoneGlobal.files.length > 1) {
-            const filesToRemove = dropzoneGlobal.files.filter(f => f !== file);
-            filesToRemove.forEach(f => dropzoneGlobal.removeFile(f));
-        } */
-
         const removeButton = file.previewElement.querySelector(`#${container} .dz-remove-button`);
         if (removeButton) {
             removeButton.addEventListener("click", (e) => {
@@ -390,9 +384,9 @@ const initDropzone = (container, element, dropzonePreviewElement, files = false)
             });
         }
     });
-
+    console.log('(luismi): files :>> ', files);
     if (files) {
-        files.forEach(file => {
+        files.forEach((file, index) => {
             const mockFile = {
                 name: file.name,
                 size: file.size,
@@ -405,6 +399,20 @@ const initDropzone = (container, element, dropzonePreviewElement, files = false)
             dropzoneGlobal.emit("complete", mockFile);
 
             dropzoneGlobal.files.push(mockFile);
+
+            // Esperar a que el DOM del preview esté disponible
+            setTimeout(() => {
+                const previews = document.querySelectorAll(`#${dropzonePreviewElement} .dz-preview`);
+                const currentPreview = previews[index];
+                console.log('(luismi): currentPreview :>> ', currentPreview);
+
+                if (currentPreview) {
+                    const radioInput = currentPreview.querySelector('input.primary-image-checkbox');
+                    if (radioInput && checks[index] === 1) {
+                        radioInput.checked = true;
+                    }
+                }
+            }, 100);
         });
     }
 }

@@ -41,7 +41,7 @@
         id="navbar">
         <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto flex items-center self-center w-full">
             <div class="shrink-0">
-                <a href="#!">
+                <a href="{{ route('webpage.home') }}">
                     <img src="{{ asset('storage/uploads/' . $generalInfo->logo) }}" alt=""
                         class="block h-10 dark:hidden">
                 </a>
@@ -60,9 +60,10 @@
                         </form> --}}
                     </li>
                     <li class="flex justify-center gap-5">
-                        <a href="#" class="effect-link-nav">Categorias</a>
-                        <a href="#" class="effect-link-nav">Marcas</a>
-                        <a href="#" class="effect-link-nav">Nuestros Productos</a>
+                        <a href="{{ route('webpage.home') }}" class="effect-link-nav">Inicio</a>
+                        <a href="{{ route('webpage.store') }}" class="effect-link-nav">Catalogo</a>
+                        <a href="{{ route('webpage.categories') }}" class="effect-link-nav">Categorias</a>
+                        <a href="#" class="effect-link-nav">Sub categorias</a>
                     </li>
                 </ul>
             </div>
@@ -75,13 +76,23 @@
                 {{-- <button type="button"
                     class="text-white border-0 text-15 btn btn_whatsapp from-custom-500 to-purple-500 hover:text-white hover:from-purple-500 hover:to-custom-500">Contactanos
                     <i class="ri-whatsapp-line"></i></button> --}}
+
+                <div action="#!" class="relative aos-init aos-animate" data-aos="fade-left">
+                    <input type="email" id="subscribeInput"
+                        class="py-3 ltr:pr-40 rtl:pl-40 bg-slate-100 dark:bg-zinc-800/40 form-input color_primary_global_pageborder dark:border-zinc-800 focus:outline-none border_secondary_global_page backdrop-blur-md"
+                        autocomplete="off" placeholder="Busca un producto" required="">
+                    <button type="submit"
+                        class="absolute px-6 py-2 text-base transition-all duration-200 ease-linear border-0 ltr:right-1 rtl:left-1 text-custom-50 btn top-1 bottom-1 from-custom-500 hover:text-white hover:from-purple-500 hover:to-custom-500"><i
+                            class="ri-arrow-right-line color_primary_global_page"></i></button>
+                </div>
                 <div>
                     <button type="button" data-drawer-target="cartSidePenal"
-                        class="inline-flex relative justify-center items-center p-0 text-topbar-item transition-all w-[37.5px] h-[37.5px] duration-200 ease-linear bg-topbar rounded-md btn hover:bg-topbar-item-bg-hover hover:text-topbar-item-hover group-data-[topbar=dark]:bg-topbar-dark group-data-[topbar=dark]:hover:bg-topbar-item-bg-hover-dark group-data-[topbar=dark]:hover:text-topbar-item-hover-dark group-data-[topbar=brand]:bg-topbar-brand group-data-[topbar=brand]:hover:bg-topbar-item-bg-hover-brand group-data-[topbar=brand]:hover:text-topbar-item-hover-brand group-data-[topbar=dark]:dark:bg-zink-700 group-data-[topbar=dark]:dark:hover:bg-zink-600 group-data-[topbar=brand]:text-topbar-item-brand group-data-[topbar=dark]:dark:hover:text-zink-50 group-data-[topbar=dark]:dark:text-zink-200 group-data-[topbar=dark]:text-topbar-item-dark">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        class="inline-flex relative justify-center items-center p-0 text-topbar-item transition-all w-10 duration-200 ease-linear bg-topbar rounded-md btn hover:bg-topbar-item-bg-hover hover:text-topbar-item-hover"
+                        style="height: 100%">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" data-lucide="shopping-cart"
-                            class="lucide lucide-shopping-cart inline-block w-5 h-5 stroke-1 fill-slate-100 group-data-[topbar=dark]:fill-topbar-item-bg-hover-dark group-data-[topbar=brand]:fill-topbar-item-bg-hover-brand">
+                            class="lucide lucide-shopping-cart inline-block w-6 h-6 stroke-1 fill-slate-100 group-data-[topbar=dark]:fill-topbar-item-bg-hover-dark group-data-[topbar=brand]:fill-topbar-item-bg-hover-brand">
                             <circle cx="8" cy="21" r="1"></circle>
                             <circle cx="19" cy="21" r="1"></circle>
                             <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12">
@@ -91,21 +102,12 @@
                             class="absolute flex items-center justify-center w-[16px] h-[16px] text-xs text-white bg-red-400 border-white rounded-full -top-1 -right-1">3</span>
                     </button>
                 </div>
-                <di action="#!" class="relative aos-init aos-animate" data-aos="fade-left">
-
-                    <input type="email" id="subscribeInput"
-                        class="py-3 ltr:pr-40 rtl:pl-40 bg-slate-100 dark:bg-zinc-800/40 form-input color_primary_global_pageborder dark:border-zinc-800 focus:outline-none border_secondary_global_page backdrop-blur-md"
-                        autocomplete="off" placeholder="Busca un producto" required="">
-                    <button type="submit"
-                        class="absolute px-6 py-2 text-base transition-all duration-200 ease-linear border-0 ltr:right-1 rtl:left-1 text-custom-50 btn top-1 bottom-1 from-custom-500 hover:text-white hover:from-purple-500 hover:to-custom-500"><i
-                            class="ri-arrow-right-line color_primary_global_page"></i></button>
-                </di>
             </div>
         </div>
     </nav>
 
     <div id="cartSidePenal" drawer-end=""
-        class="fixed inset-y-0 flex flex-col w-full transition-transform duration-300 ease-in-out transform bg-white shadow dark:bg-zink-600 ltr:right-0 rtl:left-0 md:w-96 z-drawer">
+        class="fixed inset-y-0 flex flex-col w-full transition-transform duration-300 ease-in-out transform bg-white shadow dark:bg-zink-600 ltr:right-0 rtl:left-0 md:w-96 z-drawer show hidden">
         <div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-zink-500">
             <div class="grow">
                 <h5 class="mb-0 text-16">Shopping Cart <span
@@ -157,7 +159,7 @@
                             <div class="flex items-center justify-between gap-3">
                                 <div class="inline-flex text-center input-step">
                                     <button type="button"
-                                        class="border w-9 h-9 leading-[15px] minus bg-white dark:bg-zink-700 dark:border-zink-500 ltr:rounded-l rtl:rounded-r transition-all duration-200 ease-linear border-slate-200 text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><svg
+                                        class="border w-9 leading-[15px] minus bg-white dark:bg-zink-700 dark:border-zink-500 ltr:rounded-l rtl:rounded-r transition-all duration-200 ease-linear border-slate-200 text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><svg
                                             xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -430,6 +432,30 @@
             </div>
         </div>
 
+    </div>
+
+    <!-- Bottom custom Nav -->
+    <div class="bottom-nav" id="mobileBottomNav">
+        <a href="#" class="nav-item active">
+            <i class="ri-home-5-line"></i>
+            <span>Inicio</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="ri-search-line"></i>
+            <span>Catalogo</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="ri-add-circle-line"></i>
+            <span>Categorias</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="ri-heart-line"></i>
+            <span>Carrito</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="ri-user-line"></i>
+            <span>Buscar</span>
+        </a>
     </div>
 
 

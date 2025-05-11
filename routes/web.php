@@ -60,6 +60,7 @@ Route::prefix('/')->group(function () {
     Route::post('get_product_by_attributes', [ProductAttributeController::class, 'getProductByAttributes'])->name('productAttributes.get_product_by_attributes');
 
     Route::get('tienda', [WebPageController::class, 'store'])->name('webpage.store');
+    Route::get('categorias', [WebPageController::class, 'viewCategories'])->name('webpage.categories');
     Route::get('nosotros', [WebPageController::class, 'about'])->name('webpage.about');
     Route::get('productos/{product:slug}', [WebPageController::class, 'product'])->name('webpage.product');
     Route::get('productos/categorias/{categoryProduct}', [WebPageController::class, 'viewProductsCategory'])->name('webpage.products_category');

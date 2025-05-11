@@ -47,9 +47,7 @@
 .title-page {
   color: var(--custom-primary-color);
   font-size: 1.8rem;
-  /* Mobile first */
   font-weight: 700;
-  margin-bottom: 1rem;
   transition: color 0.3s ease;
 }
 
@@ -62,11 +60,21 @@
   font-size: 1.3rem;
   /* Mobile first */
   font-weight: 600;
-  margin-bottom: 1rem;
   transition: color 0.3s ease;
 }
 
 .subtitle-page:hover {
+  color: var(----custom-secondary-color);
+}
+
+.text-normal {
+  color: var(--custom-primary-color);
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.text-normal:hover {
   color: var(----custom-secondary-color);
 }
 
@@ -374,6 +382,65 @@
 /* ----------------------------------------------------------------
                         END NAV
   ---------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------
+                        CUSTOM NAV FOOTER
+  ---------------------------------------------------------------- */
+
+
+@media (max-width: 768px) {
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid #ddd;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 60px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+    z-index: 9999;
+  }
+
+  .bottom-nav.hide {
+    transform: translateY(100%);
+  }
+
+  .bottom-nav .nav-item {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+    color: #555;
+    text-decoration: none;
+    padding: 5px 0;
+    transition: color 0.2s;
+  }
+
+  .bottom-nav .nav-item i {
+    display: block;
+    font-size: 20px;
+    margin-bottom: 3px;
+  }
+
+  .bottom-nav .nav-item.active {
+    color: #007bff;
+    font-weight: 600;
+  }
+
+  .bottom-nav .nav-item.active i {
+    color: #007bff;
+  }
+}
+
+/* ----------------------------------------------------------------
+                       END CUSTOM NAV FOOTER
+  ---------------------------------------------------------------- */
+
 /* ----------------------------------------------------------------
                         WHATSAPP BUTTON
   ---------------------------------------------------------------- */
@@ -524,66 +591,66 @@
                         DROPDOWN
   ---------------------------------------------------------------- */
 
-  .custom-dropdown {
-    position: relative;
-    width: 280px;
-  }
-  
-  .custom-dropdown__input {
-    width: 100%;
-    padding: 8px 12px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    background: #fff;
-    color: #000;
-    font-size: .9375rem;
-    outline: none;
-    cursor: pointer;
-    transition: border-color 0.3s ease;
-  }
-  
-  .custom-dropdown__input:hover,
-  .custom-dropdown.open .custom-dropdown__input {
-    border-color: var(--custom-primary-color); 
-  }
-  
-  .custom-dropdown__list {
-    list-style: none;
-    position: absolute;
-    width: 100%;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-top: 6px;
-    overflow: hidden;
-    padding: 0;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-    z-index: 10;
-  }
-  
-  .custom-dropdown__item {
-    padding: 8px 12px;
-    color: #000;
-    font-size: .9375rem;
-    cursor: pointer;
-    transition: background 0.25s;
-  }
-  
-  .custom-dropdown__item:hover {
-    background-color: color-mix(in srgb, var(--custom-primary-color) 20%, transparent);
-  }
-  
-  .custom-dropdown.open .custom-dropdown__list {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    border-color: var(--custom-primary-color); 
-  }
-  
-  
+.custom-dropdown {
+  position: relative;
+  width: 280px;
+}
+
+.custom-dropdown__input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #000;
+  font-size: .9375rem;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.custom-dropdown__input:hover,
+.custom-dropdown.open .custom-dropdown__input {
+  border-color: var(--custom-primary-color);
+}
+
+.custom-dropdown__list {
+  list-style: none;
+  position: absolute;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 6px;
+  overflow: hidden;
+  padding: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.custom-dropdown__item {
+  padding: 8px 12px;
+  color: #000;
+  font-size: .9375rem;
+  cursor: pointer;
+  transition: background 0.25s;
+}
+
+.custom-dropdown__item:hover {
+  background-color: color-mix(in srgb, var(--custom-primary-color) 20%, transparent);
+}
+
+.custom-dropdown.open .custom-dropdown__list {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  border-color: var(--custom-primary-color);
+}
+
+
 
 /* ----------------------------------------------------------------
                        END DROPDOWN

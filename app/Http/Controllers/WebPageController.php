@@ -146,7 +146,7 @@ class WebPageController extends Controller
     {
         return view('webpage.change_policies', ["activeScroll" => false]);
     }
-    
+
     public function store(Request $request)
     {
         $categories = CategoryProduct::where("status", 1)->get();
@@ -194,6 +194,24 @@ class WebPageController extends Controller
             "brands" => $brands,
             "categories" => $categories,
             "activeScroll" => false
+        ]);
+    }
+
+    public function viewCategories(Request $request, CategoryProduct $categoryProduct)
+    {
+        $categories = CategoryProduct::where("status", 1)->get();
+        $generalInfo = General::first();
+        $themes = Theme::first();
+        // Paginación
+        if (request()->ajax()) {
+            return view('webpage.components.categories', compact('categories'))->render();
+        }
+
+        return view('webpage.categories', [
+            "categories" => $categories,
+            "generalInfo" => $generalInfo,
+            "themes" => $themes,
+            "activeScroll" => false,
         ]);
     }
 

@@ -61,9 +61,9 @@
                                 <x-select data-custom_select2 name="category_product_id" data-validate>
                                     <option value="">Selecciona una opción</option>
                                     @foreach ($subCategoryProducts as $subcategory)
-                                        <option value="{{ $category->id }}"
-                                            {{ $category->id == $product->category_product_id ? 'selected' : '' }}>
-                                            {{ $category->description }}
+                                        <option value="{{ $subcategory->id }}"
+                                            {{ $subcategory->id == $product->subcategory_product_id ? 'selected' : '' }}>
+                                            {{ $subcategory->description }}
                                         </option>
                                     @endforeach
                                 </x-select>

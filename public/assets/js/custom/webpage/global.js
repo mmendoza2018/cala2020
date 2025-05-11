@@ -315,3 +315,24 @@ document.addEventListener('click', () => {
 });
 
 
+//nav footer 
+
+let lastScrollTop = 0;
+const navBottom = document.getElementById("mobileBottomNav");
+
+window.addEventListener("scroll", () => {
+  const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+  if (currentScroll > lastScrollTop) {
+    // scroll hacia abajo
+    navBottom.classList.add("hide");
+  } else {
+    // scroll hacia arriba
+    navBottom.classList.remove("hide");
+  }
+
+  lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+});
+
+
+
