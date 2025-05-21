@@ -55,15 +55,21 @@ class ShoppingCartProductController extends Controller
             if ($productVariant->stock < $quantity) {
                 return ApiResponse::error("Validation Error", ["La cantidad supera al stock actual"], 202);
             }
-            $product = Product::with('productBrand')->where("status", 1)->where("status_on_website", 1)->where("id", $productVariant->product_id)->first();
-            $imageProduct = json_decode($product->images)[0];
+            $product = Product::with('productBrand', 'productImages')->where("status", 1)->where("status_on_website", 1)->where("id", $productVariant->product_id)->first();
+            $imageMain = null;
+            foreach ($product->productImages as $image) {
+                if ($image->is_main) {
+                    $imageMain = $image->image_name;
+                }
+            }
+
             $shoppingCart[$productVariant->id] = [
                 'productId' => $product->id,
                 'productAttribute' => $productVariant->id,
                 'isDigitalProduct' => $product->raffle_id ? true : false,
                 'raffleId' => $product->raffle_id,
                 'title' => $product->title,
-                'image' => $imageProduct,
+                'image' => $imageMain,
                 'brand' => $product->productBrand->description ?? '', // Si hay un campo brand
                 'attributes_combination' => $productVariant->attributesCombination,
                 'price' => intval($productVariant->default_price),
@@ -113,7 +119,7 @@ class ShoppingCartProductController extends Controller
     public static function isValidProductSession()
     {
         $shoppingCartProducts = session('shoppingCartProducts', []);
-    
+
         if (count($shoppingCartProducts) === 0) {
             return response()->json([
                 'status' => 'error',
@@ -123,7 +129,7 @@ class ShoppingCartProductController extends Controller
                 ]
             ], 200);
         }
-    
+
         return null; // Indica que todo está correcto.
     }
 }

@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\CategoryProduct;
 use App\Models\ComplaintsBook;
 use App\Models\General;
 use App\Models\Product;
 use App\Models\ProductBrand;
+use App\Models\Promotion;
 use App\Models\Raffle;
 use App\Models\Theme;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\Calculation\Category;
 
 class WebPageController extends Controller
 {
@@ -151,16 +154,15 @@ class WebPageController extends Controller
     {
         $categories = CategoryProduct::where("status", 1)->get();
         $brands = ProductBrand::where("status", 1)->get();
-        $products = Product::where("status_on_website", 1)->where("status", 1)->paginate(4);
+        //$products = Product::where("status_on_website", 1)->where("status", 1)->paginate(4);
         $generalInfo = General::first();
         $themes = Theme::first();
 
         $productsQuery = $this->applyProductFilters($request);
 
-        $products = $productsQuery->paginate(9);
+        $products = $productsQuery->paginate(3);
 
         if (request()->ajax()) {
-
             return view('webpage.components.products', compact('products'))->render();
         }
         return view('webpage.store', [
@@ -223,12 +225,20 @@ class WebPageController extends Controller
     public function home(Request $request)
     {
         $generalInfo = General::first();
+        $banners = Banner::where('status', 1)->get();
+        $categories = CategoryProduct::where('status', 1)->get();
+        $promotions = Promotion::where('status', 1)->get();
+        $brands = ProductBrand::where('status', 1)->get();
         $themes = Theme::first();
 
         return view('webpage.home', [
             "activeScroll" => true,
             "generalInfo" => $generalInfo,
             "themes" => $themes,
+            "banners" => $banners,
+            "categories" => $categories,
+            "promotions" => $promotions,
+            "brands" => $brands,
         ]);
     }
 

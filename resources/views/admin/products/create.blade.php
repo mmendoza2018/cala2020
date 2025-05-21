@@ -47,7 +47,7 @@
                                 </x-select>
 
                                 <label class="inline-block mb-2 text-base font-medium">Sub Categoría</label>
-                                <x-select data-custom_select2 name="category_product_id" data-validate>
+                                <x-select data-custom_select2 name="subcategory_product_id" data-validate>
                                     <option value="">Selecciona una opción</option>
                                     @foreach ($subCategoryProducts as $subcategory)
                                         <option value="{{ $subcategory->id }}">{{ $subcategory->description }}</option>
@@ -108,12 +108,12 @@
                                             Visible en página web
                                         </label>
                                     </div>
-                                    <div class="flex items-center gap-2" style="display: none">
+                                    <div class="flex items-center gap-2">
                                         <input id="checkboxDefault24"
                                             class="border rounded-sm appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-sky-500 checked:border-sky-500 dark:checked:bg-sky-500 dark:checked:border-sky-500 checked:disabled:bg-sky-400 checked:disabled:border-sky-400"
-                                            type="checkbox" value="1" name="status_on_catalog" checked>
+                                            type="checkbox" value="1" name="featured">
                                         <label for="checkboxDefault24" class="align-middle">
-                                            Visible en catalogo
+                                            Destacado
                                         </label>
                                     </div>
                                 </div>

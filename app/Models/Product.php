@@ -27,6 +27,7 @@ class Product extends Model
         "measurement_unit_id",
         "category_product_id",
         "subcategory_product_id",
+        "featured",
         "user_id"
     ];
 

@@ -1,45 +1,28 @@
 @if ($paginator->hasPages())
-    <ul
-        class="custom-pagination pt-xxl-20 pt-xl-15 pt-10 d-flex align-items-center justify-content-center gap-xxl-3 gap-2">
-
+    <div class="custom-pagination-1">
         {{-- Previous Page Link --}}
         @if ($paginator->onFirstPage())
-            <li>
-                <a href="javascript:void(0)" class="cmn-60 d-center radius-circle nw1-clr pagi-bg disabled">
-                    <i class="ph ph-caret-left n4-clr fs20"></i>
-                </a>
-            </li>
+            <a href="javascript:void(0)" class="custom-prev-1 custom-disabled-1" aria-disabled="true"
+                aria-label="Página anterior">«</a>
         @else
-            <li>
-                <a href="{{ $paginator->previousPageUrl() }}" class="cmn-60 d-center radius-circle nw1-clr pagi-bg">
-                    <i class="ph ph-caret-left n4-clr fs20"></i>
-                </a>
-            </li>
+            <a href="{{ $paginator->previousPageUrl() }}" class="custom-prev-1" aria-label="Página anterior">«</a>
         @endif
 
         {{-- Pagination Elements --}}
         @foreach ($elements as $element)
             {{-- "Three Dots" Separator --}}
             @if (is_string($element))
-                <li>
-                    <a href="javascript:void(0)"
-                        class="cmn-60 d-center radius-circle n4-clr pagi-bg fs20 fw_700 disabled">{{ $element }}</a>
-                </li>
+                <span class="custom-page-1 custom-disabled-1" aria-disabled="true">{{ $element }}</span>
             @endif
 
             {{-- Array Of Links --}}
             @if (is_array($element))
                 @foreach ($element as $page => $url)
                     @if ($page == $paginator->currentPage())
-                        <li>
-                            <a href="javascript:void(0)"
-                                class="cmn-60 d-center radius-circle n4-clr pagi-bg fs20 fw_700 active">{{ $page }}</a>
-                        </li>
+                        <a href="javascript:void(0)" class="custom-page-1 custom-active-1"
+                            aria-current="page">{{ $page }}</a>
                     @else
-                        <li>
-                            <a href="{{ $url }}"
-                                class="cmn-60 d-center radius-circle n4-clr pagi-bg fs20 fw_700">{{ $page }}</a>
-                        </li>
+                        <a href="{{ $url }}" class="custom-page-1">{{ $page }}</a>
                     @endif
                 @endforeach
             @endif
@@ -47,17 +30,10 @@
 
         {{-- Next Page Link --}}
         @if ($paginator->hasMorePages())
-            <li>
-                <a href="{{ $paginator->nextPageUrl() }}" class="cmn-60 d-center radius-circle nw1-clr pagi-bg">
-                    <i class="ph ph-caret-right n4-clr fs20"></i>
-                </a>
-            </li>
+            <a href="{{ $paginator->nextPageUrl() }}" class="custom-next-1" aria-label="Página siguiente">»</a>
         @else
-            <li>
-                <a href="javascript:void(0)" class="cmn-60 d-center radius-circle nw1-clr pagi-bg disabled">
-                    <i class="ph ph-caret-right n4-clr fs20"></i>
-                </a>
-            </li>
+            <a href="javascript:void(0)" class="custom-next-1 custom-disabled-1" aria-disabled="true"
+                aria-label="Página siguiente">»</a>
         @endif
-    </ul>
+    </div>
 @endif

@@ -7,25 +7,14 @@
 
 @section('content')
     <div>
-        {{-- <div class="background-container">
-            <img src="https://images.pexels.com/photos/5083217/pexels-photo-5083217.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="Fondo" class="background-image">
-        </div> --}}
         <section class="splide full-screen-carousel" id="splidePrincipalBanner" aria-label="Splide Basic HTML Example">
             <div class="splide__track">
                 <ul class="splide__list">
-                    <li class="splide__slide">
-                        <img src="https://images.pexels.com/photos/5083217/pexels-photo-5083217.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                            alt="Fondo" class="slide-img">
-                    </li>
-                    <li class="splide__slide">
-                        <img src="https://images.pexels.com/photos/5083217/pexels-photo-5083217.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                            alt="Fondo" class="slide-img">
-                    </li>
-                    <li class="splide__slide">
-                        <img src="https://images.pexels.com/photos/5083217/pexels-photo-5083217.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                            alt="Fondo" class="slide-img">
-                    </li>
+                    @foreach ($banners as $banner)
+                        <li class="splide__slide">
+                            <img src="{{ asset('storage/uploads/' . $banner->image_name) }}" class="slide-img">
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </section>
@@ -37,42 +26,16 @@
                     <div class="splide" id="splideCategories" aria-label="Splide Basic HTML Example">
                         <div class="splide__track">
                             <ul class="splide__list">
-                                <li class="splide__slide">
-                                    <figure class="effect-apollo">
-                                        <img src="https://wpbingo-hoppers.myshopify.com/cdn/shop/files/ins-2.jpg?v=1741073607"
-                                            alt="img18" />
-                                        <figcaption>
-                                            <p>Camisetas</p>
-                                        </figcaption>
-                                    </figure>
-                                </li>
-                                <li class="splide__slide">
-                                    <figure class="effect-apollo">
-                                        <img src="https://wpbingo-hoppers.myshopify.com/cdn/shop/files/ins-4.jpg?v=1741073607"
-                                            alt="img18" />
-                                        <figcaption>
-                                            <p>Camisetas</p>
-                                        </figcaption>
-                                    </figure>
-                                </li>
-                                <li class="splide__slide">
-                                    <figure class="effect-apollo">
-                                        <img src="https://images.pexels.com/photos/31492770/pexels-photo-31492770.jpeg?auto=compress&cs=tinysrgb&w=600"
-                                            alt="img18" />
-                                        <figcaption>
-                                            <p>Camisetas</p>
-                                        </figcaption>
-                                    </figure>
-                                </li>
-                                <li class="splide__slide">
-                                    <figure class="effect-apollo">
-                                        <img src="https://images.pexels.com/photos/11542516/pexels-photo-11542516.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                                            alt="img18" />
-                                        <figcaption>
-                                            <p>Camisetas</p>
-                                        </figcaption>
-                                    </figure>
-                                </li>
+                                @foreach ($categories as $category)
+                                    <li class="splide__slide">
+                                        <figure class="effect-apollo">
+                                            <img src="{{ asset('storage/uploads/' . $category->imagen) }}" />
+                                            <figcaption>
+                                                <p>{{ $category->description }}</p>
+                                            </figcaption>
+                                        </figure>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
@@ -180,8 +143,7 @@
                         </div><!--end col & card-->
                         <div class="card md:group-[.gridView]:flex relative">
                             <div class="relative group-[.gridView]:static p-8 group-[.gridView]:p-5">
-                                <a href="#!"
-                                    class="absolute group/item toggle-button top-6 ltr:right-6 rtl:left-6"><i
+                                <a href="#!" class="absolute group/item toggle-button top-6 ltr:right-6 rtl:left-6"><i
                                         data-lucide="heart"
                                         class="size-5 text-slate-400 fill-slate-200 transition-all duration-150 ease-linear dark:text-zink-200 dark:fill-zink-600 group-[.active]/item:text-red-500 dark:group-[.active]/item:text-red-500 group-[.active]/item:fill-red-200 dark:group-[.active]/item:fill-red-500/20 group-hover/item:text-red-500 dark:group-hover/item:text-red-500 group-hover/item:fill-red-200 dark:group-hover/item:fill-red-500/20"></i></a>
                                 <div
@@ -685,15 +647,11 @@
             <div class="splide splide_offers" id="splideOffers">
                 <div class="splide__track">
                     <ul class="splide__list">
-                        <li class="splide__slide">
-                            <img src="https://t3.ftcdn.net/jpg/02/77/69/26/360_F_277692680_b65wdSQDuWZRrKwIUmGQo0zwND6n0MZR.jpg" alt="Imagen 1" />
-                        </li>
-                        <li class="splide__slide">
-                            <img src="https://static6.depositphotos.com/1014014/641/i/450/depositphotos_6416346-stock-photo-special-offers-3d-illustration-design.jpg" alt="Imagen 2" />
-                        </li>
-                        <li class="splide__slide">
-                            <img src="https://www.shutterstock.com/image-vector/special-offer-banner-vector-template-260nw-2474802375.jpg" alt="Imagen 3" />
-                        </li>
+                        @foreach ($promotions as $promotion)
+                            <li class="splide__slide">
+                                <img src="{{ asset('storage/uploads/' . $promotion->image_name) }}" />
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -706,15 +664,11 @@
             <div class="splide splide_brands" id="splideBrands">
                 <div class="splide__track">
                     <ul class="splide__list">
-                        <li class="splide__slide">
-                            <img src="https://t3.ftcdn.net/jpg/02/77/69/26/360_F_277692680_b65wdSQDuWZRrKwIUmGQo0zwND6n0MZR.jpg" alt="Imagen 1" />
-                        </li>
-                        <li class="splide__slide">
-                            <img src="https://static6.depositphotos.com/1014014/641/i/450/depositphotos_6416346-stock-photo-special-offers-3d-illustration-design.jpg" alt="Imagen 2" />
-                        </li>
-                        <li class="splide__slide">
-                            <img src="https://www.shutterstock.com/image-vector/special-offer-banner-vector-template-260nw-2474802375.jpg" alt="Imagen 3" />
-                        </li>
+                        @foreach ($brands as $brand)
+                            <li class="splide__slide">
+                                <img src="{{ asset('storage/uploads/' . $brand->imagen) }}" />
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>

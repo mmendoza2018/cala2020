@@ -1,6 +1,6 @@
 var backDropOverlay = document.getElementById("backDropDiv");
 const bodyElement = document.body;
-
+console.log('(luismi):>> 33333333333333');
 const closeModal = (idModal) => {
     document.getElementById(idModal).classList.add('show');
     document.getElementById(idModal).classList.add('hidden');
@@ -292,47 +292,52 @@ btnWhatsapp.addEventListener('click', () => {
 });
 
 /* dropdown */
-const dropdown = document.querySelector('.custom-dropdown');
-const input = dropdown.querySelector('.custom-dropdown__input');
-const options = dropdown.querySelectorAll('.custom-dropdown__item');
+const dropdown = document.querySelector('.custom-dropdown') || null;
+const input = dropdown.querySelector('.custom-dropdown__input') || null;
+const options = dropdown.querySelectorAll('.custom-dropdown__item') || null;
 
 input.addEventListener('click', (e) => {
-  e.stopPropagation();
-  dropdown.classList.toggle('open');
+    e.stopPropagation();
+    dropdown.classList.toggle('open');
 });
 
 options.forEach(option => {
-  option.addEventListener('click', (e) => {
-    e.stopPropagation();
-    input.value = option.textContent;
-    dropdown.classList.remove('open');
-  });
+    option.addEventListener('click', (e) => {
+        e.stopPropagation();
+        input.value = option.textContent;
+        dropdown.classList.remove('open');
+    });
 });
 
 // Cerrar al hacer clic fuera
 document.addEventListener('click', () => {
-  dropdown.classList.remove('open');
+    dropdown.classList.remove('open');
 });
 
 
 //nav footer 
-
+console.log('(luismi):>> 22222222222');
 let lastScrollTop = 0;
 const navBottom = document.getElementById("mobileBottomNav");
-
+console.log('(luismi): navBottom :>> ', navBottom);
 window.addEventListener("scroll", () => {
-  const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+    console.log('(luismi):>> scroll');
+    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 
-  if (currentScroll > lastScrollTop) {
-    // scroll hacia abajo
-    navBottom.classList.add("hide");
-  } else {
-    // scroll hacia arriba
-    navBottom.classList.remove("hide");
-  }
+    if (currentScroll > lastScrollTop) {
+        navBottom.classList.add("hide");
+    } else {
+        navBottom.classList.remove("hide");
+    }
 
-  lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
 });
+
+/* navbar */
+function toggleMenuCustom() {
+    const dropdown = document.getElementById('navbar-dropdown');
+    dropdown.classList.toggle('show');
+}
 
 
 

@@ -203,6 +203,136 @@
                         END LOADER
   ---------------------------------------------------------------- */
 
+
+/* ----------------------------------------------------------------
+                        NAVBAR
+  ---------------------------------------------------------------- */
+.navbar-custom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: var(--custom-primary-color);
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.navbar-custom .navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+}
+
+.navbar-custom .navbar-column {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+.navbar-custom .navbar-logo {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.navbar-custom .navbar-logo img {
+  width: 45px;
+  height: auto;
+  object-fit: contain;
+}
+
+.navbar-custom .navbar-links {
+  display: flex;
+  /* agregado */
+  gap: 1rem;
+}
+
+.navbar-custom .navbar-links a {
+  display: inline-block;
+  position: relative;
+  padding: 0.25rem 0;
+  text-decoration: none;
+  color: white;
+  transition: color 0.3s ease;
+  font-weight: 600;
+}
+
+.navbar-custom .navbar-links a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background-color: white;
+  transition: width 0.3s ease;
+}
+
+.navbar-custom .navbar-links a:hover::after {
+  width: 100%;
+}
+
+.navbar-custom .navbar-toggle {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.navbar-custom .navbar-dropdown {
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background-color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  animation: dropdownFade 0.3s ease;
+}
+
+.navbar-custom .navbar-dropdown.show {
+  display: flex;
+}
+
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-custom .navbar-links {
+    display: none;
+  }
+
+  .navbar-custom .navbar-toggle {
+    display: block;
+  }
+
+  .navbar-custom .navbar-dropdown a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .navbar-custom .navbar-dropdown a:hover {
+    color: var(--custom-primary-color);
+  }
+}
+
+/* ----------------------------------------------------------------
+                        END NAVBAR
+  ---------------------------------------------------------------- */
+
+
+
 /* ----------------------------------------------------------------
                         FOOTER
   ---------------------------------------------------------------- */
@@ -219,7 +349,6 @@
   margin: auto;
   padding: 30px 10px;
   display: flex;
-  flex-wrap: wrap;
   box-sizing: border-box;
   justify-content: center;
 }
@@ -329,6 +458,11 @@
 @media screen and (max-width: 660px) {
   .footer-items {
     width: 100%;
+    text-align: center;
+  }
+
+  .inner-footer {
+    flex-wrap: wrap;
   }
 }
 
@@ -382,6 +516,81 @@
 /* ----------------------------------------------------------------
                         END NAV
   ---------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------
+                       PAGINATION
+  ---------------------------------------------------------------- */
+
+.custom-pagination-1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 32px;
+  user-select: none;
+  max-width: fit-content;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: transparent;
+  border-radius: 16px;
+}
+
+.custom-pagination-1 a {
+  text-decoration: none;
+  color: var(--custom-primary-color);
+  padding: 6px 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--custom-primary-color);
+  background: transparent;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.custom-pagination-1 a:hover:not(.custom-active) {
+  background: var(--custom-primary-color);
+  color: white;
+  border-color: var(--custom-primary-color);
+  box-shadow: 0 0 5px var(--custom-primary-color);
+}
+
+.custom-active-1 {
+  color: white !important;
+  background-color: var(--custom-primary-color) !important;
+  border-color: var(--custom-primary-color) !important;
+  box-shadow: 0 0 8px 1.5px var(--custom-primary-color);
+  cursor: default;
+  font-weight: 700;
+}
+
+.custom-prev-1,
+.custom-next-1 {
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 10px 22px;
+  border-radius: 14px;
+  border: 1.5px solid var(--custom-primary-color);
+  background: transparent;
+  color: var(--custom-primary-color);
+  transition: all 0.3s ease;
+}
+
+.custom-prev-1:hover,
+.custom-next-1:hover {
+  background: var(--custom-primary-color);
+  color: white;
+  border-color: var(--custom-primary-color);
+  box-shadow: 0 0 5px var(--custom-primary-color);
+}
+
+.custom-disabled-1 {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: default;
+}
+
+/* ----------------------------------------------------------------
+                      END PAGINATION
+---------------------------------------------------------------- */
 
 /* ----------------------------------------------------------------
                         CUSTOM NAV FOOTER

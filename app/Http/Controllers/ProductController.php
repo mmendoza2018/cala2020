@@ -109,10 +109,12 @@ class ProductController extends Controller
             "is_main" => "nullable|array",
             "imagenes.*" => "file|image|mimes:jpeg,png,jpg,gif,svg",
             "productVariants" => "required|json",
+            "featured" => "",
             "min_stock" => "required",
             "status_on_website" => "required",
             'product_brand_id' => 'required|integer|exists:product_brands,id',
             "category_product_id" => "required",
+            "subcategory_product_id" => "required",
         ];
 
         // Definir los nombres amigables de los atributos
@@ -121,11 +123,13 @@ class ProductController extends Controller
             "description" => "Descripción",
             "imagenes" => "imagenes",
             "is_main" => "imagen activa",
+            "featured" => "Producto destacado",
             "productVariants" => "Variantes del producto",
             "min_stock" => "Minimo de Stock",
             "status_on_website" => "Estado de la página web",
             'product_brand_id' => "Marca",
             "category_product_id" => "Categoria",
+            "subcategory_product_id" => "SubCategoria",
         ];
 
         // Crear el validador manualmente
@@ -155,7 +159,6 @@ class ProductController extends Controller
 
         // Si la validación pasa, obtener los datos validados
         $validatedData = $validator->validated();
-
         // Crear producto
         $product = Product::create([
             "title" => $validatedData["title"],
@@ -167,6 +170,8 @@ class ProductController extends Controller
             "status_on_website" => $validatedData["status_on_website"],
             "product_brand_id" => $validatedData["product_brand_id"],
             "category_product_id" => $validatedData["category_product_id"],
+            "featured" => $validatedData["featured"] ?? 0,
+            "subcategory_product_id" => $validatedData["subcategory_product_id"],
             "user_id" => Auth::guard('admin')->id()
         ]);
 
@@ -222,8 +227,10 @@ class ProductController extends Controller
             "productVariants" => "required|json",
             "min_stock" => "required",
             "status_on_website" => "required",
+            "featured" => "",
             'product_brand_id' => 'required|integer|exists:product_brands,id',
             "category_product_id" => "required",
+            "subcategory_product_id" => "required",
         ];
 
         // Definir los nombres amigables de los atributos
@@ -232,11 +239,13 @@ class ProductController extends Controller
             "description" => "Descripción",
             "imagenes" => "imagenes",
             "is_main" => "imagen activa",
+            "featured" => "Producto destacado",
             "productVariants" => "Variantes del producto",
             "min_stock" => "Minimo de Stock",
             "status_on_website" => "Estado de la página web",
             'product_brand_id' => "Marca",
             "category_product_id" => "Categoria",
+            "subcategory_product_id" => "SubCategoria",
         ];
 
         // Crear el validador manualmente
@@ -306,11 +315,10 @@ class ProductController extends Controller
             $isMain = $checks[$index] === "true" ? 1 : 0;
 
             if ($currentImages->has($originalName)) {
-                // Actualizar imagen existente
-                $currentImages[$originalName]->update([
-                    'is_main' => $isMain,
-                    'status' => 1 // Reactivar en caso esté en 0
-                ]);
+                $currentImages[$originalName]->refresh();
+                $currentImages[$originalName]->is_main = $isMain;
+                $currentImages[$originalName]->status = 1;
+                $currentImages[$originalName]->save();
             } else {
                 // Guardar imagen nueva
                 $newPath = $uploadedImage->store('uploads', 'public');
@@ -335,6 +343,8 @@ class ProductController extends Controller
             "status_on_website" => $validatedData["status_on_website"],
             "product_brand_id" => $validatedData["product_brand_id"],
             "category_product_id" => $validatedData["category_product_id"],
+            "subcategory_product_id" => $validatedData["subcategory_product_id"],
+            "featured" => $validatedData["featured"],
             "user_id" => Auth::guard('admin')->id()
         ];
 

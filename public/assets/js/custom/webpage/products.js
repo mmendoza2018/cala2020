@@ -102,7 +102,7 @@ const getSelectedAttributes = () => {
     return selectedAttributes;
 
 }
-
+/* luismi */
 const addProductToShoppingCart = async () => {
 
     try {
@@ -124,6 +124,8 @@ const addProductToShoppingCart = async () => {
             let data = response.data;
             console.log('data :>> ', data);
             renderProductShoppingCartModal(data);
+
+            document.querySelector(`[data-drawer-target="cartSidePenal"]`).click();
             //offCanvasShoppingCartProduct.show();
             $('.js-panel-cart').addClass('show-header-cart');
             //renderProductsCart(data);
@@ -241,9 +243,8 @@ const renderProductShoppingCartModal = (data) => {
             // Clonamos el contenido del template
             const clone = template.content.cloneNode(true);
             let subtotalProduct = parseFloat(product.quantity * product.price).toFixed(2);
-
             // Asignamos los valores correspondientes
-            clone.querySelector('.imgShoppingCartModal').src = `${baseUrl}/storage/uploads/${product.image.path}`;
+            clone.querySelector('.imgShoppingCartModal').src = `${baseUrl}/storage/uploads/${product.image}`;
             clone.querySelector('.descriptionShoppingCartModal').textContent = `${product.title} | ${product.brand}`;
             clone.querySelector('.priceShoppingCartModal').textContent = `S/${product.price.toFixed(2)}`;
             clone.querySelector('.quantityShoppingCartModal').value = product.quantity;

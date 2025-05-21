@@ -112,7 +112,7 @@
                                     </svg></button>
                                 <input type="number"
                                     class="text-center ltr:pl-2 rtl:pr-2 w-15 h-7 product-quantity dark:bg-zink-700 focus:shadow-none"
-                                    value="19" min="0" max="100" readonly="">
+                                    value="19" min="0" max="100" readonly="" id="quantityProductCombination">
                                 <button type="button"
                                     class="transition-all duration-200 ease-linear border rounded border_color_primary_global_page w-7 plusBtn "><svg
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -124,7 +124,7 @@
                                     </svg></button>
                             </div>
                             <div class="inline-flex mr-5">
-                                <button type="button" class="text-white bg_primary_global_page btn p-3">Agregar a Carrito</button>
+                                <button type="button" class="text-white bg_primary_global_page btn p-3" onclick="addProductToShoppingCart()">Agregar a Carrito</button>
                             </div>
                         </div>
 
@@ -142,3 +142,24 @@
     <script src="{{ URL::to('assets/libs/splide/dist/js/splide.min.js') }}"></script>
     <script src="{{ URL::to('assets/js/custom/webpage/products.js') }}"></script>
 @endsection
+
+{{-- 
+  <p class="qty">
+                                        <button class="qtyminus" aria-hidden="true">-</button>
+                                        <input type="number" name="qty" id="quantityProductCombination" min="1"
+                                            max="10" step="1" value="1" class="qtyInput">
+                                        <button class="qtyplus" aria-hidden="true">+</button>
+                                    </p>
+
+
+
+                                     <div class="d-inline">
+                                <a href="javascript:void(0);" class="kewta-btn kewta-alt d-inline-flex align-items-center"
+                                    onclick="addProductToShoppingCart()">
+                                    <span class="kew-text s1-bg n0-clr">
+                                        Agregar al carrito
+                                    </span>
+                                </a>
+                            </div>
+
+--}}
