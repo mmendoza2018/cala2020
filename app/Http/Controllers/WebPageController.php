@@ -303,10 +303,11 @@ class WebPageController extends Controller
     }
 
     // Límite (por defecto 20 si no se especifica)
-    $limit = (int) $request->query('limit', 20);
+    $limit = (int) $request->query('limit', 2);
 
-    // Si viene paginate=true, usamos paginación
-    if ($request->query('paginate') === 'true') {
+    // Obtener el parámetro paginate
+    $paginateParam = $request->query('paginate');
+    if (is_null($paginateParam) || $paginateParam === 'true') {
       return $productsQuery->paginate($limit)->appends($request->query());
     }
 

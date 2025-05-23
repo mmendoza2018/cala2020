@@ -78,7 +78,7 @@
                                     <tr data-table={{ $productBrand->id }}>
                                         <td>{{ $productBrand->id }}</td>
                                         <td>
-                                            <img src="{{ asset('storage/uploads/' . $productBrand->imagen) }}" alt=""
+                                            <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $productBrand->imagen) }}" alt=""
                                                 class="h-10 h-16 rounded-md" style="width: 4rem">
                                         </td>
                                         <td>{{ $productBrand->description }}</td>

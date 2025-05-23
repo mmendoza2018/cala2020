@@ -28,7 +28,6 @@ class BannerController extends Controller
         if ($request->expectsJson()) {
             return ApiResponse::success($banners, "Registro encontrado.");
         }
-        //return view();
     }
 
     public function store(Request $request)
@@ -55,7 +54,7 @@ class BannerController extends Controller
 
         $logo = $request->file('imagen');
         //$imageName = $logo->getClientOriginalName();
-        $path = $logo->store('uploads', 'public');
+        $path = $logo->store('uploads/' . getCompanyCode(), 'public');
         $imagePath = basename($path);
 
         $banner = Banner::create([
@@ -102,7 +101,7 @@ class BannerController extends Controller
 
         // Si la imagen ya existe, actualiza su información
         if ($imagePath != $banner->image_name) {
-            $path = $image->store('uploads', 'public');
+            $path = $image->store('uploads/' . getCompanyCode(), 'public');
             $imagePath = basename($path);
         } else {
             $imagePath = $banner->image_name;

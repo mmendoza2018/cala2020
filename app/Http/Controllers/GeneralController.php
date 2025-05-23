@@ -72,7 +72,7 @@ class GeneralController extends Controller
 
         // Si la imagen ya existe, actualiza su información
         if ($path != $general->logo) {
-            $path = $logo->store('uploads', 'public');
+            $path = $logo->store('uploads/' . getCompanyCode(), 'public');
             $logoPath = basename($path);
         } else {
             $logoPath = $general->logo;

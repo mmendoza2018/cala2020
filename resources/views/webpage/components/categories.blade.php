@@ -1,7 +1,7 @@
     @if (count($categories))
         @foreach ($categories as $category)
             <a class="block overflow-hidden transition card hover:shadow-lg" href="#">
-                <img class="rounded-t-md" src="{{ asset('storage/uploads/' . $category->imagen) }}" style="aspect-ratio: 16/16; object-fit: cover; object-position: center">
+                <img class="rounded-t-md" src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $category->imagen) }}" style="aspect-ratio: 16/16; object-fit: cover; object-position: center">
                 <div class="p-3">
                     <h6 class="text-normal text-center">
                         {{ $category->description }}

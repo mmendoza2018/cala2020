@@ -2,15 +2,17 @@
         @foreach ($products as $product)
             <div class="card md:group-[.gridView]:flex relative tarjeta-producto-custom">
                 <div class="relative group-[.gridView]:static group-[.gridView]:p-5">
-                    <a href="#!"
-                        class="p-1 w-7 h-7 rounded-full bg-white absolute group/item toggle-button top-0 ltr:right-0 rtl:left-0 active border border_color_primary_global_page">
-                        <i class="ri-heart-fill ri-lg color_primary_global_page" style="margin-top: 1px"></i>
-                    </a>
+                    @if ($product->featured)
+                        <a href="#!"
+                            class="p-1 w-7 h-7 rounded-full bg-white absolute group/item toggle-button top-0 ltr:right-0 rtl:left-0 active border border_color_primary_global_page">
+                            <i class="ri-heart-fill ri-lg color_primary_global_page" style="margin-top: 1px"></i>
+                        </a>
+                    @endif
                     <div
                         class="group-[.gridView]:p-3 group-[.gridView]:bg-slate-100 dark:group-[.gridView]:bg-zink-600 group-[.gridView]:inline-block rounded-md">
                         @foreach ($product->productImages as $image)
                             @if ($image->is_main)
-                                <img src="{{ asset('storage/uploads/' . $image->image_name) }}"
+                                <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $image->image_name) }}"
                                     class="group-[.gridView]:h-16"
                                     style="aspect-ratio: 16/16; object-fit: cover; object-position: center">
                             @endif
@@ -60,7 +62,3 @@
             <p>Intenta cambiar los filtros o vuelve más tarde.</p>
         </div>
     @endif
-
-    {{-- <div class="txt-right">
-        {{ $products->links('webpage.components.pagination') }}
-    </div> --}}

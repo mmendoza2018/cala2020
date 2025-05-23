@@ -44,7 +44,7 @@
     <nav class="navbar-custom" id="navbar">
         <div class="navbar-container container">
             <div class="navbar-column navbar-logo">
-                <img src="{{ asset('storage/uploads/' . $generalInfo->logo) }}" alt="Logo">
+                <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $generalInfo->logo) }}" alt="Logo">
             </div>
             <div class="navbar-column navbar-links">
                 <a href="{{ route('webpage.home') }}" class="effect-link-nav">Inicio</a>

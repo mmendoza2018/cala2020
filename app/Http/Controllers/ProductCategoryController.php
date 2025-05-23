@@ -62,7 +62,7 @@ class ProductCategoryController extends Controller
 
         $logo = $request->file('imagen');
         //$imageName = $logo->getClientOriginalName();
-        $path = $logo->store('uploads', 'public');
+        $path = $logo->store('uploads/' . getCompanyCode(), 'public');
         $imagePath = basename($path);
 
         $productCategory = CategoryProduct::create([
@@ -113,7 +113,7 @@ class ProductCategoryController extends Controller
 
         // Si la imagen ya existe, actualiza su información
         if ($imagePath != $productCategory->imagen) {
-            $path = $image->store('uploads', 'public');
+            $path = $image->store('uploads/' . getCompanyCode(), 'public');
             $imagePath = basename($path);
         } else {
             $imagePath = $productCategory->imagen;

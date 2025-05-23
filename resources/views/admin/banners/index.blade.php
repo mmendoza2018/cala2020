@@ -23,7 +23,8 @@
                 <div class="card-body">
                     <div class="flex flex-wrap gap-2">
                         <button onclick="openModalAdd()" type="button"
-                            class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 mb-3">Registrar Banner</button>
+                            class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 mb-3">Registrar
+                            Banner</button>
                         <div id="modalAddBanner" modal-center=""
                             class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show">
                             <div
@@ -72,8 +73,8 @@
                                     <tr data-table={{ $banner->id }}>
                                         <td>{{ $banner->id }}</td>
                                         <td class="text-center">
-                                            <img src="{{ asset('storage/uploads/' . $banner->image_name) }}" alt=""
-                                                class="h-10 h-16 rounded-md" style="width: 6rem">
+                                            <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $banner->image_name) }}"
+                                                alt="" class="h-10 h-16 rounded-md" style="width: 6rem">
                                         </td>
                                         <td class="text-center">
                                             <i class="ri-edit-box-fill ri-xl cursor-pointer"

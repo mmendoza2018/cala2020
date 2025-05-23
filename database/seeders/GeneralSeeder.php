@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\General;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class GeneralSeeder extends Seeder
 {
@@ -13,6 +14,7 @@ class GeneralSeeder extends Seeder
     {
         General::create([
             'title' => 'Mimesoft',
+            'code' => Str::uuid(),
             'business_name' => 'Mimesoft Technologies',
             'ruc' => '12345678901',
             'address' => '123 Calle Principal, Ciudad Ejemplo',

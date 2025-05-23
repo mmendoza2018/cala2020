@@ -41,7 +41,7 @@
                                     <td>
                                         @foreach ($product->productImages as $image)
                                             @if ($image->is_main)
-                                                <img src="{{ asset('storage/uploads/' . $image->image_name) }}" class="h-10 h-16 rounded-md" style="width: 4rem">
+                                                <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $image->image_name) }}" class="h-10 h-16 rounded-md" style="width: 4rem">
                                             @endif
                                         @endforeach
                                     </td>

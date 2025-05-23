@@ -72,7 +72,7 @@
                                     <tr data-table={{ $promotion->id }}>
                                         <td>{{ $promotion->id }}</td>
                                         <td class="text-center">
-                                            <img src="{{ asset('storage/uploads/' . $promotion->image_name) }}" alt=""
+                                            <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $promotion->image_name) }}" alt=""
                                                 class="h-10 h-16 rounded-md" style="width: 6rem">
                                         </td>
                                         <td class="text-center">

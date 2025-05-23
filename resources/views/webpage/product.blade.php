@@ -25,7 +25,7 @@
                                     <ul class="splide__list">
                                         @foreach ($product->productImages as $image)
                                             <li class="splide__slide">
-                                                <img src="{{ asset('storage/uploads/' . $image->image_name) }}"
+                                                <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $image->image_name) }}"
                                                     class="w-full">
                                             </li>
                                         @endforeach
@@ -39,7 +39,7 @@
                                     <ul class="splide__list">
                                         @foreach ($product->productImages as $image)
                                             <li class="splide__slide">
-                                                <img src="{{ asset('storage/uploads/' . $image->image_name) }}">
+                                                <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $image->image_name) }}">
                                             </li>
                                         @endforeach
                                     </ul>

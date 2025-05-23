@@ -22,7 +22,7 @@
                                 $images = json_decode($raffle->images, true);
                                 $image = $images[0];
                             @endphp
-                            <img src="{{ asset('storage/uploads/' . $image['path']) }}" class="image-raffles"
+                            <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $image['path']) }}" class="image-raffles"
                                 alt="{{ $image['description'] }}">
                         </div>
                         <div class="current-hoberv9 d-center">

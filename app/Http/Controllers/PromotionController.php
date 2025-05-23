@@ -55,7 +55,7 @@ class PromotionController extends Controller
 
         $logo = $request->file('imagen');
         //$imageName = $logo->getClientOriginalName();
-        $path = $logo->store('uploads', 'public');
+        $path = $logo->store('uploads/' . getCompanyCode(), 'public');
         $imagePath = basename($path);
 
         $promotion = Promotion::create([
@@ -102,7 +102,7 @@ class PromotionController extends Controller
 
         // Si la imagen ya existe, actualiza su información
         if ($imagePath != $promotion->image_name) {
-            $path = $image->store('uploads', 'public');
+            $path = $image->store('uploads/' . getCompanyCode(), 'public');
             $imagePath = basename($path);
         } else {
             $imagePath = $promotion->image_name;

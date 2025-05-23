@@ -23,7 +23,7 @@
                                         data-aos="zoom-in-up" data-aos-duration="500">
                                         <div class="basket-thumb d-flex align-items-center gap-xxl-6 gap-4 w-100">
                                             <div class="thumb-basket position-relative d-center">
-                                                <img src="{{ asset('storage/uploads/' . $product['image']->path) }}"
+                                                <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $product['image']->path) }}"
                                                     alt="{{ $product['image']->description }}"
                                                     class="aspect-ratio-1-1 imgShoppingCart" style="width: 70%">
                                             </div>

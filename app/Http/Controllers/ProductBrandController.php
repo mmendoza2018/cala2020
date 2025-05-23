@@ -60,7 +60,7 @@ class ProductBrandController extends Controller
         $validatedData = $validator->validated();
 
         $logo = $request->file('imagen');
-        $path = $logo->store('uploads', 'public');
+        $path = $logo->store('uploads/' . getCompanyCode(), 'public');
         $imagePath = basename($path);
 
         $productCategory = ProductBrand::create([
@@ -110,7 +110,7 @@ class ProductBrandController extends Controller
 
         // Si la imagen ya existe, actualiza su información
         if ($imagePath != $productBrand->imagen) {
-            $path = $image->store('uploads', 'public');
+            $path = $image->store('uploads/' . getCompanyCode(), 'public');
             $imagePath = basename($path);
         } else {
             $imagePath = $productBrand->imagen;

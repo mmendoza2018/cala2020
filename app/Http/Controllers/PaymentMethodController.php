@@ -81,7 +81,7 @@ class PaymentMethodController extends Controller
                 $fileName = $register->image;
                 
                 if ($register->image != $uploadedImages[$contador]->getClientOriginalName()) {
-                    $newPath = $uploadedImages[$contador]->store('uploads', 'public');
+                    $newPath = $uploadedImages[$contador]->store('uploads/' . getCompanyCode(), 'public');
                     $fileName = basename($newPath);
                 }
                 
@@ -93,7 +93,7 @@ class PaymentMethodController extends Controller
                 $activeIds[] = $paymentMethod['id'];
             } else {
                 // Crear un nuevo registro
-                $newPath = $uploadedImages[$contador]->store('uploads', 'public');
+                $newPath = $uploadedImages[$contador]->store('uploads/' . getCompanyCode(), 'public');
                 $fileName = basename($newPath);
 
                 $newRegister = PaymentMethod::create([

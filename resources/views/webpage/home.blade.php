@@ -12,7 +12,7 @@
                 <ul class="splide__list">
                     @foreach ($banners as $banner)
                         <li class="splide__slide">
-                            <img src="{{ asset('storage/uploads/' . $banner->image_name) }}" class="slide-img">
+                            <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $banner->image_name) }}" class="slide-img">
                         </li>
                     @endforeach
                 </ul>
@@ -29,7 +29,7 @@
                                 @foreach ($categories as $category)
                                     <li class="splide__slide">
                                         <figure class="effect-apollo">
-                                            <img src="{{ asset('storage/uploads/' . $category->imagen) }}" />
+                                            <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $category->imagen) }}" />
                                             <figcaption>
                                                 <p>{{ $category->description }}</p>
                                             </figcaption>
@@ -77,13 +77,6 @@
                     <div class="contenedor-productos-custom" id="cardGridView">
                         @include('webpage.components.products', ['products' => $products])
                     </div>
-                    @if (!$products)
-                        <div class="estado-vacio-productos-custom">
-                            <i class="ri-box-3-line"></i>
-                            <h2>No hay productos disponibles</h2>
-                            <p>Intenta cambiar los filtros o vuelve más tarde.</p>
-                        </div>
-                    @endif
                 </div>
                 @foreach ($categories as $category)
                     <div class="custom-tabs__content" id="{{ $category->description . '-' . $category->id }}">
@@ -102,7 +95,7 @@
                     <ul class="splide__list">
                         @foreach ($promotions as $promotion)
                             <li class="splide__slide">
-                                <img src="{{ asset('storage/uploads/' . $promotion->image_name) }}" />
+                                <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $promotion->image_name) }}" />
                             </li>
                         @endforeach
                     </ul>
@@ -119,7 +112,7 @@
                     <ul class="splide__list">
                         @foreach ($brands as $brand)
                             <li class="splide__slide">
-                                <img src="{{ asset('storage/uploads/' . $brand->imagen) }}" />
+                                <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $brand->imagen) }}" />
                             </li>
                         @endforeach
                     </ul>

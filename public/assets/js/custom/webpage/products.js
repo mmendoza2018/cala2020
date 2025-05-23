@@ -396,18 +396,18 @@ $(document).ready(function () {
 
     $(document).on('click', '.custom-tabs__buttons [data-filter_category_name]', function () {
         if (this.dataset.filter_category_name === "favorite") {
-            fetchProducts(null, true, false);
+            fetchProducts(null, true, false, false);
         } else {
             let categoryId = this.dataset.filter_category_id;
-            fetchProducts(categoryId, null, false);
+            fetchProducts(categoryId, null, false, false);
         }
     });
 
     if (document.querySelector(`[data-page_active="home"]`)) {
-        fetchProducts(null, true, false);
+        fetchProducts(null, true, false, false);
     }
 
-    function fetchProducts(category = null, favorite = null, updateUrl = false) {
+    function fetchProducts(category = null, favorite = null, updateUrl = false, paginate=true) {
         const searchQuery = $('#searchInputQuery').val();
         const selectedOrder = $('#selectOrderQuery').val();
         let selectedBrands = [];
@@ -437,6 +437,7 @@ $(document).ready(function () {
         if (searchQuery) params.append('search', searchQuery);
         if (selectedOrder) params.append('order', selectedOrder);
         if (favorites) params.append('favorites', favorites);
+        if (paginate) params.append('paginate', paginate);
         selectedBrands.forEach(b => params.append('brands[]', b));
         selectedCategories.forEach(c => params.append('categories[]', c));
 

@@ -209,8 +209,7 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 mt-5 md:grid-cols-2 [&.gridView]:grid-cols-1 xl:grid-cols-4 group [&.gridView]:xl:grid-cols-1 gap-x-5"
-                    id="cardGridView">
+                <div class="contenedor-productos-custom" id="cardGridView">
                     @include('webpage.components.products', ['products' => $products])
                 </div>
                 @if ($products->isEmpty())

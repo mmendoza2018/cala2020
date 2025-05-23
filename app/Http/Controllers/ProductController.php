@@ -178,7 +178,7 @@ class ProductController extends Controller
         // Guardar imágenes
         $archivos = $request->file('imagenes');
         foreach ($archivos as $index => $archivo) {
-            $path = $archivo->store('uploads', 'public');
+            $path = $archivo->store('uploads/' . getCompanyCode(), 'public');
             $fileName = basename($path);
 
             $product->productImages()->create([
@@ -321,7 +321,7 @@ class ProductController extends Controller
                 $currentImages[$originalName]->save();
             } else {
                 // Guardar imagen nueva
-                $newPath = $uploadedImage->store('uploads', 'public');
+                $newPath = $uploadedImage->store('uploads/' . getCompanyCode(), 'public');
                 $fileName = basename($newPath);
 
                 $product->productImages()->create([
