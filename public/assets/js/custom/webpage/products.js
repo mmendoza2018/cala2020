@@ -387,34 +387,76 @@ $(document).ready(function () {
     // Manejar cambios en el select de ordenamiento
     $('#selectOrderQuery').change(function () {
         fetchProducts();
-        console.log('entre :>> ');
     });
 
     // Manejar cambios en las marcas seleccionadas
     $(document).on('change', '.brand-checkbox', function () {
         fetchProducts();
-        console.log('entre :>> ');
     });
 
-    function fetchProducts() {
+    $(document).on('click', '.custom-tabs__buttons [data-filter_category_name]', function () {
+        if (this.dataset.filter_category_name === "favorite") {
+            fetchProducts(null, true, false);
+        } else {
+            let categoryId = this.dataset.filter_category_id;
+            fetchProducts(categoryId, null, false);
+        }
+    });
+
+    if (document.querySelector(`[data-page_active="home"]`)) {
+        fetchProducts(null, true, false);
+    }
+
+    function fetchProducts(category = null, favorite = null, updateUrl = false) {
         const searchQuery = $('#searchInputQuery').val();
         const selectedOrder = $('#selectOrderQuery').val();
-        const selectedBrands = [];
+        let selectedBrands = [];
+        let selectedCategories = [];
+        let favorites = null;
+
+        if (!category) {
+            $('.category-checkbox:checked').each(function () {
+                selectedCategories.push($(this).val());
+            });
+        } else {
+            selectedCategories = [category];
+        }
+
         $('.brand-checkbox:checked').each(function () {
             selectedBrands.push($(this).val());
         });
-        var url = $(this).attr('href');
+
+        if (!favorite) {
+            favorites = $('#favorites').val();
+        } else {
+            favorites = favorite;
+        }
+
+        // Construir los parámetros GET
+        const params = new URLSearchParams();
+        if (searchQuery) params.append('search', searchQuery);
+        if (selectedOrder) params.append('order', selectedOrder);
+        if (favorites) params.append('favorites', favorites);
+        selectedBrands.forEach(b => params.append('brands[]', b));
+        selectedCategories.forEach(c => params.append('categories[]', c));
+
+        const urlPath = window.location.pathname;
+        const queryString = params.toString();
+        const finalUrl = `${urlPath}?${queryString}`;
+
+        // Condición: solo actualiza la URL si updateUrl es true
+        if (updateUrl) {
+            window.history.pushState({}, '', finalUrl);
+        }
+
+        // Petición AJAX
         $.ajax({
-            url, // Asegúrate de que esta ruta esté definida
+            url: finalUrl,
             type: 'GET',
-            data: {
-                search: searchQuery,
-                order: selectedOrder,
-                brands: selectedBrands
-            },
             success: function (data) {
-                $('#productList').html(data);
+                $('#cardGridView').html(data);
             }
         });
     }
+
 });

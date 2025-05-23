@@ -213,6 +213,16 @@
                     id="cardGridView">
                     @include('webpage.components.products', ['products' => $products])
                 </div>
+                @if ($products->isEmpty())
+                    <div class="estado-vacio-productos-custom">
+                        <i class="ri-box-3-line"></i>
+                        <h2>No hay productos disponibles</h2>
+                        <p>Intenta cambiar los filtros o vuelve más tarde.</p>
+                    </div>
+                @endif
+                <div class="flex justify-center">
+                    {{ $products->links('webpage.components.pagination') }}
+                </div>
 
             </div><!--end col-->
         </div><!--end grid-->

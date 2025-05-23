@@ -1,6 +1,6 @@
     @if (count($products))
         @foreach ($products as $product)
-            <div class="card md:group-[.gridView]:flex relative">
+            <div class="card md:group-[.gridView]:flex relative tarjeta-producto-custom">
                 <div class="relative group-[.gridView]:static group-[.gridView]:p-5">
                     <a href="#!"
                         class="p-1 w-7 h-7 rounded-full bg-white absolute group/item toggle-button top-0 ltr:right-0 rtl:left-0 active border border_color_primary_global_page">
@@ -54,15 +54,13 @@
             </div>
         @endforeach
     @else
-        <div class="text-quote mt-xxl-10 mt-xl-8 mt-5 text-center cus-z1 fs-four fw_700 n1-clr position-relative py-xxl-10 py-xl-7 py-5 px-xxl-8 px-xl-7 px-5 aos-init aos-animate current-bg w-full"
-            data-aos="zoom-in-left" data-aos-duration="1600">
-            No hay Productos actualmente, intentelo más tarde!
-            <span class="icon">
-                <i class="ph ph-quotes act3-clr"></i>
-            </span>
+        <div class="estado-vacio-productos-custom">
+            <i class="ri-box-3-line"></i>
+            <h2>No hay productos disponibles</h2>
+            <p>Intenta cambiar los filtros o vuelve más tarde.</p>
         </div>
     @endif
 
-    <div class="txt-right">
+    {{-- <div class="txt-right">
         {{ $products->links('webpage.components.pagination') }}
-    </div>
+    </div> --}}

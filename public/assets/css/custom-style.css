@@ -865,6 +865,67 @@
                        END DROPDOWN
   ---------------------------------------------------------------- */
 
+/* ----------------------------------------------------------------
+                        NOT PRODUCTS
+  ---------------------------------------------------------------- */
+
+
+.estado-vacio-productos-custom {
+  background-color: #f4f5f7;
+  border: 1px dashed #d0d3d9;
+  color: #6c757d;
+  text-align: center;
+  padding: 40px 20px;
+  border-radius: 8px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 100%;
+  margin: 40px auto;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.estado-vacio-productos-custom i {
+  font-size: 64px;
+  color: #b0b4ba;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.estado-vacio-productos-custom h2 {
+  font-size: 24px;
+  margin: 10px 0;
+  color: #5a5e66;
+}
+
+.estado-vacio-productos-custom p {
+  font-size: 16px;
+  color: #7c828a;
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .estado-vacio-productos-custom {
+    padding: 30px 15px;
+  }
+
+  .estado-vacio-productos-custom i {
+    font-size: 48px;
+  }
+
+  .estado-vacio-productos-custom h2 {
+    font-size: 20px;
+  }
+
+  .estado-vacio-productos-custom p {
+    font-size: 14px;
+  }
+}
+
+/* ----------------------------------------------------------------
+                       END NOT PRODUCTS
+  ---------------------------------------------------------------- */
+
+
+
 /* STYLES FOR DROPZONE  */
 .dropzone-container {
   border: 2px dashed #007bff;
@@ -1134,4 +1195,44 @@
 .select2-container .select2-selection--single:active {
   border-color: #0056b3 !important;
   box-shadow: none !important;
+}
+
+/* stylos para el flex de produxctos  */
+/* Contenedor flexible para productos */
+.contenedor-productos-custom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  /* Espacio entre tarjetas */
+  margin-top: 1.25rem;
+}
+
+/* Tarjeta de producto */
+.tarjeta-producto-custom {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+/* Ancho en dispositivos móviles (100%) */
+@media (max-width: 767px) {
+  .tarjeta-producto-custom {
+    width: 100%;
+  }
+}
+
+/* Ancho en tablets (48% para dos columnas) */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .tarjeta-producto-custom {
+    width: 48%;
+  }
+}
+
+/* Ancho en desktops (23% para cuatro columnas aprox) */
+@media (min-width: 1280px) {
+  .tarjeta-producto-custom {
+    width: 23%;
+  }
 }
