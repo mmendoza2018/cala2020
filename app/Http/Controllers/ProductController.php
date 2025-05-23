@@ -48,7 +48,7 @@ class ProductController extends Controller
             ->where('status', 1)->findOrFail($id);
         $arrayImageDetails = [];
         $arrayImageActive = [];
-        $imageDirectory = storage_path('app/public/uploads/');
+        $imageDirectory = storage_path('app/public/uploads/') . getCompanyCode();
         //dd($product);
         foreach ($product->productImages as $image) {
             $imageDetails = pathNameToFile($image->image_name, $imageDirectory);

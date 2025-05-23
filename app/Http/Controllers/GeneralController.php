@@ -18,7 +18,7 @@ class GeneralController extends Controller
     {
         $generalInfo = General::first();
 
-        $imageDirectory = storage_path('app/public/uploads/');
+        $imageDirectory = storage_path('app/public/uploads/') . getCompanyCode();
 
         $imageDetails = pathNameToFile($generalInfo->logo, $imageDirectory);
 

@@ -10,8 +10,6 @@ if (!function_exists('pathNameToFile')) {
      */
     function pathNameToFile(?string $fileName, string $imageDirectory): ?array
     {
-
-        // Si $fileName es null, retorna null inmediatamente
         if (is_null($fileName) || empty($fileName)) {
             return null;
         }
@@ -19,15 +17,18 @@ if (!function_exists('pathNameToFile')) {
         $filePath = $imageDirectory . $fileName;
 
         if (file_exists($filePath)) {
+            // Calcular la ruta relativa para URL
+            $relativePath = str_replace(storage_path('app/public/'), '', $filePath);
+
             return [
                 'name' => $fileName,
-                'size' => filesize($filePath), // Tamaño en bytes
-                'url' => '/storage/uploads/' . $fileName,
-                'description' => 'Descripción del archivo', // Modifica según tus necesidades
-                'status' => true, // Modifica según tus necesidades o lógicas
+                'size' => filesize($filePath),
+                'url' => '/storage/' . $relativePath,
+                'description' => 'Descripción del archivo',
+                'status' => true,
             ];
         }
 
-        return null; // Retorna null si el archivo no existe
+        return null;
     }
 }

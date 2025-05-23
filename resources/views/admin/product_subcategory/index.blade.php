@@ -81,7 +81,7 @@
                                     <tr data-table={{ $subCategory->id }}>
                                         <td>{{ $subCategory->id }}</td>
                                         <td>
-                                            <img src="{{ asset('storage/uploads/' . $subCategory->imagen) }}" alt=""
+                                            <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $subCategory->imagen) }}" alt=""
                                                 class="h-10 h-16 rounded-md" style="width: 4rem">
                                         </td>
                                         <td>{{ $subCategory->description }}</td>

@@ -41,7 +41,7 @@ document.addEventListener("submit", async (e) => {
                 e.target.reset();
                 let data = response.data;
                 let btnActHTML = `<i class="ri-edit-box-fill ri-xl cursor-pointer" onclick="getProductBrand('${data.id}')"></i>`;
-                let img = `<img src="${baseUrl}/storage/uploads/${data.imagen}" class="h-10 h-16 rounded-md" style="width: 4rem">`;
+                let img = `<img src="${baseUrl}/storage/uploads/${baseCodeCompany}/${data.imagen}" class="h-10 h-16 rounded-md" style="width: 4rem">`;
 
                 let rowNode = dataTableBrandProduct.row.add([
                     data.id,
@@ -91,7 +91,7 @@ document.addEventListener("submit", async (e) => {
                 let trUpdatedElement = $('[data-table="' + data.id + '"]')[0];
                 const trUpdated = dataTableBrandProduct.row(trUpdatedElement);
                 let btnAct = trUpdatedElement.querySelector("i").outerHTML;
-                let img = `<img src="${baseUrl}/storage/uploads/${data.imagen}" class="h-10 h-16 rounded-md" style="width: 4rem">`;
+                let img = `<img src="${baseUrl}/storage/uploads/${baseCodeCompany}/${data.imagen}" class="h-10 h-16 rounded-md" style="width: 4rem">`;
 
                 if (data.status == 0) return trUpdated.remove().draw(false);
 

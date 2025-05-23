@@ -81,7 +81,7 @@
                                     <tr data-table={{ $category->id }}>
                                         <td>{{ $category->id }}</td>
                                         <td>
-                                            <img src="{{ asset('storage/uploads/' . $category->imagen) }}" alt=""
+                                            <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $category->imagen) }}" alt=""
                                                 class="h-10 h-16 rounded-md" style="width: 4rem">
                                         </td>
                                         <td>{{ $category->description }}</td>

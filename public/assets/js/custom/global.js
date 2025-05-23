@@ -1,5 +1,6 @@
 let backDropOverlay = document.getElementById("backDropDiv");
 let baseUrl = document.querySelector(`[data-base_url]`).dataset.base_url;
+let baseCodeCompany = document.querySelector(`[data-code_company]`).dataset.code_company;
 const bodyElement = document.body;
 
 const languageDataTable = {

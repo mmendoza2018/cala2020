@@ -22,7 +22,7 @@ class SubcategoryProductController extends Controller
     {
         $subCategories = SubcategoryProduct::find($id);
         $arrayImageDetails = [];
-        $imageDirectory = storage_path('app/public/uploads/');
+        $imageDirectory = storage_path('app/public/uploads/') . getCompanyCode() . '/';
         $imageDetails = pathNameToFile($subCategories->imagen, $imageDirectory);
         array_push($arrayImageDetails, $imageDetails);
         $subCategories->imageDetail = $arrayImageDetails;

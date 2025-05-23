@@ -21,7 +21,7 @@ class PromotionController extends Controller
     {
         $promotions = Promotion::find($id);
         $arrayImageDetails = [];
-        $imageDirectory = storage_path('app/public/uploads/');
+        $imageDirectory = storage_path('app/public/uploads/'). getCompanyCode();
         $imageDetails = pathNameToFile($promotions->image_name, $imageDirectory);
         array_push($arrayImageDetails, $imageDetails);
         $promotions->imageDetail = $arrayImageDetails;

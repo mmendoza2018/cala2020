@@ -41,7 +41,7 @@ document.addEventListener("submit", async (e) => {
                 e.target.reset();
                 let data = response.data;
                 let btnActHTML = `<i class="ri-edit-box-fill ri-xl cursor-pointer" onclick="getProductSubCategory('${data.id}')"></i>`;
-                let img = `<img src="${baseUrl}/storage/uploads/${data.imagen}" class="h-10 h-16 rounded-md" style="width: 4rem">`;
+                let img = `<img src="${baseUrl}/storage/uploads/${baseCodeCompany}/${data.imagen}" class="h-10 h-16 rounded-md" style="width: 4rem">`;
 
                 let rowNode = dataTableSubCategoryProduct.row.add([
                     data.id,
@@ -73,7 +73,7 @@ document.addEventListener("submit", async (e) => {
         const formData = new FormData(e.target);
         const images = await getImageDropzone();
         if (images.length <= 0) return boxAlert("La imagen no puede estar vacia", "warning");
-        
+
         formData.append("imagen", images[0]);
         formData.append('_method', 'PUT');
 
@@ -93,7 +93,7 @@ document.addEventListener("submit", async (e) => {
                 const trUpdated = dataTableSubCategoryProduct.row(trUpdatedElement);
                 let btnAct = trUpdatedElement.querySelector("i").outerHTML;
 
-                let img = `<img src="${baseUrl}/storage/uploads/${data.imagen}" class="h-10 h-16 rounded-md" style="width: 4rem">`;
+                let img = `<img src="${baseUrl}/storage/uploads/${baseCodeCompany}/${data.imagen}" class="h-10 h-16 rounded-md" style="width: 4rem">`;
 
                 if (data.status == 0) return trUpdated.remove().draw(false);
 
@@ -117,7 +117,7 @@ const getProductSubCategory = async (id) => {
         let response = await customFetch(ROUTES.PRODUCT_SUBCATEGORY + `/${id}`);
         if (response.status === "success") {
             let data = response.data;
-            initDropzone('dropzoneContainerAct','dropzoneAct','dropzonePreviewAct', data.imageDetail);
+            initDropzone('dropzoneContainerAct', 'dropzoneAct', 'dropzonePreviewAct', data.imageDetail);
             document.getElementById("id").value = data.id;
             document.getElementById("description").value = data.description;
             document.getElementById("code").value = data.code;
@@ -132,13 +132,13 @@ const getProductSubCategory = async (id) => {
 
 const openModalAdd = () => {
     openModal('modalAddSubCategoryProduct');
-    initDropzone('dropzoneContainerAdd','dropzoneAdd','dropzonePreviewAdd', false);
+    initDropzone('dropzoneContainerAdd', 'dropzoneAdd', 'dropzonePreviewAdd', false);
 }
 
 const initDropzone = (container, element, dropzonePreviewElement, files = false) => {
     const dropzoneSelector = `#${container}, #${element}`;
-     // 🔴 1. Destruir instancia previa si existe
-     Dropzone.instances.forEach((dz) => {
+    // 🔴 1. Destruir instancia previa si existe
+    Dropzone.instances.forEach((dz) => {
         if (dz.element.matches(dropzoneSelector)) {
             dz.destroy();
         }
