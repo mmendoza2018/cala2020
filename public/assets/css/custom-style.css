@@ -705,7 +705,7 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
   transform: translateY(-100%);
   opacity: 0;
-  z-index: 999;
+  z-index: 99999;
   font-family: 'Segoe UI', sans-serif;
 }
 
@@ -1235,4 +1235,58 @@
   .tarjeta-producto-custom {
     width: 23%;
   }
+}
+
+/* checkox style */
+
+/* Contenedor que alinea checkbox y texto en línea y centrados verticalmente */
+.checkbox-container-custom {
+  display: inline-flex;
+  align-items: center;
+  /* centra verticalmente */
+  gap: 8px;
+  /* espacio entre checkbox y texto */
+  cursor: pointer;
+  color: var(--custom-primary-color);
+}
+
+/* Ocultar checkbox real */
+input[type="checkbox"].checkbox-custom {
+  display: none;
+}
+
+/* Caja visible del checkbox */
+.checkbox-wrapper-custom {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  position: relative;
+  border: 1px solid var(--custom-primary-color);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Check oculto por defecto */
+.checkbox-wrapper-custom::after {
+  content: "✔";
+  font-size: 13px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  color: var(--custom-primary-color);
+}
+
+/* Mostrar check cuando está marcado */
+input[type="checkbox"].checkbox-custom:checked+.checkbox-wrapper-custom::after {
+  display: block;
+}
+
+/* Texto label para que se vea natural */
+.checkbox-label-custom {
+  user-select: none;
+  color: black;
+  font-weight: 400;
+  /* para que no se seleccione al hacer clic */
 }

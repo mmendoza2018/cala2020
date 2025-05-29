@@ -105,18 +105,10 @@
                                     Todo</a>
                             </div>
                         </div>
-
-                        <div class="relative mt-4">
-                            <input type="text"
-                                class="ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                placeholder="Buscar..." autocomplete="off">
-                            <i data-lucide="search"
-                                class="inline-block size-4 absolute ltr:left-2.5 rtl:right-2.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600"></i>
-                        </div>
-
+                        <hr style="margin: 1rem 0">
                         <div class="mt-4 collapsible">
                             <button class="flex items-center w-full text-left collapsible-header group">
-                                <h6 class="underline grow">Product Category</h6>
+                                <h6 class="underline grow">Marcas</h6>
                                 <div class="shrink-0 text-slate-500 dark:text-zink-200">
                                     <i data-lucide="chevron-down" class="hidden size-4 group-[.show]:inline-block"></i>
                                     <i data-lucide="chevron-up" class="inline-block size-4 group-[.show]:hidden"></i>
@@ -124,70 +116,55 @@
                             </button>
                             <div class="mt-4 collapsible-content">
                                 <div class="flex flex-col gap-2">
-                                    <div class="flex items-center gap-2">
-                                        <input id="categoryAll"
-                                            class="size-4 cursor-pointer bg-white border border-slate-200 checked:bg-none dark:bg-zink-700 dark:border-zink-500 rounded-sm appearance-none arrow-none relative after:absolute after:content-['\eb7b'] after:top-0 after:left-0 after:font-remix after:leading-none after:opacity-0 checked:after:opacity-100 after:text-custom-500 checked:border-custom-500 dark:after:text-custom-500 dark:checked:border-custom-800"
-                                            type="checkbox" value="">
-                                        <label for="categoryAll" class="align-middle cursor-pointer">
-                                            All
+                                    @foreach ($brands as $brand)
+                                        <label class="checkbox-container-custom">
+                                            <input type="checkbox" class="checkbox-custom" id="mi-check-custom" />
+                                            <span class="checkbox-wrapper-custom"></span>
+                                            <span class="checkbox-label-custom">{{ $brand->description }}</span>
                                         </label>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <input id="category1"
-                                            class="size-4 cursor-pointer bg-white border border-slate-200 checked:bg-none dark:bg-zink-700 dark:border-zink-500 rounded-sm appearance-none arrow-none relative after:absolute after:content-['\eb7b'] after:top-0 after:left-0 after:font-remix after:leading-none after:opacity-0 checked:after:opacity-100 after:text-custom-500 checked:border-custom-500 dark:after:text-custom-500 dark:checked:border-custom-800"
-                                            type="checkbox" value="">
-                                        <label for="category1" class="align-middle cursor-pointer">
-                                            Mobiles, Computers
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 collapsible">
+                            <button class="flex items-center w-full text-left collapsible-header group">
+                                <h6 class="underline grow">Categorias</h6>
+                                <div class="shrink-0 text-slate-500 dark:text-zink-200">
+                                    <i data-lucide="chevron-down" class="hidden size-4 group-[.show]:inline-block"></i>
+                                    <i data-lucide="chevron-up" class="inline-block size-4 group-[.show]:hidden"></i>
+                                </div>
+                            </button>
+                            <div class="mt-4 collapsible-content">
+                                <div class="flex flex-col gap-2">
+                                    @foreach ($categories as $category)
+                                        <label class="checkbox-container-custom">
+                                            <input type="checkbox" class="checkbox-custom" id="mi-check-custom" />
+                                            <span class="checkbox-wrapper-custom"></span>
+                                            <span class="checkbox-label-custom">{{ $category->description }}</span>
                                         </label>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <input id="category2"
-                                            class="size-4 cursor-pointer bg-white border border-slate-200 checked:bg-none dark:bg-zink-700 dark:border-zink-500 rounded-sm appearance-none arrow-none relative after:absolute after:content-['\eb7b'] after:top-0 after:left-0 after:font-remix after:leading-none after:opacity-0 checked:after:opacity-100 after:text-custom-500 checked:border-custom-500 dark:after:text-custom-500 dark:checked:border-custom-800"
-                                            type="checkbox" value="">
-                                        <label for="category2" class="align-middle cursor-pointer">
-                                            TV, Appliances, Electronics
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 collapsible">
+                            <button class="flex items-center w-full text-left collapsible-header group">
+                                <h6 class="underline grow">Sub-Categorias</h6>
+                                <div class="shrink-0 text-slate-500 dark:text-zink-200">
+                                    <i data-lucide="chevron-down" class="hidden size-4 group-[.show]:inline-block"></i>
+                                    <i data-lucide="chevron-up" class="inline-block size-4 group-[.show]:hidden"></i>
+                                </div>
+                            </button>
+                            <div class="mt-4 collapsible-content">
+                                <div class="flex flex-col gap-2">
+                                    @foreach ($subCategories as $subCategory)
+                                        <label class="checkbox-container-custom">
+                                            <input type="checkbox" class="checkbox-custom" id="mi-check-custom" />
+                                            <span class="checkbox-wrapper-custom"></span>
+                                            <span class="checkbox-label-custom">{{ $subCategory->description }}</span>
                                         </label>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <input id="category3"
-                                            class="size-4 cursor-pointer bg-white border border-slate-200 checked:bg-none dark:bg-zink-700 dark:border-zink-500 rounded-sm appearance-none arrow-none relative after:absolute after:content-['\eb7b'] after:top-0 after:left-0 after:font-remix after:leading-none after:opacity-0 checked:after:opacity-100 after:text-custom-500 checked:border-custom-500 dark:after:text-custom-500 dark:checked:border-custom-800"
-                                            type="checkbox" value="">
-                                        <label for="category3" class="align-middle cursor-pointer">
-                                            Men's Fashion
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <input id="category4"
-                                            class="size-4 cursor-pointer bg-white border border-slate-200 checked:bg-none dark:bg-zink-700 dark:border-zink-500 rounded-sm appearance-none arrow-none relative after:absolute after:content-['\eb7b'] after:top-0 after:left-0 after:font-remix after:leading-none after:opacity-0 checked:after:opacity-100 after:text-custom-500 checked:border-custom-500 dark:after:text-custom-500 dark:checked:border-custom-800"
-                                            type="checkbox" value="">
-                                        <label for="category4" class="align-middle cursor-pointer">
-                                            Women's Fashion
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <input id="category5"
-                                            class="size-4 cursor-pointer bg-white border border-slate-200 checked:bg-none dark:bg-zink-700 dark:border-zink-500 rounded-sm appearance-none arrow-none relative after:absolute after:content-['\eb7b'] after:top-0 after:left-0 after:font-remix after:leading-none after:opacity-0 checked:after:opacity-100 after:text-custom-500 checked:border-custom-500 dark:after:text-custom-500 dark:checked:border-custom-800"
-                                            type="checkbox" value="">
-                                        <label for="category5" class="align-middle cursor-pointer">
-                                            Home, Kitchen, Pets
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <input id="category6"
-                                            class="size-4 cursor-pointer bg-white border border-slate-200 checked:bg-none dark:bg-zink-700 dark:border-zink-500 rounded-sm appearance-none arrow-none relative after:absolute after:content-['\eb7b'] after:top-0 after:left-0 after:font-remix after:leading-none after:opacity-0 checked:after:opacity-100 after:text-custom-500 checked:border-custom-500 dark:after:text-custom-500 dark:checked:border-custom-800"
-                                            type="checkbox" value="">
-                                        <label for="category6" class="align-middle cursor-pointer">
-                                            Beauty, Health, Grocery
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <input id="category7"
-                                            class="size-4 cursor-pointer bg-white border border-slate-200 checked:bg-none dark:bg-zink-700 dark:border-zink-500 rounded-sm appearance-none arrow-none relative after:absolute after:content-['\eb7b'] after:top-0 after:left-0 after:font-remix after:leading-none after:opacity-0 checked:after:opacity-100 after:text-custom-500 checked:border-custom-500 dark:after:text-custom-500 dark:checked:border-custom-800"
-                                            type="checkbox" value="">
-                                        <label for="category7" class="align-middle cursor-pointer">
-                                            Books
-                                        </label>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -212,13 +189,6 @@
                 <div class="contenedor-productos-custom" id="cardGridView">
                     @include('webpage.components.products', ['products' => $products])
                 </div>
-                @if ($products->isEmpty())
-                    <div class="estado-vacio-productos-custom">
-                        <i class="ri-box-3-line"></i>
-                        <h2>No hay productos disponibles</h2>
-                        <p>Intenta cambiar los filtros o vuelve más tarde.</p>
-                    </div>
-                @endif
                 <div class="flex justify-center">
                     {{ $products->links('webpage.components.pagination') }}
                 </div>

@@ -14,21 +14,17 @@ class ProductBrandsTableSeeder extends Seeder
     public function run(): void
     {
         $brands = [
-            'Aviagen',
-            'Nutripac',
-            'Innova',
-            'Cipral',
-            'Cornat',
-            'Agrovet Market',
-            'Elanco',
-            'Nutriave',
-            'Industrias San Miguel (ISM)',
-            'Leche Gloria'
+            ['description' => 'Kkostpa', 'image' => 'marca1'],
+            ['description' => 'Lukki', 'image' => 'marca2'],
+            ['description' => 'Kopor', 'image' => 'marca3'],
+            ['description' => 'Kodak', 'image' => 'marca4'],
+            ['description' => 'Rom', 'image' => 'marca5']
         ];
 
         foreach ($brands as $brand) {
             ProductBrand::create([
                 'description' => $brand,
+                'imagen' => $brand,
             ]);
         }
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AttentionNumber;
 use App\Models\Banner;
 use App\Models\CategoryProduct;
 use App\Models\ComplaintsBook;
@@ -10,6 +11,7 @@ use App\Models\Product;
 use App\Models\ProductBrand;
 use App\Models\Promotion;
 use App\Models\Raffle;
+use App\Models\SubcategoryProduct;
 use App\Models\Theme;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -48,8 +50,6 @@ class WebPageController extends Controller
     /* luismi */
     $product->load(['productAttributes.attributesCombination', 'productBrand']);
     $defaultProductAttribute = $product->productAttributes->firstWhere('is_default', 1);
-    $generalInfo = General::first();
-    $themes = Theme::first();
 
     $groupedAttributes = [];
     $defaultAttributes = []; // Para almacenar la combinación por defecto, si existe
@@ -104,8 +104,6 @@ class WebPageController extends Controller
       "finalGroupedAttributes" => $finalGroupedAttributes,
       "defaultAttributes" => $defaultAttributes,
       "defaultProductAttribute" => $defaultProductAttribute,
-      "generalInfo" => $generalInfo,
-      "themes" => $themes
     ]);
   }
 
@@ -154,9 +152,8 @@ class WebPageController extends Controller
   {
     $categories = CategoryProduct::where("status", 1)->get();
     $brands = ProductBrand::where("status", 1)->get();
+    $subCategories = SubcategoryProduct::where("status", 1)->get();
     //$products = Product::where("status_on_website", 1)->where("status", 1)->paginate(4);
-    $generalInfo = General::first();
-    $themes = Theme::first();
 
     $productsQuery = $this->applyProductFilters($request);
 
@@ -164,13 +161,11 @@ class WebPageController extends Controller
       return view('webpage.components.products', compact('products'))->render();
     }
     return view('webpage.store', [
-
       "products" => $productsQuery,
       "brands" => $brands,
       "categories" => $categories,
+      "subCategories" => $subCategories,
       "activeScroll" => false,
-      "generalInfo" => $generalInfo,
-      "themes" => $themes
     ]);
   }
 
@@ -201,8 +196,6 @@ class WebPageController extends Controller
   public function viewCategories(Request $request, CategoryProduct $categoryProduct)
   {
     $categories = CategoryProduct::where("status", 1)->get();
-    $generalInfo = General::first();
-    $themes = Theme::first();
     // Paginación
     if (request()->ajax()) {
       return view('webpage.components.categories', compact('categories'))->render();
@@ -210,8 +203,6 @@ class WebPageController extends Controller
 
     return view('webpage.categories', [
       "categories" => $categories,
-      "generalInfo" => $generalInfo,
-      "themes" => $themes,
       "activeScroll" => false,
     ]);
   }
@@ -223,12 +214,10 @@ class WebPageController extends Controller
 
   public function home(Request $request)
   {
-    $generalInfo = General::first();
     $banners = Banner::where('status', 1)->get();
     $categories = CategoryProduct::where('status', 1)->get();
     $promotions = Promotion::where('status', 1)->get();
     $brands = ProductBrand::where('status', 1)->get();
-    $themes = Theme::first();
 
     $products = $this->applyProductFilters($request);
 
@@ -239,8 +228,6 @@ class WebPageController extends Controller
     return view('webpage.home', [
       "activeScroll" => true,
       "products" => $products,
-      "generalInfo" => $generalInfo,
-      "themes" => $themes,
       "banners" => $banners,
       "categories" => $categories,
       "promotions" => $promotions,

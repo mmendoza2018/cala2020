@@ -44,7 +44,8 @@
     <nav class="navbar-custom" id="navbar">
         <div class="navbar-container container">
             <div class="navbar-column navbar-logo">
-                <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $generalInfo->logo) }}" alt="Logo">
+                <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $generalInfo->logo) }}"
+                    alt="Logo">
             </div>
             <div class="navbar-column navbar-links">
                 <a href="{{ route('webpage.home') }}" class="effect-link-nav">Inicio</a>
@@ -304,20 +305,15 @@
 
         <div class="box-whatsapp-agentes hidden_box">
             <strong>Comunicate con nuestros asesores:</strong>
-            <div class="asesor">
-                <div class="info">
-                    <p class="nombre">Juan Pérez</p>
-                    <p class="numero">📱 937351597</p>
+            @foreach ($attentionNumbers as $number)
+                <div class="asesor">
+                    <div class="info">
+                        <p class="nombre">{{ $number->name }}</p>
+                        <p class="numero">📱 {{ $number->phone_number }}</p>
+                    </div>
+                    <a href="https://wa.me/{{ $number->phone_number }}" target="_blank" class="btn-contactar">Contactar</a>
                 </div>
-                <a href="https://wa.me/937351597" target="_blank" class="btn-contactar">Contactar</a>
-            </div>
-            <div class="asesor">
-                <div class="info">
-                    <p class="nombre">Carla Ruiz</p>
-                    <p class="numero">📱 912345678</p>
-                </div>
-                <a href="https://wa.me/912345678" target="_blank" class="btn-contactar">Contactar</a>
-            </div>
+            @endforeach
         </div>
 
     </div>
