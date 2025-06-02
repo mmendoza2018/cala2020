@@ -1,4 +1,4 @@
-    @if (count($products))
+    @if ($products)
         @foreach ($products as $product)
             <div class="card md:group-[.gridView]:flex relative tarjeta-producto-custom">
                 <div class="relative group-[.gridView]:static group-[.gridView]:p-5">

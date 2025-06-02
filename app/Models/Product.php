@@ -14,7 +14,6 @@ class Product extends Model
         "code",
         "description",
         "slug",
-        "images",
         "raffle_id",
         "digital_product",
         "documents",

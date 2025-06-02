@@ -3,28 +3,34 @@
 namespace Database\Seeders;
 
 use App\Models\ProductBrand;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProductBrandsTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $brands = [
-            ['description' => 'Kkostpa', 'image' => 'marca1'],
-            ['description' => 'Lukki', 'image' => 'marca2'],
-            ['description' => 'Kopor', 'image' => 'marca3'],
-            ['description' => 'Kodak', 'image' => 'marca4'],
-            ['description' => 'Rom', 'image' => 'marca5']
-        ];
+        $companyCode = getCompanyCode();
+        $origenPath = storage_path('app/public/app/base/marcas');
+        $destinoPath = "uploads/$companyCode";
 
-        foreach ($brands as $brand) {
+        $archivos = collect(scandir($origenPath))
+            ->filter(fn($file) => !in_array($file, ['.', '..']) && is_file("$origenPath/$file"));
+
+        foreach ($archivos as $archivo) {
+            $descripcion = pathinfo($archivo, PATHINFO_FILENAME);
+            $contenido = file_get_contents("$origenPath/$archivo");
+            $extension = pathinfo($archivo, PATHINFO_EXTENSION);
+            $imageName = Str::uuid() . '.' . $extension;
+
+            // Guarda la imagen en la ruta correcta
+            Storage::disk('public')->put("$destinoPath/$imageName", $contenido);
+
+            // Crea el registro de la marca
             ProductBrand::create([
-                'description' => $brand,
-                'imagen' => $brand,
+                'description' => $descripcion,
+                'imagen' => $imageName,
             ]);
         }
     }

@@ -118,7 +118,7 @@
                                 <div class="flex flex-col gap-2">
                                     @foreach ($brands as $brand)
                                         <label class="checkbox-container-custom">
-                                            <input type="checkbox" class="checkbox-custom" id="mi-check-custom" />
+                                            <input type="checkbox" class="checkbox-custom brand-checkbox" value="{{ $brand->id }}" id="mi-check-custom" />
                                             <span class="checkbox-wrapper-custom"></span>
                                             <span class="checkbox-label-custom">{{ $brand->description }}</span>
                                         </label>
@@ -139,7 +139,7 @@
                                 <div class="flex flex-col gap-2">
                                     @foreach ($categories as $category)
                                         <label class="checkbox-container-custom">
-                                            <input type="checkbox" class="checkbox-custom" id="mi-check-custom" />
+                                            <input type="checkbox" class="checkbox-custom category-checkbox" value="{{ $category->id }}" id="mi-check-custom" />
                                             <span class="checkbox-wrapper-custom"></span>
                                             <span class="checkbox-label-custom">{{ $category->description }}</span>
                                         </label>
@@ -160,7 +160,7 @@
                                 <div class="flex flex-col gap-2">
                                     @foreach ($subCategories as $subCategory)
                                         <label class="checkbox-container-custom">
-                                            <input type="checkbox" class="checkbox-custom" id="mi-check-custom" />
+                                            <input type="checkbox" class="checkbox-custom subcategory-checkbox" value="{{ $subCategory->id }}" id="mi-check-custom" />
                                             <span class="checkbox-wrapper-custom"></span>
                                             <span class="checkbox-label-custom">{{ $subCategory->description }}</span>
                                         </label>
@@ -175,12 +175,12 @@
                 <div class="flex flex-wrap items-center gap-2" style="justify-content: end">
                     <div class="flex gap-2 shrink-0 items-cente">
                         <div class="custom-dropdown">
-                            <input type="text" class="custom-dropdown__input" placeholder="Select option" readonly>
+                            <input type="text" class="custom-dropdown__input" id="inputFiltersProduct" placeholder="Selecciona un filtro" readonly>
                             <ul class="custom-dropdown__list">
-                                <li class="custom-dropdown__item">Option 1</li>
-                                <li class="custom-dropdown__item">Option 2</li>
-                                <li class="custom-dropdown__item">Option 3</li>
-                                <li class="custom-dropdown__item">Option 4</li>
+                                <li class="custom-dropdown__item" data-value="price_desc">Precio de mayor a menor</li>
+                                <li class="custom-dropdown__item" data-value="price_asc">Precio de menor a mayor</li>
+                                <li class="custom-dropdown__item" data-value="newest">Productos más nuevos</li>
+                                <li class="custom-dropdown__item" data-value="oldest">Productos más antiguos</li>
                             </ul>
                         </div>
                     </div>

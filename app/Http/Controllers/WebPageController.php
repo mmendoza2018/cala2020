@@ -158,7 +158,10 @@ class WebPageController extends Controller
     $productsQuery = $this->applyProductFilters($request);
 
     if (request()->ajax()) {
-      return view('webpage.components.products', compact('products'))->render();
+      //dd($productsQuery);
+      return view('webpage.components.products', [
+        "products" => $productsQuery
+      ])->render();
     }
     return view('webpage.store', [
       "products" => $productsQuery,
@@ -264,6 +267,10 @@ class WebPageController extends Controller
       $productsQuery->whereIn('products.category_product_id', $request->query('categories'));
     }
 
+    if ($request->query('subcategories')) {
+      $productsQuery->whereIn('products.subcategory_product_id', $request->query('subcategories'));
+    }
+
     // Ordenamiento
     switch ($request->query('order')) {
       case 'price_desc':
@@ -290,7 +297,7 @@ class WebPageController extends Controller
     }
 
     // Límite (por defecto 20 si no se especifica)
-    $limit = (int) $request->query('limit', 2);
+    $limit = (int) $request->query('limit', 20);
 
     // Obtener el parámetro paginate
     $paginateParam = $request->query('paginate');

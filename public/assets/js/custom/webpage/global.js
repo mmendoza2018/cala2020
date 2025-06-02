@@ -305,6 +305,8 @@ options.forEach(option => {
     option.addEventListener('click', (e) => {
         e.stopPropagation();
         input.value = option.textContent;
+        input.dataset.value = option.dataset.value;
+        input.dispatchEvent(new Event('input'));
         dropdown.classList.remove('open');
     });
 });
@@ -316,7 +318,6 @@ document.addEventListener('click', () => {
 
 
 //nav footer 
-console.log('(luismi):>> 22222222222');
 let lastScrollTop = 0;
 const navBottom = document.getElementById("mobileBottomNav");
 console.log('(luismi): navBottom :>> ', navBottom);

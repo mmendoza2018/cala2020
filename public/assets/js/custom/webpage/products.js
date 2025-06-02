@@ -384,14 +384,14 @@ $(document).ready(function () {
         console.log('entre :>> ');
     });
 
-    // Manejar cambios en el select de ordenamiento
-    $('#selectOrderQuery').change(function () {
-        fetchProducts();
+    $('#inputFiltersProduct').on('input', function (e) {
+        fetchProducts(null, null, true, true);
+        console.log('entre :>> ');
     });
 
     // Manejar cambios en las marcas seleccionadas
-    $(document).on('change', '.brand-checkbox', function () {
-        fetchProducts();
+    $(document).on('change', '.brand-checkbox, .category-checkbox, .subcategory-checkbox', function () {
+        fetchProducts(null, null, true, true);
     });
 
     $(document).on('click', '.custom-tabs__buttons [data-filter_category_name]', function () {
@@ -407,11 +407,12 @@ $(document).ready(function () {
         fetchProducts(null, true, false, false);
     }
 
-    function fetchProducts(category = null, favorite = null, updateUrl = false, paginate=true) {
+    function fetchProducts(category = null, favorite = null, updateUrl = false, paginate = true) {
         const searchQuery = $('#searchInputQuery').val();
-        const selectedOrder = $('#selectOrderQuery').val();
+        const selectedOrder = document.getElementById("inputFiltersProduct").dataset.value;
         let selectedBrands = [];
         let selectedCategories = [];
+        let selectedSubCategories = [];
         let favorites = null;
 
         if (!category) {
@@ -424,6 +425,10 @@ $(document).ready(function () {
 
         $('.brand-checkbox:checked').each(function () {
             selectedBrands.push($(this).val());
+        });
+
+        $('.subcategory-checkbox:checked').each(function () {
+            selectedSubCategories.push($(this).val());
         });
 
         if (!favorite) {
@@ -440,6 +445,7 @@ $(document).ready(function () {
         if (paginate) params.append('paginate', paginate);
         selectedBrands.forEach(b => params.append('brands[]', b));
         selectedCategories.forEach(c => params.append('categories[]', c));
+        selectedSubCategories.forEach(c => params.append('subcategories[]', c));
 
         const urlPath = window.location.pathname;
         const queryString = params.toString();

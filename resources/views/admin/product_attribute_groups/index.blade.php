@@ -22,7 +22,7 @@
             <div class="card bg-white">
                 <div class="card-body">
                     <div class="w-full md:w-2/4 mx-auto">
-                        <table id="tableProductBrand" class="display stripe group" style="width:100%">
+                        <table id="tableProductVariant" class="display stripe group" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -61,5 +61,5 @@
     <script src="{{ URL::to('assets/js/datatables/jquery-3.7.0.js') }}"></script>
     <script src="{{ URL::to('assets/js/datatables/data-tables.min.js') }}"></script>
     <script src="{{ URL::to('assets/js/datatables/data-tables.tailwindcss.min.js') }}"></script>
-    <script src="{{ URL::to('assets/js/custom/productBrand.js') }}"></script>
+    <script src="{{ URL::to('assets/js/custom/productVariant.js') }}"></script>
 @endsection

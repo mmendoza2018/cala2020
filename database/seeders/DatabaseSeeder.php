@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Database\Seeders\ropa\CategoriasRopaSeeder;
-use Database\Seeders\ropa\SubcategoriasRopaSeeder;
+use Database\Seeders\ropa\CategoriasSeeder;
+use Database\Seeders\ropa\SubcategoriasSeeder;
+use Database\Seeders\ropa\AttributeSeeder;
+use Database\Seeders\ropa\AttributeGroupSeeder;
+use Database\Seeders\ropa\ProductoSeeder;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -17,14 +19,15 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             GeneralSeeder::class,
-            CategoriasRopaSeeder::class,
-            SubcategoriasRopaSeeder::class,
-            MeasurementUnitsTableSeeder::class,
-            ProductBrandsTableSeeder::class,
+            UserSeeder::class,
             AttributeGroupSeeder::class,
             AttributeSeeder::class,
+            CategoriasSeeder::class,
+            SubcategoriasSeeder::class,
+            MeasurementUnitsTableSeeder::class,
+            ProductBrandsTableSeeder::class,
+            ProductoSeeder:: class,
             PriceTypesSeeder::class,
-            UserSeeder::class,
             ThemeSeeder::class,
             LegalitySeeder::class
         ]);

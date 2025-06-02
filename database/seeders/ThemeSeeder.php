@@ -15,7 +15,7 @@ class ThemeSeeder extends Seeder
     {
         DB::table('themes')->insert([
             'primary_color' => '#FF5733', // Color primario
-            'secondary_color' => '#33FF57', // Color secundario
+            'secondary_color' => '#D9D9D9', // Color secundario
             'product_card_shape' => 'SQUARE', // Forma de la card
             'theme_active' => 'THEME_01', // Tema activo
             'status' => 1, // Activo
