@@ -1,2 +1,6 @@
-*
-!.gitignore
+
+# Ignora todo dentro de public/storage/uploads
+/public/storage/uploads/**
+
+# Pero permite la carpeta public/storage en sí
+!/public/storage/
