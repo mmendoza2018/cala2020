@@ -1,5 +1,6 @@
-# Ignora todo dentro de public/storage/uploads
+# Ignorar todo dentro de uploads
 /public/storage/uploads/**
 
-# Permite la carpeta public/storage/app y su contenido
+# No ignorar app y su contenido
+!/public/storage/app/
 !/public/storage/app/**
