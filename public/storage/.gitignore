@@ -1,6 +1,0 @@
-# Ignorar todo dentro de uploads
-/public/storage/uploads/**
-
-# No ignorar app y su contenido
-!/public/storage/app/
-!/public/storage/app/**
