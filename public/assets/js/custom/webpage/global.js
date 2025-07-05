@@ -1,4 +1,5 @@
 var backDropOverlay = document.getElementById("backDropDiv");
+let baseCodeCompany = document.querySelector(`[data-code_company]`).dataset.code_company;
 const bodyElement = document.body;
 console.log('(luismi):>> 33333333333333');
 const closeModal = (idModal) => {
@@ -95,6 +96,16 @@ const boxAlertValidation = (messages) => {
         confirmButtonText: 'Aceptar'
     });
 }
+
+const initializeSelect2 = () => {
+    const $elements = $('[data-custom_select2]');
+    if ($elements.length !== 0) {
+        $elements.select2({
+            placeholder: 'Selecciona una opción',
+            allowClear: true
+        });
+    }
+};
 
 const FormValidate = (idFormulario) => {
     const listaCampos = document.querySelectorAll(`#${idFormulario} [data-validate]`);
@@ -272,6 +283,7 @@ window.addEventListener("load", () => {
 
         }, 3000);
     }, 3000);
+    //initializeSelect2();
 });
 
 
@@ -292,37 +304,38 @@ btnWhatsapp.addEventListener('click', () => {
 });
 
 /* dropdown */
-const dropdown = document.querySelector('.custom-dropdown') || null;
-const input = dropdown.querySelector('.custom-dropdown__input') || null;
-const options = dropdown.querySelectorAll('.custom-dropdown__item') || null;
+const dropdown = document.querySelector('.custom-dropdown');
+const input = dropdown ? dropdown.querySelector('.custom-dropdown__input') : null;
+const options = dropdown ? dropdown.querySelectorAll('.custom-dropdown__item') : null;
+if (input) {
 
-input.addEventListener('click', (e) => {
-    e.stopPropagation();
-    dropdown.classList.toggle('open');
-});
-
-options.forEach(option => {
-    option.addEventListener('click', (e) => {
+    input.addEventListener('click', (e) => {
         e.stopPropagation();
-        input.value = option.textContent;
-        input.dataset.value = option.dataset.value;
-        input.dispatchEvent(new Event('input'));
-        dropdown.classList.remove('open');
+        dropdown.classList.toggle('open');
     });
-});
+}
+if (options) {
+    options.forEach(option => {
+        option.addEventListener('click', (e) => {
+            e.stopPropagation();
+            input.value = option.textContent;
+            input.dataset.value = option.dataset.value;
+            input.dispatchEvent(new Event('input'));
+            dropdown.classList.remove('open');
+        });
+    });
+}
 
 // Cerrar al hacer clic fuera
 document.addEventListener('click', () => {
-    dropdown.classList.remove('open');
+    dropdown?.classList?.remove('open');
 });
 
 
 //nav footer 
 let lastScrollTop = 0;
 const navBottom = document.getElementById("mobileBottomNav");
-console.log('(luismi): navBottom :>> ', navBottom);
 window.addEventListener("scroll", () => {
-    console.log('(luismi):>> scroll');
     const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 
     if (currentScroll > lastScrollTop) {
@@ -340,5 +353,133 @@ function toggleMenuCustom() {
     dropdown.classList.toggle('show');
 }
 
+/* search product */
 
+let inputSearchProduct = document.querySelector(".custom-form-search-products");
 
+inputSearchProduct.addEventListener("focus", function () {
+    let container = document.getElementById("containerSearchProducts");
+    container.style.display = "block"; // Azul claro
+});
+
+inputSearchProduct.addEventListener("blur", function () {
+    setTimeout(() => {
+        let container = document.getElementById("containerSearchProducts");
+        container.style.display = "none"; // Restablecer
+    }, 500);
+});
+
+/* let inputSearchProductMovile = document.querySelector("#customFormSearchProductsMobile");
+
+inputSearchProductMovile.addEventListener("focus", function () {
+    let container = document.getElementById("containerSearchProductsMobile");
+    container.style.display = "block"; // Azul claro
+});
+
+inputSearchProductMovile.addEventListener("blur", function () {
+    setTimeout(() => {
+        let container = document.getElementById("containerSearchProductsMobile");
+        container.style.display = "none"; // Restablecer
+    }, 500);
+});
+ */
+
+const searchProducts = async (element = null, containerProducts) => {
+
+    try {
+        let query = '';
+        if (element) {
+            query = element.value;
+        }
+
+        let response = await customFetch(
+            ROUTES.SEARCH_PRODUCTS + `?query=${query}`
+        )/* aqui */
+        if (response.status === "success") {
+            let baseUrl = document.querySelector(`[data-base_url]`).dataset.base_url;
+            let container = document.getElementById(containerProducts);
+            console.log('response :>> ', response.data);
+            // Limpiar contenido previo
+            container.innerHTML = "";
+            if (response.data.length <= 0) {
+                let htmlSinProductos = `<div href="javascript:void(0);" class="d-flex p-2">
+                                            <div class="col-12 text-center">
+                                                No se econtraron productos, vuelva a intentarlo 
+                                            </div>
+                                        </div>`;
+                container.innerHTML = htmlSinProductos;
+            } else {
+                response.data.forEach(product => {
+                    let images = product.product_images;
+
+                    // obtener la imagen principal
+                    let imageMain = images.find(image => image.is_main === 1);
+                    let firstImage = imageMain
+                        ? `${baseUrl}/storage/uploads/${baseCodeCompany}/${imageMain.image_name}`
+                        : "ruta_por_defecto.jpg";
+
+                    let card = document.createElement("a");
+                    card.href = `${baseUrl}/productos/${product.slug}`;
+                    card.className = "flex gap-2 product";
+
+                    card.innerHTML = `
+                    <div class="flex items-center justify-center w-12 h-12 rounded-md bg-slate-100 shrink-0 dark:bg-zink-500">
+                        <img src="${firstImage}" alt="" class="h-8">
+                    </div>
+                    <div class="overflow-hidden grow">
+                        <a href="${baseUrl}/productos/${product.slug}" class="transition-all duration-200 ease-linear hover:text-custom-500">
+                            <h6 class="mb-1 text-15">${product.title}</h6>
+                        </a>
+                        <div class="flex items-end mb-2">
+                            <h5 class="text-base product-price" style="margin-top: 0">S/<span>${product.product_attributes[0]?.default_price ?? "0.00"}</span></h5>
+                            <div class="font-normal rtl:mr-1 ltr:ml-1 text-slate-500 dark:text-zink-200">(${product.product_brand.description})</div>
+                        </div>
+                    </div>
+                `;
+
+                    container.appendChild(card);
+                });
+
+            }
+        }
+    } catch (error) {
+        console.error('error :>> ', error);
+    }
+
+}
+
+function getDivFromTheElement(element) {
+    let temp = element.parentNode.querySelector('input.product-quantity');
+
+    if (!temp) {
+        const upperParent = element.parentNode;
+        return getDivFromTheElement(upperParent);
+    }
+    return temp;
+}
+
+document.body.addEventListener('click', function (event) {
+    // Si se clickea un botón + o -, encontramos el contenedor más cercano
+    const clickedButton = event.target.closest('.plusBtn, .minusBtn');
+    if (!clickedButton) return;
+
+    const container = clickedButton.closest('.containerMinusPlus');
+    console.log('(luismi): container :>> ', container);
+    if (!container) return;
+
+    const input = container.querySelector('input[type="number"]');
+    console.log('(luismi): input :>> ', input);
+    if (!input) return;
+
+    let value = parseInt(input.value, 10) || 0;
+    const min = parseInt(input.min, 10) || 0;
+    const max = parseInt(input.max, 10) || 9999;
+
+    if (clickedButton.classList.contains('plusBtn') && value < max) {
+        input.value = value + 1;
+    }
+
+    if (clickedButton.classList.contains('minusBtn') && value > min) {
+        input.value = value - 1;
+    }
+});

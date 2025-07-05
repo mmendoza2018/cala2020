@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ApiResponse;
+use App\Models\AttentionNumber;
+use App\Models\EcommerceSaleProduct;
+use App\Models\EcommerceSaleProductDetail;
 use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductVariant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ShoppingCartProductController extends Controller
 {
@@ -71,6 +76,7 @@ class ShoppingCartProductController extends Controller
                 'title' => $product->title,
                 'image' => $imageMain,
                 'brand' => $product->productBrand->description ?? '', // Si hay un campo brand
+                'slug' => $product->slug ?? '', // Si hay un campo brand
                 'attributes_combination' => $productVariant->attributesCombination,
                 'price' => intval($productVariant->default_price),
                 'quantity' => $quantity,
@@ -131,5 +137,175 @@ class ShoppingCartProductController extends Controller
         }
 
         return null; // Indica que todo está correcto.
+    }
+
+    public function store(Request $request)
+    {
+        //crear la orden
+        $existError = ShoppingCartProductController::isValidProductSession();
+        if ($existError) {
+            return $existError;
+        }
+
+        $rules = [
+            "first_name" => "required|string|max:255",
+            "last_name" => "required|string|max:255",
+            "phone_number" => "required|string|max:20",
+            "alternate_phone_number" => "nullable|string|max:20",
+            "email" => "required|email|max:255",
+            "address" => "required|string|max:500",
+            "state" => "required|string|max:255",
+            "city" => "required|string|max:255",
+            "district" => "required|string|max:255",
+        ];
+
+        // Definir los nombres amigables de los atributos
+        $attributes = [
+            "first_name" => "Nombres",
+            "last_name" => "Apellidos",
+            "phone_number" => "Celular",
+            "alternate_phone_number" => "Celular alternativo",
+            "email" => "Correo",
+            "address" => "Dirección",
+            "state" => "Provincia",
+            "city" => "Departamento",
+            "district" => "distrito"
+        ];
+
+        // Crear el validador manualmente
+        $validator = Validator::make($request->all(), $rules);
+        $validator->setAttributeNames($attributes);
+
+        // Validar los datos
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            return ApiResponse::error("Validation Error", $errors, 202);
+        }
+
+        $validatedData = $validator->validated();
+        //creamos la venta con estado pendiente a la espera de la confirmacion (IPN)
+        $shoppingCartProducts = session('shoppingCartProducts', []);
+
+        $total = 0;
+        $total = array_reduce(session('shoppingCartProducts'), function ($carry, $product) {
+            return $carry + ($product['price'] * $product['quantity']);
+        }, 0);
+
+        //sumamos cantidades
+        $totalQuantityProduct = 0;
+        foreach ($shoppingCartProducts as $product) {
+            $totalQuantityProduct += $product['quantity'];
+        }
+
+        $ecommerceSaleInsert = EcommerceSaleProduct::create([
+            "code" => '-',
+            "payment_method" => "",
+            "quantity" => $totalQuantityProduct,
+            "total" => $total,
+            "status" => "PENDING",
+            "first_name" => $validatedData["first_name"],
+            "last_name" => $validatedData["last_name"],
+            "phone_number" => $validatedData["phone_number"],
+            "alternate_phone_number" => $validatedData["alternate_phone_number"],
+            "email" => $validatedData["email"],
+            "address" => $validatedData["address"],
+            "state" => $validatedData["state"],
+            "city" => $validatedData["city"],
+            "district" => $validatedData["district"]
+        ]);
+
+        foreach (session('shoppingCartProducts') as $product) {
+
+            $descripctionProduct = $product['title'] . ' | ' . $product['brand'];
+
+            EcommerceSaleProductDetail::create([
+                "sale_id" => $ecommerceSaleInsert->id,
+                "product_attribute_id" => $product["productAttribute"],
+                "product_name" => $descripctionProduct,
+                "price" => $product["price"],
+                "quantity" => $product["quantity"],
+                "subtotal" => $product["subtotal"],
+            ]);
+        }
+
+        $linkWhatsapp = $this->sendOrderWhatsApp($validatedData, $shoppingCartProducts);
+
+        // Limpiamos el carrito
+        session()->forget('shoppingCartProducts');
+
+        return ApiResponse::success([
+            "whatsapp_link" => $linkWhatsapp
+        ], "Orden generada con éxito");
+    }
+
+    private function sendOrderWhatsApp($data, $products)
+    {
+        $attentionNumbers = AttentionNumber::where("status", 1)->pluck('phone_number')->toArray();
+
+        if (empty($attentionNumbers)) {
+            throw new \Exception("No hay números activos de atención configurados.");
+        }
+
+        $empresaPhone = $attentionNumbers[array_rand($attentionNumbers)];
+
+        $message = "*NUEVA ORDEN RECIBIDA*\n";
+
+        $message .= "━━━━━━━━━━━━━━━━━━━\n\n";
+
+        $message .= "*CLIENTE:*\n";
+        $message .= "Nombre: {$data['first_name']} {$data['last_name']}\n";
+        $message .= "Teléfono: {$data['phone_number']}\n";
+
+        if (!empty($data['alternate_phone_number'])) {
+            $message .= "Teléfono Alternativo: {$data['alternate_phone_number']}\n";
+        }
+
+        $message .= "Correo: {$data['email']}\n\n";
+        $message .= "*DIRECCIÓN DE ENTREGA:*\n";
+        $message .= "Departamento: {$data['state']}\n";
+        $message .= "Ciudad: {$data['city']}\n";
+        $message .= "Distrito: {$data['district']}\n";
+        $message .= "Dirección: {$data['address']}\n\n";
+        $message .= "*DETALLE DE LOS PRODUCTOS:*\n";
+
+        $message .= "━━━━━━━━━━━━━━━━━━━\n\n";
+
+        $totalGeneral = 0;
+        $totalCantidad = 0;
+        $contadorProducts = 1;
+        foreach ($products as $index => $product) {
+            $message .= $contadorProducts . ". *{$product['title']}*\n";
+            $message .= "Marca: {$product['brand']}\n";
+
+            if (!empty($product['attributes_combination']) && $product['attributes_combination'] instanceof \Illuminate\Support\Collection) {
+                $message .= "Atributos:\n";
+                foreach ($product['attributes_combination'] as $attributeCombination) {
+                    $grupo = $attributeCombination->attribute->attributeGroup->description ?? '';
+                    $valor = $attributeCombination->attribute->description ?? '';
+                    $message .= "- {$grupo}: {$valor}\n";
+                }
+            }
+
+            $message .= "Precio Unitario: S/ {$product['price']}\n";
+            $message .= "Cantidad: {$product['quantity']}\n";
+            $message .= "Subtotal: S/ {$product['subtotal']}\n\n";
+
+            $totalGeneral += $product['subtotal'];
+            $totalCantidad += $product['quantity'];
+            $contadorProducts ++;
+        }
+
+        $message .= "*RESUMEN DE LA ORDEN:*\n";
+
+        $message .= "━━━━━━━━━━━━━━━━━━━\n\n";
+
+        $message .= "Total de Productos: {$totalCantidad}\n";
+        $message .= "Total a Pagar: *S/ {$totalGeneral}*\n\n";
+        $message .= "Método de Pago: A coordinar\n";
+        $message .= "Estado: PENDIENTE\n";
+
+        $urlWhatsapp = "https://wa.me/{$empresaPhone}?text=" . rawurlencode($message);
+
+        return $urlWhatsapp;
     }
 }

@@ -13,7 +13,7 @@ class PaymentMethodController extends Controller
     {
         $paymentMethods = PaymentMethod::where("status", 1)->get();
         // Definir el directorio de imágenes
-        $imageDirectory = storage_path('app/public/uploads/') . getCompanyCode();
+        $imageDirectory = storage_path('app/public/uploads/') . getCompanyCode() . "/";
 
         foreach ($paymentMethods as $paymentMethod) {
 

@@ -24160,7 +24160,7 @@ div.flatpickr-day.dataTables_scrollBody>table.dataTable>:is(thead>tr>th, thead>t
 }
 
 .h-\[calc\(100vh_-_370px\)\] {
-    height: calc(100vh - 370px)
+    height: calc(100vh - 176px)
 }
 
 .h-\[calc\(100vh_-_410px\)\] {
@@ -36773,6 +36773,10 @@ td.gridjs-td:last-child {
 
     .\32xl\:block {
         display: block
+    }
+
+    .\32xl\:hidden {
+        display: none
     }
 
     .\32xl\:w-20 {

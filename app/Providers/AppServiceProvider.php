@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Models\AttentionNumber;
 use App\Models\General;
+use App\Models\PaymentMethod;
+use App\Models\SocialNetwork;
 use App\Models\Theme;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -26,11 +28,16 @@ class AppServiceProvider extends ServiceProvider
         $generalInfo = General::first();
         $themes = Theme::first();
         $attentionNumbers = AttentionNumber::where("status", 1)->get();
+        $socialNetworks = SocialNetwork::where("status", 1)->get();
+        $paymentMethods = PaymentMethod::where("status", 1)->get();
+        
 
         View::share([
             'generalInfo' => $generalInfo,
             'themes' => $themes,
-            'attentionNumbers' => $attentionNumbers
+            'attentionNumbers' => $attentionNumbers,
+            'socialNetworks' => $socialNetworks,
+            'paymentMethods' => $paymentMethods
         ]);
     }
 }

@@ -68,7 +68,21 @@ document.addEventListener('DOMContentLoaded', function () {
         main.mount();
         thumbnails.mount();
     }
+
+    obtenerProductosSession();
 });
+
+const obtenerProductosSession = async () => {
+    let response = await customFetch(
+        ROUTES.SHOPPING_CART_PRODUCTS + `/showCart`,
+        "GET"
+    )
+    if (response.status === "success") {
+        let data = response.data;
+        console.log('(luismi): data :>> ', data);
+        renderProductShoppingCart(data)
+    }
+}
 
 /* funciones para ver los del carrito de compras */
 
@@ -121,8 +135,8 @@ const addProductToShoppingCart = async () => {
             formData
         )
         if (response.status === "success") {
+            toastAlert("!Producto Agregado!", "success", "bottom-start")
             let data = response.data;
-            console.log('data :>> ', data);
             renderProductShoppingCartModal(data);
 
             document.querySelector(`[data-drawer-target="cartSidePenal"]`).click();
@@ -137,7 +151,7 @@ const addProductToShoppingCart = async () => {
     }
 
 }
-
+/* luismi */
 const addRemoveProductToShoppingCart = async (element, type = "plus") => {
     try {
 
@@ -155,8 +169,9 @@ const addRemoveProductToShoppingCart = async (element, type = "plus") => {
         )
         if (response.status === "success") {
             let data = response.data;
-            console.log('data :>> ', data);
+            toastAlert(type === "plus" ? "!Producto Agregado¡" : "!Producto Removido¡", "success", "bottom-start")
             renderProductShoppingCartModal(data);
+            renderProductShoppingCart(data);
         } else {
             boxAlertValidation(response.errors);
         }
@@ -169,60 +184,73 @@ const addRemoveProductToShoppingCart = async (element, type = "plus") => {
 const renderProductShoppingCart = (data) => {
     const template = document.getElementById('templateProductShoppingCart');
     const container = document.querySelector('#containerShoppingCart');
-    let baseUrl = document.querySelector(`[data-base_url]`).dataset.base_url;
+    const baseUrl = document.querySelector('[data-base_url]').dataset.base_url;
+
     let total = 0;
     let subtotal = 0;
 
-    container.innerHTML = "";
+    container.innerHTML = '';
 
     if (Object.keys(data).length === 0) {
         container.innerHTML = `
-        <div class="p-10 text-sm border text-center rounded-md text-slate-500 border-slate-200 bg-slate-50 dark:bg-zink-500/30 dark:border-zink-500 dark:text-zink-200">
-                    <span class="font-bold">Aun no se añadieron productos a la orden</span>
+        <tr>
+            <td colspan="2">
+                <div class="p-10 text-sm border text-center rounded-md text-slate-500 border-slate-200 bg-slate-50 dark:bg-zink-500/30 dark:border-zink-500 dark:text-zink-200">
+                    <span class="font-bold">Aún no se añadieron productos a la orden</span>
                 </div>
+            </td>
+        </tr>
         `;
     } else {
         Object.values(data).forEach(product => {
-            // Clonamos el contenido del template
             const clone = template.content.cloneNode(true);
-            let subtotalProduct = parseFloat(product.quantity * product.price).toFixed(2);
 
-            // Asignamos los valores correspondientes
-            clone.querySelector('.imgShoppingCart').src = `${baseUrl}/storage/uploads/${product.image.path}`;
-            clone.querySelector('.descriptionShoppingCart').textContent = `${product.title} | ${product.brand}`;
-            clone.querySelector('.priceShoppingCart').textContent = `S/${product.price.toFixed(2)}`;
-            clone.querySelector('.quantityShoppingCart').value = product.quantity;
-            clone.querySelector('.subtotalShoppingCart').textContent = subtotalProduct;
+            const img = clone.querySelector('img');
+            const titleLink = clone.querySelector('h6 a');
+            const qualitySpans = clone.querySelectorAll('.fs-nine.text-sm.text-slate-500');
+            const priceQtyText = clone.querySelector('p');
+            const subtotalTd = clone.querySelector('td:last-child');
 
-            // Asignamos los atributos dinámicamente
-            const attributesList = clone.querySelector('.attributesShoppingCart');
-            attributesList.innerHTML = ''; // Limpiamos la lista de atributos antes de añadir nuevos
-            {/* <span class="fw_600 n3-clr d-block mb-0" style="line-height: 110%;">
-</span> */}
+            const subtotalProduct = parseFloat(product.price * product.quantity).toFixed(2);
+
+            // Set values
+            img.src = `${baseUrl}/storage/uploads/${baseCodeCompany}/${product.image}`;
+            img.alt = product.title;
+            titleLink.textContent = `${product.title} | ${product.brand}`;
+            titleLink.href = `productos/${product.slug}`;
+
+            // Clear and fill attribute blocks (as "Calidad", "Color", etc.)
+            qualitySpans.forEach(span => span.remove());
+
+            const wrapper = clone.querySelector('.grow');
+
             product.attributes_combination.forEach(attribute => {
-                const span = document.createElement('span');
-                span.classList.add('fw_600', 'n3-clr', 'd-block', 'mb-0');
-                span.style.lineHeight = '100%';
-                span.innerHTML = `${attribute.attribute.attribute_group.description}:  ${attribute.attribute.description}`;
-                attributesList.appendChild(span);
+                const div = document.createElement('div');
+                div.className = 'fs-nine text-sm text-slate-500 mb-1';
+                div.style.lineHeight = '100%';
+
+                div.innerHTML = `
+                    <strong class="fs-nine fw_600" style="line-height: 110%">
+                        ${attribute.attribute.attribute_group.description}:
+                    </strong> ${attribute.attribute.description}
+                `;
+
+                wrapper.insertBefore(div, priceQtyText);
             });
 
-            clone.querySelector('.minusBtnShoppingCart').dataset.product_attribute_id = product.productAttribute;
-            clone.querySelector('.plusBtnShoppingCart').dataset.product_attribute_id = product.productAttribute;
-            clone.querySelector('.removeBtnShoppingCart').dataset.product_attribute_id = product.productAttribute;
+            // Price and quantity text
+            priceQtyText.textContent = `S/${product.price.toFixed(2)} x ${String(product.quantity).padStart(2, '0')}`;
+            subtotalTd.textContent = `S/${subtotalProduct}`;
 
-            subtotal += Number(subtotalProduct);
+            subtotal += parseFloat(subtotalProduct);
             total = subtotal;
 
             container.appendChild(clone);
         });
     }
 
-    document.querySelector("#detailsContainerShoppingCart .numProducts").textContent = Object.values(data).length;
-    document.querySelector("#detailsContainerShoppingCart .subtotal").textContent = subtotal.toFixed(2);
-    document.querySelector("#detailsContainerShoppingCart .total").textContent = total.toFixed(2);
-
-}
+    document.querySelector("#detailsContainerShoppingCart .total").textContent = `S/ ${total.toFixed(2)}`;
+};
 
 const renderProductShoppingCartModal = (data) => {
     const template = document.getElementById('templateProductShoppingCartModal');
@@ -240,26 +268,29 @@ const renderProductShoppingCartModal = (data) => {
         updateNumberProductsShoppingCart(0)
     } else {
         Object.values(data).forEach(product => {
+            console.log('(luismi): product :>> ', product);
             // Clonamos el contenido del template
             const clone = template.content.cloneNode(true);
             let subtotalProduct = parseFloat(product.quantity * product.price).toFixed(2);
             // Asignamos los valores correspondientes
-            clone.querySelector('.imgShoppingCartModal').src = `${baseUrl}/storage/uploads/${product.image}`;
+            clone.querySelector('.imgShoppingCartModal').src = `${baseUrl}/storage/uploads/${baseCodeCompany}/${product.image}`;
             clone.querySelector('.descriptionShoppingCartModal').textContent = `${product.title} | ${product.brand}`;
+            clone.querySelector('.descriptionShoppingCartModal').parentNode.href = `${product.slug}`;
             clone.querySelector('.priceShoppingCartModal').textContent = `S/${product.price.toFixed(2)}`;
             clone.querySelector('.quantityShoppingCartModal').value = product.quantity;
-            clone.querySelector('.subtotalShoppingCartModal').textContent = subtotalProduct;
-
+            clone.querySelector('.subtotalShoppingCartModal').textContent = `S/ ${subtotalProduct}`;
+            console.log('(luismi): product.price.toFixed(2) :>> ', product.price.toFixed(2));
             // Asignamos los atributos dinámicamente
             const attributesList = clone.querySelector('.attributesShoppingCartModal');
             attributesList.innerHTML = ''; // Limpiamos la lista de atributos antes de añadir nuevos
 
             product.attributes_combination.forEach(attribute => {
-                const li = document.createElement('li');
-                li.classList.add('fs-nine');
-                li.style.lineHeight = '100%';
-                li.innerHTML = `<span class="fs-nine fw_600" style="line-height: 110%">${attribute.attribute.attribute_group.description}:</span> ${attribute.attribute.description}`;
-                attributesList.appendChild(li);
+                const div = document.createElement('div');
+                div.classList.add('fs-nine');
+                div.style.lineHeight = '100%';
+                div.innerHTML = `<strong class="fs-nine fw_600" style="line-height: 110%">
+                ${attribute.attribute.attribute_group.description}:</strong> ${attribute.attribute.description}`;
+                attributesList.appendChild(div);
             });
 
 
@@ -276,12 +307,14 @@ const renderProductShoppingCartModal = (data) => {
         updateNumberProductsShoppingCart(Object.values(data).length)
     }
 
-    document.querySelector("#detailsContainerShoppingCartModal .totalShoppingCartModal").textContent = total.toFixed(2);
+    document.querySelector("#detailsContainerShoppingCartModal .totalShoppingCartModal").textContent = `S/ ${total.toFixed(2)}`;
 
 }
 
 const updateNumberProductsShoppingCart = (numProducts) => {
-    document.getElementById(`numProductsShoppingCart`).innerHTML = numProducts;
+    document.querySelectorAll(`.numProductsShoppingCart`).forEach(element => {
+        element.innerHTML = numProducts;
+    });
 }
 
 const addRemoveProductCart = (element, type = "plus") => {
@@ -348,7 +381,6 @@ const removeProductShoppingCart = async (element) => {
     }
 }
 
-
 /* Fin funciones para ver los del carrito de compras  */
 
 $(document).on('click', '.pagination a', function (e) {
@@ -409,7 +441,7 @@ $(document).ready(function () {
 
     function fetchProducts(category = null, favorite = null, updateUrl = false, paginate = true) {
         const searchQuery = $('#searchInputQuery').val();
-        const selectedOrder = document.getElementById("inputFiltersProduct").dataset.value;
+        const selectedOrder = document.getElementById("inputFiltersProduct")?.dataset?.value;
         let selectedBrands = [];
         let selectedCategories = [];
         let selectedSubCategories = [];
@@ -467,3 +499,17 @@ $(document).ready(function () {
     }
 
 });
+
+
+new Splide('#splideRelatedProducts', {
+    type: 'loop',
+    perPage: 5,
+    autoplay: true,
+    interval: 1000,
+    gap: '2rem', // Espacio entre slides
+    breakpoints: {
+        768: {
+            perPage: 1,
+        },
+    },
+}).mount();

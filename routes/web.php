@@ -47,6 +47,8 @@ Route::get('/enlace', function () {
 /* routes webpage */
 Route::prefix('/')->group(function () {
     Route::get('iniciar-sesion', [WebPageController::class, 'login'])->name('webpage.login');
+    Route::get('configuracion-tienda', [WebPageController::class, 'configStore'])->name('webpage.config_store');
+    
     Route::get('terminos-y-condiciones', [WebPageController::class, 'termsAndConditions'])->name('webpage.termsAndConditions');
     Route::get('libro-de-reclamaciones', [WebPageController::class, 'complaintsBook'])->name('webpage.complaintsBook');
     Route::post('/libro-store', [ComplaintsBookController::class, 'store'])->name('webpage.complaint.store');
@@ -58,6 +60,7 @@ Route::prefix('/')->group(function () {
     Route::get('productos/categorias/{categoryProduct}', [WebPageController::class, 'viewProductsCategory'])->name('web_page.products_category');
     Route::get('productos/subcategorias/{subCategoryProduct}', [WebPageController::class, 'viewProductsSubCategory'])->name('web_page.products_subcategory');
     Route::post('get_product_by_attributes', [ProductAttributeController::class, 'getProductByAttributes'])->name('productAttributes.get_product_by_attributes');
+    Route::get('search-products', [webPageController::class, 'searchProducts'])->name('web_page.search_products');
 
     Route::get('tienda', [WebPageController::class, 'store'])->name('webpage.store');
     Route::get('categorias', [WebPageController::class, 'viewCategories'])->name('webpage.categories');

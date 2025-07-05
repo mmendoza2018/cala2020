@@ -9,10 +9,11 @@
     <!-- Layout config Js -->
     <script src="{{ URL::to('assets/js/layout.js') }}"></script>
     <!-- StarCode CSS -->
-    <link rel="stylesheet" type="text/css" href="{{ URL::to('assets/libs/animsition/css/animsition.min.css') }}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{ URL::to('assets/libs/animsition/css/animsition.min.css') }}"> --}}
     <link rel="stylesheet" href="{{ URL::to('assets/css/starcode2.css') }}">
     <link rel="stylesheet" href="{{ URL::to('assets/css/custom-style.css') }}">
     {{-- <link rel="stylesheet" href="{{ URL::to('assets/css/webpage/style.css') }}"> --}}
+    <link rel="stylesheet" type="text/css" href="{{ URL::to('assets/libs/select2/select2.min.css') }}">
     <!-- message toastr -->
     <link rel="stylesheet" href="{{ URL::to('assets/css/toastr.min.css') }}">
     <script src="{{ URL::to('assets/js/toastr_jquery.min.js') }}"></script>
@@ -38,7 +39,12 @@
             <div class="loader_2"></div>
         </div>
     </div>
-
+    @php
+        $totalProductoSesion = 0;
+        if (session()->has('shoppingCartProducts') && count(session('shoppingCartProducts')) > 0) {
+            $totalProductoSesion = count(session('shoppingCartProducts'));
+        }
+    @endphp
     <!-- NAV BAR -->
 
     <nav class="navbar-custom" id="navbar">
@@ -51,17 +57,23 @@
                 <a href="{{ route('webpage.home') }}" class="effect-link-nav">Inicio</a>
                 <a href="{{ route('webpage.store') }}" class="effect-link-nav">Catalogo</a>
                 <a href="{{ route('webpage.categories') }}" class="effect-link-nav">Categorias</a>
-                <a href="#" class="effect-link-nav">Sub categorias</a>
+                <a href="{{ route('webpage.about') }}" class="effect-link-nav">Nosotros</a>
             </div>
             <div class="navbar-column navbar-actions">
 
                 <div action="#!" class="relative aos-init aos-animate hidden md:block" data-aos="fade-left">
-                    <input type="email" id="subscribeInput"
-                        class="py-3 ltr:pr-40 rtl:pl-40 bg-slate-100 dark:bg-zinc-800/40 form-input color_primary_global_pageborder dark:border-zinc-800 focus:outline-none border_secondary_global_page backdrop-blur-md"
-                        autocomplete="off" placeholder="Busca un producto" required="">
-                    <button type="submit"
-                        class="absolute px-6 py-2 text-base transition-all duration-200 ease-linear border-0 ltr:right-1 rtl:left-1 text-custom-50 btn top-1 bottom-1 from-custom-500 hover:text-white hover:from-purple-500 hover:to-custom-500"><i
-                            class="ri-arrow-right-line color_primary_global_page"></i></button>
+                    <div class="col-12 px-0 pos-relative">
+                        <input type="text" class="form-control custom-form-search-products"
+                            placeholder="Busca tu producto..."
+                            oninput="searchProducts(this, 'containerSearchProducts')">
+                        <div class="container-search-products" id="containerSearchProducts">
+                            <div href="javascript:void(0);" class="d-flex p-2">
+                                <div class="col-12 text-center">
+                                    No se econtraron productos, vuelva a intentarlo
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <button type="button" data-drawer-target="cartSidePenal"
@@ -77,7 +89,9 @@
                         </path>
                     </svg>
                     <span
-                        class="absolute flex items-center justify-center w-[16px] h-[16px] text-xs text-white bg-red-400 border-white rounded-full -top-1 -right-1">3</span>
+                        class="absolute flex items-center justify-center w-[16px] h-[16px] text-xs text-white bg-red-400 border-white rounded-full -top-1 -right-1 numProductsShoppingCart">
+                        {{ $totalProductoSesion }}
+                    </span>
                 </button>
                 <button class="navbar-toggle" onclick="toggleMenuCustom()">☰</button>
             </div>
@@ -87,76 +101,144 @@
             <a href="{{ route('webpage.home') }}" class="effect-link-nav">Inicio</a>
             <a href="{{ route('webpage.store') }}" class="effect-link-nav">Catalogo</a>
             <a href="{{ route('webpage.categories') }}" class="effect-link-nav">Categorias</a>
-            <a href="#" class="effect-link-nav">Sub categorias</a>
+            <a href="{{ route('webpage.about') }}" class="effect-link-nav">Nosotros</a>
         </div>
 
     </nav>
-
-
     <!-- END NAV BAR -->
 
     <div id="cartSidePenal" drawer-end=""
-        class="fixed inset-y-0 flex flex-col w-full transition-transform duration-300 ease-in-out transform bg-white shadow dark:bg-zink-600 ltr:right-0 rtl:left-0 md:w-96 z-drawer show hidden">
+        class="fixed inset-y-0 flex flex-col w-full transition-transform duration-300 ease-in-out transform bg-white shadow dark:bg-zink-600 ltr:right-0 rtl:left-0 md:w-96 show hidden" style="z-index: 99999">
         <div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-zink-500">
             <div class="grow">
-                <h5 class="mb-0 text-16">Shopping Cart <span
-                        class="inline-flex items-center justify-center w-5 h-5 ml-1 text-[11px] font-medium border rounded-full text-white bg-custom-500 border-custom-500 "
-                        id="numProductsShoppingCart">3</span>
+                <h5 class="mb-0 text-16">Carrito de Compras<span
+                        class="inline-flex items-center justify-center w-5 h-5 ml-1 text-[11px] font-medium border rounded-full text-white bg-custom-500 border-custom-500  numProductsShoppingCart"
+                        id="numProductsShoppingCart">{{ $totalProductoSesion }}</span>
                 </h5>
             </div>
             <div class="shrink-0">
                 <button data-drawer-close="cartSidePenal"
-                    class="transition-all duration-150 ease-linear text-slate-500 hover:text-slate-800"><svg
-                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" data-lucide="x" class="lucide lucide-x size-4">
-                        <path d="M18 6 6 18"></path>
-                        <path d="m6 6 12 12"></path>
-                    </svg></button>
+                    class="transition-all duration-150 ease-linear text-slate-500 hover:text-slate-800">
+                    <i class="ri-close-line" style="font-size: 20px"></i>
+                </button>
             </div>
-        </div>
-        <div class="px-4 py-3 text-sm text-green-500 border border-transparent bg-green-50 dark:bg-green-400/20">
-            <span class="font-bold underline">starcode50</span> Coupon code applied successfully.
         </div>
         <div>
             <div class="h-[calc(100vh_-_370px)] p-4 overflow-y-auto product-list">
                 <div class="flex flex-col gap-4" id="containerShoppingCartModal">
 
+                    @php
+                        $total = 0;
+                    @endphp
+
+                    @if (session()->has('shoppingCartProducts') && count(session('shoppingCartProducts')) > 0)
+                        @foreach (session('shoppingCartProducts') as $product)
+                            @php
+                                $subtotal = $product['price'] * $product['quantity'];
+                                $total += $subtotal;
+                            @endphp
+
+                            <div class="flex gap-2 product mb-4">
+                                <!-- Imagen del producto -->
+                                <div
+                                    class="flex items-center justify-center w-12 h-12 rounded-md bg-slate-100 shrink-0 dark:bg-zink-500">
+                                    <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $product['image']) }}"
+                                        class="imgShoppingCartModal h-8 object-cover">
+                                </div>
+
+                                <!-- Detalles del producto -->
+                                <div class="overflow-hidden grow">
+                                    <!-- Botón de eliminar -->
+                                    <div class="ltr:float-right rtl:float-left">
+                                        <button type="button"
+                                            class="transition-all duration-150 ease-linear text-slate-500 hover:text-red-500 removeBtnShoppingCartModal"
+                                            data-product_attribute_id="{{ $product['productAttribute'] }}"
+                                            onclick="removeProductShoppingCart(this)">
+                                            <i class="ri-close-line"></i>
+                                        </button>
+                                    </div>
+
+                                    <!-- Título del producto -->
+                                    <a href="{{ route('webpage.product', ['product' => $product['slug']]) }}"
+                                        class="transition-all duration-200 ease-linear hover:text-custom-500">
+                                        <h6 class="mb-1 text-15 descriptionShoppingCartModal">
+                                            {{ $product['title'] . ' | ' . $product['brand'] }}
+                                        </h6>
+                                    </a>
+                                    <!-- Atributos combinados -->
+                                    <div
+                                        class="attributesShoppingCartModal text-sm text-slate-500 dark:text-zink-300 mb-2">
+                                        @foreach ($product['attributes_combination'] as $combinacion)
+                                            <div>
+                                                <strong>{{ $combinacion->attribute->attributeGroup->description }}:</strong>
+                                                {{ $combinacion->attribute->description }}
+                                            </div>
+                                        @endforeach
+                                    </div>
+
+                                    <div class="flex items-center mb-2">
+                                        <h5 class="text-base priceShoppingCartModal">
+                                            $<span>{{ number_format($product['price'], 2) }}</span></h5>
+                                    </div>
+
+                                    <!-- Precio y cantidad -->
+                                    <div class="flex items-center justify-between gap-3">
+                                        <!-- Controles de cantidad -->
+                                        <div
+                                            class="inline-flex p-2 text-center border rounded input-step border-slate-200 dark:border-zink-500 containerMinusPlus">
+                                            <button type="button"
+                                                class="border w-7 leading-[15px] minusBtn minusBtnShoppingCartModal border_color_primary_global_page rounded transition-all duration-200 ease-linear"
+                                                data-product_attribute_id="{{ $product['productAttribute'] }}"
+                                                onclick="addRemoveProductToShoppingCart(this, 'minus')">
+                                                <i class="ri-subtract-line"></i>
+                                            </button>
+                                            <input type="number"
+                                                class="text-center ltr:pl-2 rtl:pr-2 w-15 h-7 inputMinusPlus product-quantity dark:bg-zink-700 focus:shadow-none quantityShoppingCartModal"
+                                                value="{{ $product['quantity'] }}" min="0" max="500"
+                                                readonly>
+                                            <button type="button"
+                                                class="transition-all plusBtnShoppingCartModal duration-200 ease-linear border rounded border_color_primary_global_page w-7 plusBtn"
+                                                data-product_attribute_id="{{ $product['productAttribute'] }}"
+                                                onclick="addRemoveProductToShoppingCart(this, 'plus')">
+                                                <i class="ri-add-line"></i>
+                                            </button>
+                                        </div>
+
+                                        <!-- Subtotal del producto -->
+                                        <h6 class="product-line-price subtotalShoppingCartModal font-semibold text-sm">
+                                            S/{{ number_format($subtotal, 2) }}
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <div
+                            class="p-10 text-sm border text-center rounded-md text-slate-500 border-slate-200 bg-slate-50 dark:bg-zink-500/30 dark:border-zink-500 dark:text-zink-200">
+                            <span class="font-bold">Aún no se añadieron productos a la orden</span>
+                        </div>
+                    @endif
+
 
                 </div>
             </div>
             <div class="p-4 border-t border-slate-200 dark:border-zink-500" id="detailsContainerShoppingCartModal">
-
                 <table class="w-full mb-3 ">
                     <tbody class="table-total">
-                        <tr>
-                            <td class="py-2">Sub Total :</td>
-                            <td class="text-right cart-subtotal totalShoppingCartModal">$2,847.55</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2">Discount <span class="text-muted">(starcode50)</span>:</td>
-                            <td class="text-right cart-discount">-$476.00</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2">Shipping Charge :</td>
-                            <td class="text-right cart-shipping">$89.00</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2">Estimated Tax (12.5%) : </td>
-                            <td class="text-right cart-tax">$70.62</td>
-                        </tr>
                         <tr class="font-semibold">
                             <td class="py-2">Total : </td>
-                            <td class="text-right cart-total">$2,531.17</td>
+                            <td class="text-right cart-total totalShoppingCartModal">S/{{ number_format($total, 2) }}
+                            </td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="flex items-center justify-between gap-3">
                     <a href="apps-ecommerce-product-grid.html"
-                        class="w-full text-white btn bg-slate-500 border-slate-500 hover:text-white hover:bg-slate-600 hover:border-slate-600 focus:text-white focus:bg-slate-600 focus:border-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:border-slate-600 active:ring active:ring-slate-100 dark:ring-slate-400/10">Continue
-                        Shopping</a>
-                    <a href="apps-ecommerce-checkout.html"
-                        class="w-full text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Checkout</a>
+                        class="w-full text-white btn bg-slate-500 border-slate-500 hover:text-white hover:bg-slate-600 hover:border-slate-600 focus:text-white focus:bg-slate-600 focus:border-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:border-slate-600 active:ring active:ring-slate-100 dark:ring-slate-400/10">Seguir
+                        Comprando</a>
+                    <a href="{{ route('web_page.checkoutProducts') }}"
+                        class="text-white btn w-full bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">Finalizar
+                        Compra</a>
                 </div>
             </div>
         </div>
@@ -170,47 +252,37 @@
             <div class="overflow-hidden grow">
                 <div class="ltr:float-right rtl:float-left">
                     <button
-                        class="transition-all duration-150 ease-linear text-slate-500 hover:text-red-500 removeBtnShoppingCartModal"><svg
-                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" data-lucide="x" class="lucide lucide-x size-4">
-                            <path d="M18 6 6 18"></path>
-                            <path d="m6 6 12 12"></path>
-                        </svg></button>
+                        class="transition-all duration-150 ease-linear text-slate-500 hover:text-red-500 removeBtnShoppingCartModal"
+                        onclick="removeProductShoppingCart(this)">
+                        <i class="ri-close-line"></i>
+                    </button>
                 </div>
+
                 <a href="#!" class="transition-all duration-200 ease-linear hover:text-custom-500">
                     <h6 class="mb-1 text-15 descriptionShoppingCartModal">Descripcion</h6>
-                    <div class="attributesShoppingCartModal">
-
-                    </div>
                 </a>
-                <div class="flex items-center mb-3">
-                    <h5 class="text-base product-price priceShoppingCartModal"> $<span>155.32</span></h5>
-                    {{-- <div class="font-normal rtl:mr-1 ltr:ml-1 text-slate-500 dark:text-zink-200">(Fashion)
-                    </div> --}}
+
+                <div class="attributesShoppingCartModal  text-sm text-slate-500 dark:text-zink-300 mb-2">
+                </div>
+                <div class="flex items-center mb-2">
+                    <h5 class="text-base priceShoppingCartModal"> $<span>155.32</span></h5>
                 </div>
                 <div class="flex items-center justify-between gap-3">
-                    <div class="inline-flex text-center input-step">
+                    <div
+                        class="inline-flex p-2 text-center border rounded input-step border-slate-200 dark:border-zink-500 containerMinusPlus">
                         <button type="button"
-                            class="border w-9 leading-[15px] minus bg-white ltr:rounded-l rtl:rounded-r transition-all duration-200 ease-linear border-slate-200 text-slate-500 minusBtnShoppingCartModal"><svg
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" data-lucide="minus"
-                                class="lucide lucide-minus inline-block size-4">
-                                <path d="M5 12h14"></path>
-                            </svg></button>
+                            class="border w-7 leading-[15px] minusBtn minus minusBtnShoppingCartModal border_color_primary_global_page rounded transition-all duration-200 ease-linear "
+                            onclick="addRemoveProductToShoppingCart(this, 'minus')">
+                            <i class="ri-subtract-line"></i>
+                        </button>
                         <input type="number"
-                            class="w-12 text-center h-9 border-y product-quantity focus:shadow-none  quantityShoppingCartModal"
-                            value="2" min="0" max="100" readonly="">
+                            class="text-center ltr:pl-2 rtl:pr-2 w-15 h-7 inputMinusPlus product-quantity dark:bg-zink-700 focus:shadow-none quantityShoppingCartModal"
+                            value="1" min="0" max="500" readonly="">
                         <button type="button"
-                            class="transition-all duration-200 ease-linear bg-white border ltr:rounded-r rtl:rounded-l w-9 h-9 border-slate-200 plus text-slate-500 plusBtnShoppingCartModal"><svg
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" data-lucide="plus"
-                                class="lucide lucide-plus inline-block size-4">
-                                <path d="M5 12h14"></path>
-                                <path d="M12 5v14"></path>
-                            </svg></button>
+                            class="transition-all plusBtnShoppingCartModal duration-200 ease-linear border rounded border_color_primary_global_page w-7 plus plusBtn"
+                            onclick="addRemoveProductToShoppingCart(this, 'plus')">
+                            <i class="ri-add-line"></i>
+                        </button>
                     </div>
                     <h6 class="product-line-price subtotalShoppingCartModal">subTotal</h6>
                 </div>
@@ -235,16 +307,16 @@
                 <h3>Páginas</h3>
                 <div class="border1"></div> <!--for the underline -->
                 <ul>
-                    <a href="#">
+                    <a href="{{ route('webpage.home') }}">
                         <li>Inicio</li>
                     </a>
-                    <a href="#">
+                    <a href="{{ route('webpage.store') }}">
                         <li>Catalogo</li>
                     </a>
-                    <a href="#">
+                    <a href="{{ route('webpage.categories') }}">
                         <li>Categorias</li>
                     </a>
-                    <a href="#">
+                    <a href="{{ route('webpage.about') }}">
                         <li>Nosotros</li>
                     </a>
                 </ul>
@@ -269,19 +341,18 @@
 
             <!--  for contact us info -->
             <div class="footer-items">
-                <h3>Contact us</h3>
+                <h3>Contacto</h3>
                 <div class="border1"></div>
                 <ul>
-                    <li><i class="fa fa-map-marker" aria-hidden="true"></i>XYZ, abc</li>
-                    <li><i class="fa fa-phone" aria-hidden="true"></i>123456789</li>
-                    <li><i class="fa fa-envelope" aria-hidden="true"></i>xyz@gmail.com</li>
+                    <li><i class="ri-map-pin-line"></i> {{ $generalInfo->address }} </li>
+                    <li><i class="ri-mail-unread-line"></i> {{ $generalInfo->email }}</li>
                 </ul>
 
                 <!--   for social links -->
                 <div class="social-media">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-google-plus-square"></i></a>
+                    @foreach ($socialNetworks as $social)
+                        <a href="{{ $social->link }}">{!! $social->icon_html !!}</a>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -311,7 +382,8 @@
                         <p class="nombre">{{ $number->name }}</p>
                         <p class="numero">📱 {{ $number->phone_number }}</p>
                     </div>
-                    <a href="https://wa.me/{{ $number->phone_number }}" target="_blank" class="btn-contactar">Contactar</a>
+                    <a href="https://wa.me/{{ $number->phone_number }}" target="_blank"
+                        class="btn-contactar">Contactar</a>
                 </div>
             @endforeach
         </div>
@@ -320,26 +392,66 @@
 
     <!-- Bottom custom Nav -->
     <div class="bottom-nav" id="mobileBottomNav">
-        <a href="#" class="nav-item active">
+        <a href="{{ route('webpage.home') }}" class="nav-item active">
             <i class="ri-home-5-line"></i>
             <span>Inicio</span>
         </a>
-        <a href="#" class="nav-item">
+        <a href="{{ route('webpage.store') }}" class="nav-item">
             <i class="ri-store-3-fill"></i>
             <span>Catalogo</span>
         </a>
-        <a href="#" class="nav-item">
+        <a href="#" class="nav-item" data-drawer-target="cartSidePenal">
             <i class="ri-shopping-cart-line"></i>
             <span>Carrito</span>
         </a>
-        <a href="#" class="nav-item">
+        <a href="#" class="nav-item" data-modal-target="fullScreenModal">
             <i class="ri-search-line"></i>
             <span>Buscar</span>
         </a>
-        <a href="#" class="nav-item">
+        <a href="{{ route('webpage.about') }}" class="nav-item">
             <i class="ri-heart-line"></i>
             <span>Nosotros</span>
         </a>
+    </div>
+
+    {{-- Modal search   --}}
+    <div id="fullScreenModal" modal-center=""
+        class="fixed inset-0 flex flex-col transition-all duration-300 ease-in-out z-drawer hidden">
+        <div class="flex flex-col w-full h-full bg-white dark:bg-zink-600">
+            <div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-zink-500">
+                <h5 class="text-16">¡Encuentras tus productos favoritos!</h5>
+                <button data-modal-close="fullScreenModal"
+                    class="transition-all duration-200 ease-linear text-slate-500 hover:text-red-500 dark:text-zink-200 dark:hover:text-red-500"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" data-lucide="x" class="lucide lucide-x size-5">
+                        <path d="M18 6 6 18"></path>
+                        <path d="m6 6 12 12"></path>
+                    </svg></button>
+            </div>
+            <div class="p-4">
+                <div class="d-flex">
+                    <div class="col-12 px-0 pos-relative">
+                        <input type="text"
+                            class="px-5 py-3 text-15 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-zink-700 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 "
+                            placeholder="Digite el nombre de su producto..."
+                            oninput="searchProducts(this, 'containerSearchProductsMobile')"
+                            id="customFormSearchProductsMobile">
+                        <div style="overflow: auto; height: 80vh; margin-top: .5rem"
+                            id="containerSearchProductsMobile">
+                            <div class="d-flex p-2">
+                                <div class="col-12 text-center">
+                                    No se econtraron productos, vuelva a intentarlo
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center justify-between p-4 mt-auto border-t border-slate-200 dark:border-zink-500">
+                <h5 class="text-16">Modal Footer</h5>
+            </div>
+        </div>
     </div>
 
 
@@ -353,6 +465,7 @@
     <script src="{{ URL::to('assets/libs/animsition/js/animsition.min.js') }}"></script>
     <!-- Sweet Alerts js -->
     <script src="{{ URL::to('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+     <script src="{{ URL::to('assets/libs/select2/select2.min.js') }}"></script>
 
     <!--sweet alert init js-->
     <script src="{{ URL::to('assets/js/pages/sweetalert.init.js') }}"></script>

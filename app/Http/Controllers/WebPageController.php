@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ApiResponse;
 use App\Models\AttentionNumber;
 use App\Models\Banner;
 use App\Models\CategoryProduct;
@@ -9,6 +10,7 @@ use App\Models\ComplaintsBook;
 use App\Models\General;
 use App\Models\Product;
 use App\Models\ProductBrand;
+use App\Models\ProductVariant;
 use App\Models\Promotion;
 use App\Models\Raffle;
 use App\Models\SubcategoryProduct;
@@ -36,6 +38,10 @@ class WebPageController extends Controller
     ]);
   }
 
+  public function configStore()
+  {
+    return view('webpage.config_store', []);
+  }
 
   public function shoppingCartProducts()
   {
@@ -44,10 +50,26 @@ class WebPageController extends Controller
     ]);
   }
 
+  public function searchProducts(Request $request)
+  {
+    $query = $request->input('query');
+
+    $products = Product::with([
+      'productAttributes.prices',
+      'productAttributes.attributesCombination',
+      'productBrand',
+      'productImages',
+    ])
+      ->where('status', 1)
+      ->where('title', 'like', "%{$query}%")
+      ->get();
+
+    return ApiResponse::success($products, "Registro encontrado");
+  }
 
   public function product(Product $product)
   {
-    /* luismi */
+
     $product->load(['productAttributes.attributesCombination', 'productBrand']);
     $defaultProductAttribute = $product->productAttributes->firstWhere('is_default', 1);
 
@@ -95,15 +117,25 @@ class WebPageController extends Controller
         'attributes' => $data['attributes'], // Arreglo de atributos con ID y valor
       ];
     }
-    /* dd($product);
-        dd($finalGroupedAttributes, $defaultAttributes); */
-    //dd(session('shoppingCartProducts'));
+    // Obtener productos relacionados de la misma categoría
+    $relatedProducts = Product::with([
+      'productAttributes.prices',
+      'productAttributes.attributesCombination',
+      'productBrand'
+    ])->where('category_product_id', $product->category_product_id)
+      ->where('id', '!=', $product->id) // Excluir el producto actual
+      ->where('status', 1) // Si manejas un campo status para productos activos
+      ->inRandomOrder()
+      ->take(8)
+      ->get();
+
     return view('webpage.product', [
       "product" => $product,
       "activeScroll" => false,
       "finalGroupedAttributes" => $finalGroupedAttributes,
       "defaultAttributes" => $defaultAttributes,
       "defaultProductAttribute" => $defaultProductAttribute,
+      "relatedProducts" => $relatedProducts
     ]);
   }
 

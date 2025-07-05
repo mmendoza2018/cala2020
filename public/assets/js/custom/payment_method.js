@@ -31,10 +31,10 @@ document.addEventListener("submit", async (e) => {
                 let instanciasDropzone = dropzoneArray[index].files;
                 console.log('instanciasDropzone :>> ', instanciasDropzone);
 
-                
+
                 // Solo permitimos un archivo por Dropzone, obtener el primero
                 let fileToUpload = instanciasDropzone[0];
-                
+
                 if (!fileToUpload) {
                     console.log(`La imagen #${index + 1} no puede estar vacía`, "warning");
                     continue; // Saltar esta iteración si no hay archivos
@@ -94,7 +94,7 @@ const eliminarTrProducto = (elemento) => {
     let tBody = trPadre.parentNode;
     let trs = Array.from(tBody.querySelectorAll("tr")); // Convertir a array para usar indexOf
     let posicion = trs.indexOf(trPadre); // Obtener posición en base 0
-    
+
     dropzoneArray.splice(posicion, 1);
 
     if (trs.length <= 1) return;
@@ -176,7 +176,6 @@ const createDropZone = (element, data) => {
         // Añadir el archivo a la lista de archivos de Dropzone
         dropzoneAdd.files.push(mockFile);
     }
-
     dropzoneArray.push(dropzoneAdd);
 }
 

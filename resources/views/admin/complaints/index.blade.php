@@ -1,4 +1,3 @@
-use Illuminate\Support\Facades\URL;
 @extends('layouts.master')
 
 @section('content')

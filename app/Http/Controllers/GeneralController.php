@@ -17,12 +17,11 @@ class GeneralController extends Controller
     function show()
     {
         $generalInfo = General::first();
-
-        $imageDirectory = storage_path('app/public/uploads/') . getCompanyCode();
-
+        $arrayImageDetails = [];
+        $imageDirectory = storage_path('app/public/uploads/') . getCompanyCode() . '/';
         $imageDetails = pathNameToFile($generalInfo->logo, $imageDirectory);
-
-        $generalInfo->logo_file  = $imageDetails ? $imageDetails : null;
+        array_push($arrayImageDetails, $imageDetails);
+        $generalInfo->logo_file  = $arrayImageDetails;
 
         return ApiResponse::success($generalInfo, "Petición exitosa");
     }

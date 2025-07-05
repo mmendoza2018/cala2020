@@ -21,7 +21,7 @@ class BannerController extends Controller
     {
         $banners = Banner::find($id);
         $arrayImageDetails = [];
-        $imageDirectory = storage_path('app/public/uploads/') . getCompanyCode();
+        $imageDirectory = storage_path('app/public/uploads/') . getCompanyCode() . "/";
         $imageDetails = pathNameToFile($banners->image_name, $imageDirectory);
         array_push($arrayImageDetails, $imageDetails);
         $banners->imageDetail = $arrayImageDetails;

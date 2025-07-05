@@ -11,6 +11,7 @@ function getDivFromTheElement(element) {
 
 
 function isData() {
+    console.log('(luismi):>> holissssssssssssssss');
     const plusElements = document.querySelectorAll('button.plusBtn');
     const minusElements = document.querySelectorAll('button.minusBtn');
 

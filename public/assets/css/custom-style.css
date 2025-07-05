@@ -596,6 +596,9 @@
                         CUSTOM NAV FOOTER
   ---------------------------------------------------------------- */
 
+.bottom-nav {
+  display: none;
+}
 
 @media (max-width: 768px) {
   .bottom-nav {
@@ -637,12 +640,12 @@
   }
 
   .bottom-nav .nav-item.active {
-    color: #007bff;
+    color: var(--custom-primary-color);
     font-weight: 600;
   }
 
   .bottom-nav .nav-item.active i {
-    color: #007bff;
+    color: var(--custom-primary-color);
   }
 }
 
@@ -924,6 +927,440 @@
                        END NOT PRODUCTS
   ---------------------------------------------------------------- */
 
+/* ----------------------------------------------------------------
+                       NOSOTROS
+  ---------------------------------------------------------------- */
+.profile-container-custom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.profile-card-custom {
+  background-color: var(--custom-primary-color);
+  color: white;
+  padding: 2rem;
+  text-align: center;
+  max-width: 300px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.profile-image-custom {
+  width: 120px;
+  height: 120px;
+  border-radius: 100%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  border: 2px solid white;
+  margin: auto;
+}
+
+.profile-name-custom {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  color: white;
+  font-weight: bold;
+}
+
+.profile-description-custom {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  text-align: justify;
+}
+
+.social-links-custom a {
+  color: white;
+  margin: 0 0.5rem;
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+.profile-about-custom {
+  max-width: 500px;
+  padding: 1rem;
+}
+
+.credit-custom {
+  font-size: 0.8rem;
+  color: var(--custom-primary-color)
+}
+
+.credit-custom a {
+  color: var(--custom-primary-color);
+  text-decoration: none;
+}
+
+.profile-about-custom p {
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Detalles de la tienda */
+.detail-store {
+  margin-bottom: 2rem;
+}
+
+.item-detail-store {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--custom-primary-color);
+  padding: 0.5rem 0;
+  gap: 1rem;
+}
+
+.item-detail-store span:first-child {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.item-detail-store span:last-child {
+  font-weight: normal;
+  flex: 1;
+  text-align: right;
+}
+
+/* Métodos de pago */
+.payment-methods {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* 4 columnas por defecto */
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.payment-methods figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  width: 100%;
+}
+
+.payment-methods img {
+  width: 100%;
+  max-width: 100px;
+  height: auto;
+  border-radius: 4px;
+  aspect-ratio: 16 / 16;
+}
+
+.payment-methods figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* Tablets: 3 por fila */
+@media (max-width: 1023px) {
+  .payment-methods {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Móviles: 2 por fila */
+@media (max-width: 767px) {
+  .payment-methods {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-card-custom {
+    max-width: 400px;
+    width: 100%;
+  }
+}
+
+/* ----------------------------------------------------------------
+                       END NOSOTROS
+  ---------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------
+                       SEARCH
+  ---------------------------------------------------------------- */
+
+.container-search-products {
+  width: 100%;
+  position: absolute;
+  min-height: 40px;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: white;
+  z-index: 2000;
+  border-radius: 20px;
+  padding: .5rem;
+  border: solid 1px rgb(189, 189, 189);
+  display: none;
+}
+
+.container-search-products {
+  overflow-y: auto;
+  /* Habilita el scroll en Y */
+  scrollbar-width: thin;
+  /* Hace el scroll más delgado (Firefox) */
+  scrollbar-color: rgb(189, 189, 189) transparent;
+  /* Color del thumb y track en Firefox */
+}
+
+/* Para Chrome, Edge y Safari */
+.container-search-products::-webkit-scrollbar {
+  width: 6px;
+  /* Grosor del scroll */
+}
+
+.container-search-products::-webkit-scrollbar-thumb {
+  background-color: rgb(189, 189, 189);
+  /* Color del scroll */
+  border-radius: 4px;
+  /* Bordes redondeados */
+}
+
+.mi-contenedor::-webkit-scrollbar-track {
+  background: transparent;
+  /* Hace que el track (fondo) sea transparente */
+}
+
+.container-search-products a {
+  color: #222 !important;
+}
+
+.custom-form-search-products {
+  padding: .8rem;
+  border-radius: 25px;
+  display: inline-block;
+  color: black !important;
+  width: 400px;
+}
+
+.custom-form-search-products:focus,
+.custom-form-search-products:active {
+  border: none;
+  outline: none;
+}
+
+.btn-search-products {
+  width: auto;
+  height: 50px;
+  width: 50px;
+  background-color: #fffb00;
+  color: black;
+  display: inline-block;
+  border-radius: 100%;
+  font-size: 25px;
+}
+
+/* ----------------------------------------------------------------
+                      END SEARCH
+  ---------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------
+                       CONFIG STORE 
+  ---------------------------------------------------------------- */
+.config-store {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.config-store .config-container {
+  width: 100%;
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 2rem;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  position: relative;
+  margin: auto;
+}
+
+.config-store .config-logo {
+  width: 120px;
+  display: block;
+  margin: 0 auto 2rem auto;
+}
+
+.config-store .slides {
+  position: relative;
+  min-height: 300px;
+}
+
+.config-store .slide {
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: relative;
+}
+
+.config-store .slide.active {
+  display: flex;
+}
+
+.config-store input[type="text"],
+.config-store input[type="email"],
+.config-store input[type="file"],
+.config-store select {
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
+  border-radius: 12px;
+  border: none;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  background-repeat: no-repeat;
+  background-position: left 10px center;
+  background-size: 16px 16px;
+  cursor: pointer;
+  list-style: none;
+  outline: none;
+}
+
+.config-store input[type="text"]:focus,
+.config-store input[type="email"]:focus,
+.config-store select:focus {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 2px #000000;
+  outline: none;
+}
+
+.config-store select option {
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  padding: 0.5rem 1rem;
+}
+
+.config-store .row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.config-store .color-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.config-store input[type="color"] {
+  width: 100%;
+  height: 40px;
+  border: none;
+  border-radius: 12px;
+  padding: 0;
+  cursor: pointer;
+  background: none;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.config-store input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  position: relative;
+  transition: background 0.3s, border-color 0.3s;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  vertical-align: middle;
+}
+
+.config-store input[type="checkbox"]:hover {
+  border-color: rgba(0, 0, 0, 0.7);
+}
+
+.config-store input[type="checkbox"]:checked {
+  background: #000000;
+  border-color: #000000;
+  box-shadow: 0 0 8px #000000;
+}
+
+.config-store input[type="checkbox"]:checked::after {
+  content: "✓";
+  color: #ffffff;
+  font-weight: bold;
+  position: absolute;
+  top: -2px;
+  left: 5px;
+  font-size: 16px;
+  user-select: none;
+}
+
+.config-store .config-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.config-store .config-navigation button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  background: #000000;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  user-select: none;
+}
+
+.config-store .config-navigation button:hover {
+  background: #333333;
+  transform: translateY(-2px);
+}
+
+.config-store .config-navigation button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #999999;
+  box-shadow: none;
+}
+
+.config-store .slide h2 {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #222;
+  margin-bottom: 0.3rem;
+  position: relative;
+  z-index: 2;
+}
+
+.config-store .slide hr {
+  width: 60px;
+  height: 3px;
+  background: rgba(0, 0, 0, 0.3);
+  border: none;
+  margin: 0 auto 1.5rem auto;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 1;
+}
+
+/* ----------------------------------------------------------------
+                      END CONFIG STORE 
+  ---------------------------------------------------------------- */
 
 
 /* STYLES FOR DROPZONE  */
@@ -1202,40 +1639,246 @@
 .contenedor-productos-custom {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.25rem;
-  /* Espacio entre tarjetas */
-  margin-top: 1.25rem;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
 /* Tarjeta de producto */
 .tarjeta-producto-custom {
   background-color: white;
   border-radius: 0.5rem;
-  padding: 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Ancho en dispositivos móviles (100%) */
-@media (max-width: 767px) {
+/* Control del ancho por dispositivo */
+@media (max-width: 639px) {
   .tarjeta-producto-custom {
-    width: 100%;
+    flex: 0 0 calc(50% - 0.5rem);
+    /* 2 por fila en móviles */
   }
 }
 
-/* Ancho en tablets (48% para dos columnas) */
-@media (min-width: 768px) and (max-width: 1279px) {
+@media (min-width: 640px) and (max-width: 1023px) {
   .tarjeta-producto-custom {
-    width: 48%;
+    flex: 0 0 calc((100% - 2 * 1.25rem) / 3);
   }
 }
 
-/* Ancho en desktops (23% para cuatro columnas aprox) */
-@media (min-width: 1280px) {
+@media (min-width: 1024px) and (max-width: 1439px) {
   .tarjeta-producto-custom {
-    width: 23%;
+    flex: 0 0 calc((100% - 2 * 1.25rem) / 3);
   }
 }
+
+@media (min-width: 1440px) {
+  .tarjeta-producto-custom {
+    flex: 0 0 calc(25% - 0.75rem);
+    /* 4 por fila en pantallas grandes */
+  }
+}
+
+/* card product */
+/* Contenedor de tarjeta de producto */
+.product-card {
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Imagen y botón de favorito */
+.product-image-container {
+  position: relative;
+}
+
+.favorite-button {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 28px;
+  height: 28px;
+  background-color: #fff;
+  border-radius: 50%;
+  border: 1px solid var(--custom-primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.favorite-button i {
+  color: var(--custom-primary-color);
+  font-size: 16px;
+}
+
+.product-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.imagen-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.imagen-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.imagen-wrapper:hover img {
+  transform: scale(1.05);
+}
+
+/* Contenido inferior */
+.product-info {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* Título del producto */
+.product-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+  max-height: calc(1.4em * 2);
+  /* máximo 2 líneas */
+}
+
+.product-title a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.product-title a:hover {
+  color: var(--custom-primary-color);
+}
+
+/* Precio */
+.product-price {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
+.product-price-old {
+  text-decoration: line-through;
+  color: #888;
+  margin-left: 0.5rem;
+  font-size: 0.85rem;
+}
+
+/* Botones */
+.product-buttons {
+  margin-top: auto;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: .4rem;
+}
+
+.add-to-cart {
+  flex-grow: 1;
+  padding: 6px 8px;
+  background-color: #fff;
+  border: 1px dashed var(--custom-primary-color);
+  color: var(--custom-primary-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* .add-to-cart:hover {
+  background-color: var(--custom-primary-color);
+  color: #fff;
+} */
+
+.add-to-cart i {
+  font-size: 16px;
+}
+
+/* Grid responsivo para tarjetas */
+.contenedor-productos-custom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.tarjeta-producto-custom {
+  width: 100%;
+}
+
+@media (min-width: 480px) {
+  .product-title {
+    font-size: 0.95rem;
+  }
+
+  .product-price {
+    font-size: 1.05rem;
+  }
+
+  .add-to-cart {
+    font-size: 0.95rem;
+  }
+
+  .tarjeta-producto-custom {
+    width: calc(50% - 0.5rem);
+  }
+
+}
+
+@media (min-width: 768px) {
+  .product-title {
+    font-size: 1rem;
+  }
+
+  .product-price {
+    font-size: 1.1rem;
+  }
+
+  .tarjeta-producto-custom {
+    width: calc(33.333% - 0.5rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .tarjeta-producto-custom {
+    width: calc(25% - 0.5rem);
+  }
+}
+
+
+
+
 
 /* checkox style */
 
@@ -1289,4 +1932,17 @@ input[type="checkbox"].checkbox-custom:checked+.checkbox-wrapper-custom::after {
   color: black;
   font-weight: 400;
   /* para que no se seleccione al hacer clic */
+}
+
+/* custom styles for cofirm order  */
+
+.swal2-confirm-btn-custom {
+  background-color: #25D366 !important;
+  /* Verde WhatsApp */
+  color: white !important;
+}
+
+.swal2-cancel-btn-custom {
+  background-color: #f27474 !important;
+  color: white !important;
 }

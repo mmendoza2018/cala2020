@@ -13,6 +13,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ URL::to('assets/js/custom/webpage/raffles.js') }}"></script>
     <script src="{{ URL::to('assets/js/custom/webpage/products.js') }}"></script>
 @endsection

@@ -19,7 +19,16 @@ class EcommerceSaleProduct extends Model
         'payment_method',
         'quantity',
         'total',
-        'status'
+        'status',
+        'first_name',
+        'last_name',
+        'phone_number',
+        'alternate_phone_number',
+        'email',
+        'address',
+        'state',
+        'city',
+        'district'
     ];
 
     // Relación con el usuario (cada venta pertenece a un usuario)

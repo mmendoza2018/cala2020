@@ -20,4 +20,5 @@ let ROUTES = {
     THEMES: `/admin/temas-colores`,
     BANNERS: `/admin/banners`,
     PROMOTIONS: `/admin/promotions`,
+    SEARCH_PRODUCTS: `/search-products`,
 };

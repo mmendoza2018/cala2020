@@ -71,7 +71,7 @@
                     <div class="flex justify-center items-center">
                         <select id="icon-select" class="socialSelect" style="width: 100%">
                             <option></option>
-                            <option value="Facebook" data-icon="<i class='ri-phone-fill ri-lg'></i>">Facebook</option>
+                            <option value="Facebook" data-icon="<i class='ri-facebook-circle-fill ri-lg'></i>">Facebook</option>
                             <option value="Instagram" data-icon="<i class='ri-instagram-fill ri-lg'></i>">Instagram</option>
                             <option value="LinkedIn" data-icon="<i class='ri-linkedin-box-fill ri-lg'></i>">LinkedIn</option>
                             <option value="Telegram" data-icon="<i class='ri-telegram-fill ri-lg'></i>">Telegram</option>

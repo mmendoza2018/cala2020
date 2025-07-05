@@ -17,6 +17,7 @@ const initDropzone = async () => {
     document.getElementById("address").value = file.address;
     document.getElementById("email").value = file.email;
     document.getElementById("description").value = file.description;
+    let logoImg = file.logo_file[0];
 
     const previewTemplate = document.querySelector("#preview-template").innerHTML;
 
@@ -63,20 +64,21 @@ const initDropzone = async () => {
     });
 
     let mockFile = {
-        name: file.logo_file.name,
-        size: file.logo_file.size,
-        url: file.logo_file.url,
+        name: logoImg.name,
+        size: logoImg.size,
+        url: logoImg.url,
         isMock: true
     };
 
     // Emitir los eventos de Dropzone para añadir el archivo
     dropzoneAdd.emit("addedfile", mockFile);
-    dropzoneAdd.emit("thumbnail", mockFile, file.logo_file.url);
+    dropzoneAdd.emit("thumbnail", mockFile, logoImg.url);
     dropzoneAdd.emit("complete", mockFile);
 
     // Añadir el archivo a la lista de archivos de Dropzone
     dropzoneAdd.files.push(mockFile);
 }
+
 const getGeneralInfo = async () => {
 
     try {
@@ -92,7 +94,6 @@ const getGeneralInfo = async () => {
     }
 
 }
-
 
 document.addEventListener("submit", async (e) => {
     if (e.target.matches("#formAddGeneralConfig")) {

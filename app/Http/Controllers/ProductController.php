@@ -48,7 +48,7 @@ class ProductController extends Controller
             ->where('status', 1)->findOrFail($id);
         $arrayImageDetails = [];
         $arrayImageActive = [];
-        $imageDirectory = storage_path('app/public/uploads/') . getCompanyCode();
+        $imageDirectory = storage_path('app/public/uploads/') . getCompanyCode() . "/";
         //dd($product);
         foreach ($product->productImages as $image) {
             $imageDetails = pathNameToFile($image->image_name, $imageDirectory);
@@ -107,7 +107,7 @@ class ProductController extends Controller
             "description" => "required",
             "imagenes" => "nullable|array",
             "is_main" => "nullable|array",
-            "imagenes.*" => "file|image|mimes:jpeg,png,jpg,gif,svg",
+            "imagenes.*" => "file|image|mimes:jpeg,png,jpg,gif,svg,webp",
             "productVariants" => "required|json",
             "featured" => "",
             "min_stock" => "required",
@@ -222,7 +222,7 @@ class ProductController extends Controller
             "description" => "required",
             "imagenes" => "nullable|array",
             "is_main" => "nullable|array",
-            "imagenes.*" => "file|image|mimes:jpeg,png,jpg,gif,svg",
+            "imagenes.*" => "file|image|mimes:jpeg,png,jpg,gif,svg,webp",
             "productVariants" => "required|json",
             "min_stock" => "required",
             "status_on_website" => "required",

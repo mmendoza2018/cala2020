@@ -21,7 +21,7 @@ class ProductBrandController extends Controller
     {
         $productBrand = ProductBrand::find($id);
         $arrayImageDetails = [];
-        $imageDirectory = storage_path('app/public/uploads/') . getCompanyCode();
+        $imageDirectory = storage_path('app/public/uploads/') . getCompanyCode() . '/';
         $imageDetails = pathNameToFile($productBrand->imagen, $imageDirectory);
         array_push($arrayImageDetails, $imageDetails);
         $productBrand->imageDetail = $arrayImageDetails;

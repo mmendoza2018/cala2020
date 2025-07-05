@@ -39,7 +39,8 @@
                                     <ul class="splide__list">
                                         @foreach ($product->productImages as $image)
                                             <li class="splide__slide">
-                                                <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $image->image_name) }}">
+                                                <img
+                                                    src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $image->image_name) }}">
                                             </li>
                                         @endforeach
                                     </ul>
@@ -101,36 +102,99 @@
                         </div>
                         <div class="d-flex gap-5 mt-5">
                             <div
-                                class="inline-flex p-2 text-center border rounded input-step border-slate-200 dark:border-zink-500">
+                                class="inline-flex p-2 text-center border rounded input-step border-slate-200 dark:border-zink-500 containerMinusPlus">
                                 <button type="button"
-                                    class="border w-7 leading-[15px] minusBtn border_color_primary_global_page rounded transition-all duration-200 ease-linear "><svg
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" data-lucide="minus"
-                                        class="lucide lucide-minus inline-block size-4 color_primary_global_page">
-                                        <path d="M5 12h14"></path>
-                                    </svg></button>
+                                    class="border w-7 leading-[15px] minusBtn border_color_primary_global_page rounded transition-all duration-200 ease-linear ">
+                                    <i class="ri-subtract-line"></i>
+                                </button>
                                 <input type="number"
                                     class="text-center ltr:pl-2 rtl:pr-2 w-15 h-7 product-quantity dark:bg-zink-700 focus:shadow-none"
-                                    value="19" min="0" max="100" readonly="" id="quantityProductCombination">
+                                    value="1" min="0" max="500" readonly=""
+                                    id="quantityProductCombination">
                                 <button type="button"
-                                    class="transition-all duration-200 ease-linear border rounded border_color_primary_global_page w-7 plusBtn "><svg
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" data-lucide="plus"
-                                        class="lucide lucide-plus inline-block size-4 color_primary_global_page">
-                                        <path d="M5 12h14"></path>
-                                        <path d="M12 5v14"></path>
-                                    </svg></button>
+                                    class="transition-all duration-200 ease-linear border rounded border_color_primary_global_page w-7 plusBtn ">
+                                    <i class="ri-add-line"></i>
+                                </button>
                             </div>
                             <div class="inline-flex mr-5">
-                                <button type="button" class="text-white bg_primary_global_page btn p-3" onclick="addProductToShoppingCart()">Agregar a Carrito</button>
+                                <button type="button" class="text-white bg_primary_global_page btn p-3"
+                                    onclick="addProductToShoppingCart()">
+                                    Agregar a Carrito
+                                </button>
                             </div>
                         </div>
 
                     </div>
 
                 </div>
+                <section class="container mt-14 mb-16 p-10">
+                    <div>
+                        <h4 class="title-page mb-16">Productos Relacionados</h4>
+                    </div>
+                    <div class="splide splide_brands" id="splideRelatedProducts">
+                        <div class="splide__track">
+                            <ul class="splide__list">
+                                @foreach ($relatedProducts as $product)
+                                    <li class="splide__slide">
+                                        <div class="product-card tarjeta-producto-custom" style="width: 100%">
+                                            <div class="product-image-container">
+                                                @if ($product->featured)
+                                                    <a href="#!" class="favorite-button">
+                                                        <i class="ri-heart-fill ri-lg"></i>
+                                                    </a>
+                                                @endif
+
+                                                @foreach ($product->productImages as $image)
+                                                    @if ($image->is_main)
+                                                        <div class="imagen-wrapper">
+                                                            <a href="{{ route('webpage.product', ['product' => $product->slug]) }}"
+                                                                style="text-decoration: none">
+                                                                <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $image->image_name) }}"
+                                                                    class="product-image" />
+                                                            </a>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+
+                                            <div class="product-info">
+                                                <h6 class="product-title">
+                                                    <a
+                                                        href="{{ route('webpage.product', ['product' => $product->slug]) }}">
+                                                        {{ $product->title }}
+                                                    </a>
+                                                </h6>
+
+                                                @php
+                                                    $defaultAttribute = $product->productAttributes->firstWhere(
+                                                        'is_default',
+                                                        true,
+                                                    );
+                                                    $originalPrice = $defaultAttribute->default_price;
+                                                    $incrementPrice = $originalPrice * 1.2;
+                                                @endphp
+
+                                                <h5 class="product-price">
+                                                    S/{{ number_format($originalPrice, 2) }}
+                                                    <small
+                                                        class="product-price-old">S/{{ number_format($incrementPrice, 2) }}</small>
+                                                </h5>
+
+                                                <div class="product-buttons">
+                                                    <a href="{{ route('webpage.product', ['product' => $product->slug]) }}"
+                                                        class="add-to-cart">
+                                                        <i data-lucide="shopping-cart"></i>
+                                                        <span>Agregar</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </section>
             </div>
 
         </section>
@@ -142,24 +206,3 @@
     <script src="{{ URL::to('assets/libs/splide/dist/js/splide.min.js') }}"></script>
     <script src="{{ URL::to('assets/js/custom/webpage/products.js') }}"></script>
 @endsection
-
-{{-- 
-  <p class="qty">
-                                        <button class="qtyminus" aria-hidden="true">-</button>
-                                        <input type="number" name="qty" id="quantityProductCombination" min="1"
-                                            max="10" step="1" value="1" class="qtyInput">
-                                        <button class="qtyplus" aria-hidden="true">+</button>
-                                    </p>
-
-
-
-                                     <div class="d-inline">
-                                <a href="javascript:void(0);" class="kewta-btn kewta-alt d-inline-flex align-items-center"
-                                    onclick="addProductToShoppingCart()">
-                                    <span class="kew-text s1-bg n0-clr">
-                                        Agregar al carrito
-                                    </span>
-                                </a>
-                            </div>
-
---}}
