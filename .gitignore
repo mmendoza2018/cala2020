@@ -1,5 +1,5 @@
-node_modules
-/vendor/
+#node_modules
+#/vendor/
 # Ignora todo en public/storage/uploads
 /public/storage/uploads/**
 
