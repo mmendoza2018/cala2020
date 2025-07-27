@@ -38,7 +38,7 @@ class ProductImportService
         ]);
 
         // Guardar imágenes
-        $origenBasePath = public_path("storage/app/tiendas/$nameStore");
+        $origenBasePath = public_path("assets/app/tiendas/$nameStore");
         $destinoPath = "uploads/{$companyCode}";
         $yaTienePrincipal = false;
 

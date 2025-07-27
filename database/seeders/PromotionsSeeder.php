@@ -13,7 +13,7 @@ class PromotionsSeeder extends Seeder
     public function run(): void
     {
         $companyCode = getCompanyCode();
-        $origenPath = storage_path('app/public/app/base/promociones');
+        $origenPath = public_path('assets/app/base/marcas'); // ✅ nueva ruta
         $destinoPath = "uploads/$companyCode";
 
         $archivos = collect(scandir($origenPath))

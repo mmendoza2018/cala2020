@@ -14,7 +14,7 @@ class CategoriasSeeder extends Seeder
     {
         $companyCode = getCompanyCode();
         $nameStore = 'ropa';
-        $origenBasePath = public_path("storage/app/tiendas/$nameStore");
+        $origenBasePath = public_path("assets/app/tiendas/$nameStore");
         $destinoPath = "uploads/$companyCode";
 
         $categorias = [

@@ -17,7 +17,7 @@ class BannerSeeder extends Seeder
     {
         $companyCode = getCompanyCode();
         $nameStore = 'tecnologia';
-        $origenBasePath = public_path("storage/app/tiendas/$nameStore");
+        $origenBasePath = public_path("assets/app/tiendas/$nameStore");
         $destinoPath = "uploads/$companyCode";
 
         $subcategorias = [
