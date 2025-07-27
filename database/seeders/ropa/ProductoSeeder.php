@@ -37,7 +37,7 @@ class ProductoSeeder extends Seeder
                 'subcategory_product_id' => $active_subcategory === "1" ? $camisasSubcategoria : null,
                 'product_brand_id' => $active_brand === "1" ? rand(1, 5) : null,
                 'measurement_unit_id' => null,
-                'image_names' => ['Hombre/Camisas/1-1.webp', 'Hombre/Camisas/1-2.webp', 'Hombre/Camisas/1-3.webp', 'Hombre/Camisas/1-4.webp'],
+                'image_names' => ['hombre/Camisas/1-1.webp', 'hombre/Camisas/1-2.webp', 'hombre/Camisas/1-3.webp', 'hombre/Camisas/1-4.webp'],
                 'stock_range' => [100, 500],
                 'price_range' => [50, 100]
             ],
@@ -50,7 +50,7 @@ class ProductoSeeder extends Seeder
                 'subcategory_product_id' => $active_subcategory === "1" ? $camisasSubcategoria : null,
                 'product_brand_id' => $active_brand === "1" ? rand(1, 5) : null,
                 'measurement_unit_id' => null,
-                'image_names' => ['Hombre/Camisas/2-1.webp', 'Hombre/Camisas/2-2.webp', 'Hombre/Camisas/2-3.webp', 'Hombre/Camisas/2-4.webp'],
+                'image_names' => ['hombre/Camisas/2-1.webp', 'hombre/Camisas/2-2.webp', 'hombre/Camisas/2-3.webp', 'hombre/Camisas/2-4.webp'],
                 'stock_range' => [150, 400],
                 'price_range' => [60, 110]
             ],

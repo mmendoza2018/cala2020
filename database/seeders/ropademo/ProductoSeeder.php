@@ -38,7 +38,7 @@ class ProductoSeeder extends Seeder
                 'subcategory_product_id' => $camisasSubcategoria,
                 'product_brand_id' => rand(1, 5),
                 'measurement_unit_id' => 1,
-                'image_names' => ['hombre/Camisas/1-1.webp', 'hombre/Camisas/1-2.webp', 'hombre/Camisas/1-3.webp', 'hombre/Camisas/1-4.webp'],
+                'image_names' => ['Hombre/Camisas/1-1.webp', 'Hombre/Camisas/1-2.webp', 'Hombre/Camisas/1-3.webp', 'Hombre/Camisas/1-4.webp'],
                 'stock_range' => [100, 500],
                 'price_range' => [50, 100]
             ],
@@ -51,7 +51,7 @@ class ProductoSeeder extends Seeder
                 'subcategory_product_id' => $camisasSubcategoria,
                 'product_brand_id' => rand(1, 5),
                 'measurement_unit_id' => 1,
-                'image_names' => ['hombre/Camisas/2-1.webp', 'hombre/Camisas/2-2.webp', 'hombre/Camisas/2-3.webp', 'hombre/Camisas/2-4.webp'],
+                'image_names' => ['Hombre/Camisas/2-1.webp', 'Hombre/Camisas/2-2.webp', 'Hombre/Camisas/2-3.webp', 'Hombre/Camisas/2-4.webp'],
                 'stock_range' => [150, 400],
                 'price_range' => [60, 110]
             ],
@@ -64,7 +64,7 @@ class ProductoSeeder extends Seeder
                 'subcategory_product_id' => $deportivosSubcategoria,
                 'product_brand_id' => rand(1, 5),
                 'measurement_unit_id' => 1,
-                'image_names' => ['hombre/Deportivos/1-1.webp', 'hombre/Deportivos/1-2.webp', 'hombre/Deportivos/1-3.webp'],
+                'image_names' => ['Hombre/Deportivos/1-1.webp', 'Hombre/Deportivos/1-2.webp', 'Hombre/Deportivos/1-3.webp'],
                 'stock_range' => [100, 500],
                 'price_range' => [50, 100]
             ],
@@ -77,7 +77,7 @@ class ProductoSeeder extends Seeder
                 'subcategory_product_id' => $deportivosSubcategoria,
                 'product_brand_id' => rand(1, 5),
                 'measurement_unit_id' => 1,
-                'image_names' => ['hombre/Deportivos/2-1.webp', 'hombre/Deportivos/2-2.webp', 'hombre/Deportivos/2-3.webp'],
+                'image_names' => ['Hombre/Deportivos/2-1.webp', 'Hombre/Deportivos/2-2.webp', 'Hombre/Deportivos/2-3.webp'],
                 'stock_range' => [150, 400],
                 'price_range' => [60, 110]
             ],
@@ -91,7 +91,7 @@ class ProductoSeeder extends Seeder
                 'subcategory_product_id' => $polosSubcategoria,
                 'product_brand_id' => rand(1, 5),
                 'measurement_unit_id' => 1,
-                'image_names' => ['hombre/Polos/1-1.webp', 'hombre/Polos/1-2.webp', 'hombre/Polos/1-3.webp', 'hombre/Polos/1-4.webp'],
+                'image_names' => ['Hombre/Polos/1-1.webp', 'Hombre/Polos/1-2.webp', 'Hombre/Polos/1-3.webp', 'Hombre/Polos/1-4.webp'],
                 'stock_range' => [150, 400],
                 'price_range' => [20, 60]
             ],
@@ -104,7 +104,7 @@ class ProductoSeeder extends Seeder
                 'subcategory_product_id' => $polosSubcategoria,
                 'product_brand_id' => rand(1, 5),
                 'measurement_unit_id' => 1,
-                'image_names' => ['hombre/Polos/2-1.webp', 'hombre/Polos/2-2.webp'],
+                'image_names' => ['Hombre/Polos/2-1.webp', 'Hombre/Polos/2-2.webp'],
                 'stock_range' => [100, 500],
                 'price_range' => [20, 60]
             ],
@@ -117,7 +117,7 @@ class ProductoSeeder extends Seeder
                 'subcategory_product_id' => $polosSubcategoria,
                 'product_brand_id' => rand(1, 5),
                 'measurement_unit_id' => 1,
-                'image_names' => ['hombre/Polos/3-1.webp', 'hombre/Polos/3-2.webp', 'hombre/Polos/3-3.webp', 'hombre/Polos/3-4.webp', 'hombre/Polos/3-5.webp'],
+                'image_names' => ['Hombre/Polos/3-1.webp', 'Hombre/Polos/3-2.webp', 'Hombre/Polos/3-3.webp', 'Hombre/Polos/3-4.webp', 'Hombre/Polos/3-5.webp'],
                 'stock_range' => [150, 400],
                 'price_range' => [20, 60]
             ],
@@ -132,7 +132,7 @@ class ProductoSeeder extends Seeder
                 'subcategory_product_id' => $sacosSubcategoria,
                 'product_brand_id' => rand(1, 5),
                 'measurement_unit_id' => 1,
-                'image_names' => ['hombre/Sacos/1-1.webp', 'hombre/Sacos/1-2.webp', 'hombre/Sacos/1-3.webp', 'hombre/Sacos/1-4.webp'],
+                'image_names' => ['Hombre/Sacos/1-1.webp', 'Hombre/Sacos/1-2.webp', 'Hombre/Sacos/1-3.webp', 'Hombre/Sacos/1-4.webp'],
                 'stock_range' => [100, 350],
                 'price_range' => [120, 180]
             ],
@@ -145,7 +145,7 @@ class ProductoSeeder extends Seeder
                 'subcategory_product_id' => $sacosSubcategoria,
                 'product_brand_id' => rand(1, 5),
                 'measurement_unit_id' => 1,
-                'image_names' => ['hombre/Sacos/2-1.webp', 'hombre/Sacos/2-2.webp', 'hombre/Sacos/2-3.webp', 'hombre/Sacos/2-4.webp'],
+                'image_names' => ['Hombre/Sacos/2-1.webp', 'Hombre/Sacos/2-2.webp', 'Hombre/Sacos/2-3.webp', 'Hombre/Sacos/2-4.webp'],
                 'stock_range' => [80, 300],
                 'price_range' => [150, 220]
             ],
@@ -158,7 +158,7 @@ class ProductoSeeder extends Seeder
                 'subcategory_product_id' => $sacosSubcategoria,
                 'product_brand_id' => rand(1, 5),
                 'measurement_unit_id' => 1,
-                'image_names' => ['hombre/Sacos/3-1.webp', 'hombre/Sacos/3-2.webp', 'hombre/Sacos/3-3.webp'],
+                'image_names' => ['Hombre/Sacos/3-1.webp', 'Hombre/Sacos/3-2.webp', 'Hombre/Sacos/3-3.webp'],
                 'stock_range' => [120, 400],
                 'price_range' => [100, 150]
             ],
@@ -175,7 +175,7 @@ class ProductoSeeder extends Seeder
                 'subcategory_product_id' => $zapatosSubcategoria,
                 'product_brand_id' => rand(1, 5),
                 'measurement_unit_id' => 1,
-                'image_names' => ['hombre/Zapatos/1-1.webp', 'hombre/Zapatos/1-2.webp', 'hombre/Zapatos/1-3.webp', 'hombre/Zapatos/1-4.webp', 'hombre/Zapatos/1-4.webp'],
+                'image_names' => ['Hombre/Zapatos/1-1.webp', 'Hombre/Zapatos/1-2.webp', 'Hombre/Zapatos/1-3.webp', 'Hombre/Zapatos/1-4.webp', 'Hombre/Zapatos/1-4.webp'],
                 'stock_range' => [100, 350],
                 'price_range' => [120, 180]
             ],
@@ -188,7 +188,7 @@ class ProductoSeeder extends Seeder
                 'subcategory_product_id' => $zapatosSubcategoria,
                 'product_brand_id' => rand(1, 5),
                 'measurement_unit_id' => 1,
-                'image_names' => ['hombre/Zapatos/2-1.webp', 'hombre/Zapatos/2-2.webp', 'hombre/Zapatos/2-3.webp'],
+                'image_names' => ['Hombre/Zapatos/2-1.webp', 'Hombre/Zapatos/2-2.webp', 'Hombre/Zapatos/2-3.webp'],
                 'stock_range' => [80, 300],
                 'price_range' => [150, 220]
             ],
@@ -201,7 +201,7 @@ class ProductoSeeder extends Seeder
                 'subcategory_product_id' => $zapatosSubcategoria,
                 'product_brand_id' => rand(1, 5),
                 'measurement_unit_id' => 1,
-                'image_names' => ['hombre/Zapatos/3-1.webp', 'hombre/Zapatos/3-2.webp'],
+                'image_names' => ['Hombre/Zapatos/3-1.webp', 'Hombre/Zapatos/3-2.webp'],
                 'stock_range' => [120, 400],
                 'price_range' => [100, 150]
             ],
