@@ -12,7 +12,7 @@ class ProductBrandsTableSeeder extends Seeder
     public function run(): void
     {
         $companyCode = getCompanyCode();
-        $origenPath = storage_path('app/public/app/base/marcas');
+        $origenPath = public_path('app/public/app/base/marcas');
         $destinoPath = "uploads/$companyCode";
 
         $archivos = collect(scandir($origenPath))
