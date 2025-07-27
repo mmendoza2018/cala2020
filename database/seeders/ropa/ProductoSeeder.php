@@ -64,7 +64,7 @@ class ProductoSeeder extends Seeder
                 'subcategory_product_id' => $active_subcategory === "1" ? $topsSubcategoria : null,
                 'product_brand_id' => $active_brand === "1" ? rand(1, 5) : null,
                 'measurement_unit_id' => null,
-                'image_names' => ['Mujer/Tops/1-1.png', 'Mujer/Tops/1-2.png', 'Mujer/Tops/1-3.png'],
+                'image_names' => ['mujer/Tops/1-1.png', 'mujer/Tops/1-2.png', 'mujer/Tops/1-3.png'],
                 'stock_range' => [100, 350],
                 'price_range' => [120, 180]
             ],
@@ -77,7 +77,7 @@ class ProductoSeeder extends Seeder
                 'subcategory_product_id' => $active_subcategory === "1" ? $topsSubcategoria : null,
                 'product_brand_id' => $active_brand === "1" ? rand(1, 5) : null,
                 'measurement_unit_id' => null,
-                'image_names' => ['Mujer/Tops/2-1.webp', 'Mujer/Tops/2-2.webp', 'Mujer/Tops/2-3.webp', 'Mujer/Tops/2-4.webp', 'Mujer/Tops/2-5.webp'],
+                'image_names' => ['mujer/Tops/2-1.webp', 'mujer/Tops/2-2.webp', 'mujer/Tops/2-3.webp', 'mujer/Tops/2-4.webp', 'mujer/Tops/2-5.webp'],
                 'stock_range' => [80, 300],
                 'price_range' => [150, 220]
             ],
@@ -90,7 +90,7 @@ class ProductoSeeder extends Seeder
                 'subcategory_product_id' => $active_subcategory === "1" ? $tacosSubcategoria : null,
                 'product_brand_id' => $active_brand === "1" ? rand(1, 5) : null,
                 'measurement_unit_id' => null,
-                'image_names' => ['Mujer/Tacos/1-1.webp', 'Mujer/Tacos/1-2.webp', 'Mujer/Tacos/1-3.webp', 'Mujer/Tacos/1-4.webp'],
+                'image_names' => ['mujer/Tacos/1-1.webp', 'mujer/Tacos/1-2.webp', 'mujer/Tacos/1-3.webp', 'mujer/Tacos/1-4.webp'],
                 'stock_range' => [100, 350],
                 'price_range' => [120, 180]
             ],
@@ -103,7 +103,7 @@ class ProductoSeeder extends Seeder
                 'subcategory_product_id' => $active_subcategory === "1" ? $tacosSubcategoria : null,
                 'product_brand_id' => $active_brand === "1" ? rand(1, 5) : null,
                 'measurement_unit_id' => null,
-                'image_names' => ['Mujer/Tacos/2-1.webp', 'Mujer/Tacos/2-2.webp', 'Mujer/Tacos/2-3.webp', 'Mujer/Tacos/2-4.webp'],
+                'image_names' => ['mujer/Tacos/2-1.webp', 'mujer/Tacos/2-2.webp', 'mujer/Tacos/2-3.webp', 'mujer/Tacos/2-4.webp'],
                 'stock_range' => [80, 300],
                 'price_range' => [150, 220]
             ],
@@ -117,7 +117,7 @@ class ProductoSeeder extends Seeder
                 'subcategory_product_id' => $active_subcategory === "1" ? $blusasSubcategoria : null,
                 'product_brand_id' => $active_brand === "1" ? rand(1, 5) : null,
                 'measurement_unit_id' => null,
-                'image_names' => ['Mujer/Blusas/1-1.webp', 'Mujer/Blusas/1-2.webp', 'Mujer/Blusas/1-3.webp', 'Mujer/Blusas/1-4.webp', 'Mujer/Blusas/1-5.webp'],
+                'image_names' => ['mujer/Blusas/1-1.webp', 'mujer/Blusas/1-2.webp', 'mujer/Blusas/1-3.webp', 'mujer/Blusas/1-4.webp', 'mujer/Blusas/1-5.webp'],
                 'stock_range' => [100, 350],
                 'price_range' => [120, 180]
             ],
@@ -130,7 +130,7 @@ class ProductoSeeder extends Seeder
                 'subcategory_product_id' => $active_subcategory === "1" ? $camisasSubcategoria : null,
                 'product_brand_id' => $active_brand === "1" ? rand(1, 5) : null,
                 'measurement_unit_id' => null,
-                'image_names' => ['Ninio/Polos/1-1.webp', 'Ninio/Polos/1-2.webp', 'Ninio/Polos/1-3.webp', 'Ninio/Polos/1-4.webp'],
+                'image_names' => ['ninio/Polos/1-1.webp', 'ninio/Polos/1-2.webp', 'ninio/Polos/1-3.webp', 'ninio/Polos/1-4.webp'],
                 'stock_range' => [100, 350],
                 'price_range' => [120, 180]
             ],
