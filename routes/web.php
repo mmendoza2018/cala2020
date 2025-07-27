@@ -44,6 +44,20 @@ Route::get('/enlace', function () {
     return 'Enlace simbólico creado correctamente.';
 })->name('enlace');
 
+Route::get('/migrate', function () {
+    Artisan::call('migrate', [
+        '--force' => true // Importante para producción
+    ]);
+    return 'Migraciones ejecutadas correctamente.';
+})->name('migrate');
+
+Route::get('/migrate-fresh', function () {
+    Artisan::call('migrate:fresh', [
+        '--force' => true // Importante para producción
+    ]);
+    return 'Migraciones frescas ejecutadas correctamente.';
+})->name('migrate.fresh');
+
 
 /* routes webpage */
 Route::prefix('/')->group(function () {
