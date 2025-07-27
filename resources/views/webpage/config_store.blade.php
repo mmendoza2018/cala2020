@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Configuración Tienda WhatsApp</title>
     <link rel="stylesheet" href="{{ URL::to('assets/css/custom-style.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <style>
     * {
@@ -115,65 +118,70 @@
 </style>
 
 <body>
-    <div class="config-store">
+    <div class="config-store" data-base_url="{{ url('/') }}">
         <div class="config-container">
             <header class="config-header">
                 <img src="https://ideogram.ai/assets/image/lossless/response/p2kdjYNCRfisaT43NezGdg"
                     alt="Logo de la empresa" style="border-radius: 100%;" class="config-logo" />
             </header>
-
-            <div class="slides">
-                <div class="slide slide-config-custom active" data-slide="1">
-                    <h2>Información General</h2>
-                    <hr>
-                    <input type="text" placeholder="Nombre de la tienda" />
-                    <input type="text" placeholder="Descripción breve" />
-                    <div id="dropzoneContainerAdd" class="dropzone-container">
-                        <div id="dropzoneAdd">
-                            Sube tu Logo aqui.
-                        </div>
-                        <div id="dropzonePreviewAdd" class="dropzone-previews"></div>
-                    </div>
-                </div>
-
-                <div class="slide slide-config-custom" data-slide="2">
-                    <h2>Datos de Contacto</h2>
-                    <hr>
-                    <input type="text" placeholder="Número de WhatsApp" />
-                    <input type="email" placeholder="Correo electrónico (opcional)" />
-                    <input type="text" placeholder="Dirección física (si aplica)" />
-                </div>
-
-                <div class="slide slide-config-custom" data-slide="3">
-                    <h2>Datos de la Tienda</h2>
-                    <hr>
-                    <div class="row">
-                        <div class="color-field">
-                            <label>Color principal</label>
-                            <input type="color" />
-                        </div>
-                        <div class="color-field">
-                            <label>Color secundario</label>
-                            <input type="color" />
+            <form id="formConfigStore" autocomplete="off">
+                <div class="slides">
+                    <div class="slide slide-config-custom active" data-slide="1">
+                        <h2>Información General</h2>
+                        <hr>
+                        <input type="text" placeholder="Nombre de la tienda" name="name_store" autocomplete="off"/>
+                        <input type="text" placeholder="Descripción breve" name="description" autocomplete="off"/>
+                        <div id="dropzoneContainerAdd" class="dropzone-container">
+                            <div id="dropzoneAdd">
+                                Sube tu Logo aqui.
+                            </div>
+                            <div id="dropzonePreviewAdd" class="dropzone-previews"></div>
                         </div>
                     </div>
 
-                    <label><input type="checkbox" /> ¿Usar marcas?</label>
-                    <label><input type="checkbox" /> ¿Usar subcategorías?</label>
+                    <div class="slide slide-config-custom" data-slide="2">
+                        <h2>Datos de Contacto</h2>
+                        <hr>
+                        <input type="text" placeholder="Número de WhatsApp" autocomplete="off" name="phone_number" />
+                        <input type="email" required placeholder="Correo electrónico (opcional)" name="email" autocomplete="off"/>
+                        <input type="text" placeholder="Dirección física (si aplica)" name="adress" autocomplete="off" />
+                    </div>
 
-                    <select>
-                        <option disabled selected>Selecciona el tipo de tienda</option>
-                        <option value="ropa">Ropa</option>
-                        <option value="tecnologia">Tecnología</option>
-                        <option value="ferreteria">Ferretería</option>
-                    </select>
-                </div>
+                    <div class="slide slide-config-custom" data-slide="3">
+                        <h2>Datos de la Tienda</h2>
+                        <hr>
+                        <div class="row">
+                            <div class="color-field">
+                                <label>Color principal</label>
+                                <input type="color" name="primary_color" value="#1E90FF" />
+                            </div>
+                            <div class="color-field">
+                                <label>Color secundario</label>
+                                <input type="color" name="secondary_color" value="#e1e1e1" />
+                            </div>
+                        </div>
 
-                <div class="slide slide-config-custom" data-slide="4">
-                    <h2>Generando tienda...</h2>
-                    <p>Estamos creando tu tienda automáticamente. Esto puede tardar unos segundos.</p>
+                        <label><input type="checkbox" name="active_brand" /> ¿Usar marcas?</label>
+                        <label><input type="checkbox" name="active_subcategory" /> ¿Usar subcategorías?</label>
+
+                        <select name="type_store">
+                            <option disabled selected>Selecciona el tipo de tienda</option>
+                            <option value="Ropa">Ropa</option>
+                            <option value="Tecnologia">Tecnología</option>
+                            <option value="Hogar">Hogar</option>
+                            <option value="Iniciar desde 0">Hogar</option>
+                        </select>
+                    </div>
+
+                    <div class="slide slide-config-custom" data-slide="4" style="text-align: center">
+                        <h2>Generando tienda...</h2>
+                        <p>Estamos creando tu tienda automáticamente. Esto puede tardar unos segundos.</p>
+                        <video autoplay muted loop playsinline width="70%" style="text-align: center; margin: auto">
+                            <source src="{{ URL::to('assets/images/ai2.mp4') }}" type="video/mp4">
+                        </video>
+                    </div>
                 </div>
-            </div>
+            </form>
 
             <div class="config-navigation">
                 <button id="prevBtn">Anterior</button>
@@ -249,11 +257,25 @@
         });
 
         nextBtn.addEventListener("click", () => {
+            const isPenultimate = currentSlide === slides.length - 2;
+
+            const valid = validateCurrentSlide();
+            if (!valid) return;
+
+            if (isPenultimate) {
+                enviarData(); // ejecuta en penúltimo
+            }
+
             if (currentSlide < slides.length - 1) {
                 showSlide(currentSlide + 1);
-            } else {
-                alert("¡Tienda generada con éxito!");
             }
+            setTimeout(() => {
+                const slideActive = document.querySelector("[data-slide='4']");
+                if (slideActive && slideActive.classList.contains("active")) {
+                    const containerBtns = document.querySelector(".config-navigation");
+                    containerBtns.style.display = "none";
+                }
+            }, 1000);
         });
 
         showSlide(0);
@@ -294,14 +316,14 @@
             });
 
             dropzoneGlobal.on("addedfile", (file) => {
-                console.log('(luismi):>> fdsfds');
                 // Elimina anteriores si hay más de uno
                 if (dropzoneGlobal.files.length > 1) {
                     const filesToRemove = dropzoneGlobal.files.filter(f => f !== file);
                     filesToRemove.forEach(f => dropzoneGlobal.removeFile(f));
                 }
 
-                const removeButton = file.previewElement.querySelector(`#${container} .dz-remove-button`);
+                const removeButton = file.previewElement.querySelector(
+                    `#${container} .dz-remove-button`);
                 if (removeButton) {
                     removeButton.addEventListener("click", (e) => {
                         e.preventDefault();
@@ -329,8 +351,123 @@
             }
         }
 
+        function validateCurrentSlide() {
+            const currentSlideEl = slides[currentSlide];
+            const inputs = currentSlideEl.querySelectorAll('input[type="text"], input[type="email"]');
+            const selects = currentSlideEl.querySelectorAll('select');
+            let isValid = true;
+
+            // Limpiar estados previos
+            [...inputs, ...selects].forEach(el => {
+                el.style.boxShadow = 'inset 0 2px 6px rgba(0, 0, 0, 0.1)'; // Estilo normal
+            });
+
+            inputs.forEach(input => {
+                if (input.value.trim() === '') {
+                    input.style.boxShadow = '0 0 0 2px red';
+                    isValid = false;
+                }
+            });
+
+            selects.forEach(select => {
+                if (!select.value || select.selectedIndex === 0) {
+                    select.style.boxShadow = '0 0 0 2px red';
+                    isValid = false;
+                }
+            });
+
+            return isValid;
+        }
+
+        async function enviarData() {
+            try {
+                const formData = new FormData(document.getElementById("formConfigStore"));
+                let active_brand = document.querySelector(`#formConfigStore [name="active_brand"]`).checked ?
+                    "1" : "0";
+                let active_subcategory = document.querySelector(`#formConfigStore [name="active_subcategory"]`)
+                    .checked ? "1" : "0";
+
+                formData.append("active_brand", active_brand);
+                formData.append("active_subcategory", active_subcategory);
+
+                const images = await getImageDropzone();
+                formData.append("logo", images[0]);
+
+                const options = {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                            'content')
+                    }
+                };
+                const response = await fetch('/configStore/create', options);
+                const data = await response.json();
+                console.log('(luismi): data :>> ', data);
+                if (data.success) {
+                    setTimeout(() => {
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: "Tienda Creada Correctamente",
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                        setTimeout(() => {
+                            let baseUrl = document.querySelector(`[data-base_url]`).dataset.base_url;
+                            location.href = baseUrl;
+                        }, 2100);
+                    }, 5000);
+                } else {
+                    boxAlertValidation(data.errors)
+                }
+            } catch (error) {
+                console.log('(luismi): error :>> ', error);
+            }
+        }
+
 
         initDropzone('dropzoneContainerAdd', 'dropzoneAdd', 'dropzonePreviewAdd', false);
+
+        const getImageDropzone = async () => {
+            const filesToUpload = dropzoneGlobal.files;
+            const filesFinal = [];
+
+            for (const file of filesToUpload) {
+                if (file instanceof File) {
+                    // Archivo real, simplemente lo agregamos
+                    filesFinal.push(file);
+                } else if (file.url) {
+                    // Mock file: convertir a File desde URL
+                    try {
+                        const response = await fetch(file.url);
+                        const blob = await response.blob();
+                        const realFile = new File([blob], file.name, {
+                            type: blob.type,
+                        });
+                        filesFinal.push(realFile);
+                    } catch (err) {
+                        console.error("Error al convertir mock a File:", err);
+                    }
+                }
+            }
+
+            return filesFinal;
+        };
+
+        const boxAlertValidation = (messages) => {
+            const messageList = messages.map(message => `<li>${message}</li>`).join('');
+            const messageHTML = `<ul>${messageList}</ul>`;
+
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "Error de validación",
+                html: messageHTML,
+                confirmButtonText: 'Aceptar'
+            });
+        }
     </script>
 </body>
 

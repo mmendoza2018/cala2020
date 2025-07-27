@@ -13,9 +13,13 @@ class ThemeSeeder extends Seeder
      */
     public function run(): void
     {
+
+         $primary_color = config('tienda.primary_color');
+         $secondary_color = config('tienda.secondary_color');
+
         DB::table('themes')->insert([
-            'primary_color' => '#FF5733', // Color primario
-            'secondary_color' => '#D9D9D9', // Color secundario
+            'primary_color' => $primary_color, // Color primario
+            'secondary_color' => $secondary_color, // Color secundario
             'product_card_shape' => 'SQUARE', // Forma de la card
             'theme_active' => 'THEME_01', // Tema activo
             'status' => 1, // Activo

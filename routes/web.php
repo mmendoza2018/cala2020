@@ -11,6 +11,7 @@ use App\Http\Controllers\AuthPage\LoginPageController;
 use App\Http\Controllers\AuthPage\RegisterPageController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ComplaintsBookController;
+use App\Http\Controllers\ConfigStoreController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExportExcelController;
 use App\Http\Controllers\GeneralController;
@@ -48,7 +49,7 @@ Route::get('/enlace', function () {
 Route::prefix('/')->group(function () {
     Route::get('iniciar-sesion', [WebPageController::class, 'login'])->name('webpage.login');
     Route::get('configuracion-tienda', [WebPageController::class, 'configStore'])->name('webpage.config_store');
-    
+
     Route::get('terminos-y-condiciones', [WebPageController::class, 'termsAndConditions'])->name('webpage.termsAndConditions');
     Route::get('libro-de-reclamaciones', [WebPageController::class, 'complaintsBook'])->name('webpage.complaintsBook');
     Route::post('/libro-store', [ComplaintsBookController::class, 'store'])->name('webpage.complaint.store');
@@ -79,6 +80,13 @@ Route::prefix('shopping-cart-products')->group(function () {
     Route::delete('/removeProduct/{idProductAttribute}', [ShoppingCartProductController::class, 'removeProduct']);
     Route::put('{id}', [ShoppingCartProductController::class, 'update']);
     Route::get('/', [ShoppingCartProductController::class, 'index']);
+});
+
+Route::prefix('configStore')->group(function () {
+
+    Route::post('/create', [ConfigStoreController::class, 'createStore'])->name('product.create_store');
+    Route::get('/reset', [ConfigStoreController::class, 'resetConfig'])->name('product.reset_store');
+
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', CheckUserType::class . ':admin_panel']], function () {

@@ -54,17 +54,21 @@
                         </h4>
                         @php
                             $defaultAttribute = $product->productAttributes->firstWhere('is_default', true);
-                            $originalPrice = number_format($defaultAttribute->default_price, 2);
-                            $incrementPrice = number_format($originalPrice * 1.2, 2); // 20% de descuento
+                            $basePrice = $defaultAttribute->default_price ?? 0;
+
+                            $incrementPrice = number_format($basePrice * 1.2, 2); // 20% incremento
+                            $originalPrice = number_format($basePrice, 2);
                         @endphp
 
                         <div class="mb-4">
                             <p class="mb-1 text-green-500">Precio Especial</p>
-                            <h4>
+                            <h4 id="originalPrice" style="display: inline-block;">
                                 S/{{ $originalPrice }}
-                                <small
-                                    class="font-normal line-through align-middle text-slate-500 dark:text-zink-200">S/{{ $incrementPrice }}</small>
                             </h4>
+                            <p class="font-normal line-through align-middle text-slate-500 dark:text-zink-200"
+                                id="incrementedPrice" style="display: inline-block;">
+                                S/{{ $incrementPrice }}
+                            </p>
                         </div>
 
                         <div class="description-body mb-xxl-8 mb-xl-4 mb-5 ck-content">

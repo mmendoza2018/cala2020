@@ -10,6 +10,7 @@ class General extends Model
     use HasFactory;
     protected $fillable = [
         'title',
+        'code',
         'business_name',
         'ruc',
         'address',
@@ -20,6 +21,7 @@ class General extends Model
         'brand_is_active',
         'subcategory_is_active',
         'status',
+        'config_finished'
     ];
 
 }

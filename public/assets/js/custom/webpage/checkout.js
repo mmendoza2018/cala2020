@@ -16,7 +16,7 @@ document.addEventListener('submit', async function (e) {
                 "POST",
                 formData
             )
-
+            console.log('(luismi): response :>> ', response);
             if (response.status === "success") {
                 Swal.fire({
                     title: '¡Orden generada exitosamente!',
@@ -59,7 +59,8 @@ document.addEventListener('submit', async function (e) {
                 boxAlertValidation(response.errors)
             }
         } catch (error) {
-            console.error('Error de red:', error);
+            const message = error?.response?.data?.message ?? 'Ha ocurrido un error inesperado.';
+            toastAlert(message, 'error');
         }
     }
 

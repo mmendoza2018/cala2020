@@ -20,19 +20,19 @@ class CategoriasSeeder extends Seeder
         $categorias = [
             [
                 'description' => 'Hombre',
-                'filename' => 'Categorias/Hombre.webp',
+                'filename' => 'categorias/Hombre.webp',
             ],
             [
                 'description' => 'Mujer',
-                'filename' => 'Categorias/Mujer.webp',
+                'filename' => 'categorias/Mujer.webp',
             ],
             [
                 'description' => 'Niño',
-                'filename' => 'Categorias/Ninio.webp',
+                'filename' => 'categorias/Ninio.webp',
             ],
             [
                 'description' => 'Niña',
-                'filename' => 'Categorias/Ninia.webp',
+                'filename' => 'categorias/Ninia.webp',
             ],
         ];
 

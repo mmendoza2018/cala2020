@@ -47,7 +47,7 @@
                                     </td>
                                     <td>{{ $product->title }}</td>
                                     <td>{{ $product->categoryProduct->description }}</td>
-                                    <td>{{ $product->productBrand->description }}</td>
+                                    <td>{{ $product->productBrand?->description }}</td>
                                     <td>{{ $product->min_stock }}</td>
                                     <td>
                                         <x-badge color="{{ $product->status_on_website ? 'success' : 'danger' }}"

@@ -18,7 +18,7 @@ class ProductImportService
         return getCompanyCode(); 
     }
 
-    public function crearProducto(array $data, string $nameStore): void
+    public function crearProducto(array $data, string $nameStore, string $descriptionAtributte1 = "Calidad", string $descriptionAtributte2 = "Tamaño"): void
     {
         $companyCode = $this->getCompanyCode();
 
@@ -68,8 +68,8 @@ class ProductImportService
         }
 
         // Obtener atributos de Calidad y Tamaño
-        $calidad = Attribute::whereHas('attributeGroup', fn ($q) => $q->where('description', 'Calidad'))->get();
-        $tamanios = Attribute::whereHas('attributeGroup', fn ($q) => $q->where('description', 'Tamaño'))->get();
+        $calidad = Attribute::whereHas('attributeGroup', fn ($q) => $q->where('description', $descriptionAtributte1))->get();
+        $tamanios = Attribute::whereHas('attributeGroup', fn ($q) => $q->where('description', $descriptionAtributte2))->get();
 
         // Generar combinaciones
         $yaTieneDefault = false;

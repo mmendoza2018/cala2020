@@ -3,7 +3,7 @@
 document.addEventListener("change", async (e) => {
 
     if (e.target.matches(".attributesProduct")) {
-
+        console.log('(luismi):>> change');
         const selectedAttributes = getSelectedAttributes();
         let idProduct = document.querySelector(`[data-product_id]`).dataset.product_id;
         let formData = new FormData();
@@ -121,8 +121,9 @@ const addProductToShoppingCart = async () => {
 
     try {
         let idProductAttribute = document.querySelector(`[data-default_product_attribute_id]`).dataset.default_product_attribute_id
+        console.log('(luismi): idProductAttribute :>> ', idProductAttribute);
         let quantityProductCombination = document.getElementById("quantityProductCombination").value;
-
+        console.log('(luismi):>> xddddddd');
         const formData = new FormData();
 
         formData.append("idProductAttribute", idProductAttribute);

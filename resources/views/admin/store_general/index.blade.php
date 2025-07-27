@@ -21,58 +21,97 @@
             </div>
             <div class="card bg-white">
                 <div class="card-body">
-                    <div class="w-full md:w-3/4 mx-auto">
-                        <form id="formAddGeneralConfig">
-                            <div class="flex flex-col md:flex-row justify-center w-full gap-5">
+                    <div>
+                        <ul
+                            class="flex flex-wrap w-full text-sm font-medium text-center border-b border-slate-200 dark:border-zink-500 nav-tabs">
+                            <li class="group active">
+                                <a href="javascript:void(0);" data-tab-toggle="" data-target="homeIcon"
+                                    class="inline-block px-4 py-2 text-base transition-all duration-300 ease-linear rounded-t-md text-slate-500 dark:text-zink-200 border border-transparent group-[.active]:text-custom-500 group-[.active]:border-slate-200 dark:group-[.active]:border-zink-500 group-[.active]:border-b-white dark:group-[.active]:border-b-zink-700 hover:text-custom-500 active:text-custom-500 dark:hover:text-custom-500 dark:active:text-custom-500 -mb-[1px]">
 
-                                <div class="w-full md:w-2/4 mx-auto">
-                                    <label class="inline-block mb-2 text-base font-medium">Razon social de la tienda</label>
-                                    <x-input type="text" name="business_name" id="business_name" data-validate/>
-                                    
-                                    <input type="hidden" name="id" id="id">
+                                    <i class="ri-home-5-line"></i>
+                                    <span class="align-middle">General</span>
+                                </a>
+                            </li>
+                            <li class="group">
+                                <a href="javascript:void(0);" data-tab-toggle="" data-target="ProfileIcon"
+                                    class="inline-block px-4 py-2 text-base transition-all duration-300 ease-linear rounded-t-md text-slate-500 dark:text-zink-200 border border-transparent group-[.active]:text-custom-500 group-[.active]:border-slate-200 dark:group-[.active]:border-zink-500 group-[.active]:border-b-white dark:group-[.active]:border-b-zink-700 hover:text-custom-500 active:text-custom-500 dark:hover:text-custom-500 dark:active:text-custom-500 -mb-[1px]">
+                                    <i class="ri-settings-5-line"></i>
+                                    <span class="align-middle">Tienda</span>
+                                </a>
+                            </li>
+                        </ul>
 
-                                    <label class="inline-block mb-2 text-base font-medium">Correo Electronico</label>
-                                    <x-input type="text" name="email" id="email" data-validate />
+                        <div class="mt-5 tab-content">
+                            <div class="tab-pane block" id="homeIcon">
+                                <div class="w-full md:w-3/4 mx-auto">
+                                    <form id="formAddGeneralConfig">
+                                        <div class="flex flex-col md:flex-row justify-center w-full gap-5">
 
-                                    <label class="inline-block mb-2 text-base font-medium">RUC</label>
-                                    <x-input type="text" name="ruc" id="ruc" data-validate/>
+                                            <div class="w-full md:w-2/4 mx-auto">
+                                                <label class="inline-block mb-2 text-base font-medium">Razon social de la
+                                                    tienda</label>
+                                                <x-input type="text" name="business_name" id="business_name"
+                                                    data-validate />
 
-                                    <label class="inline-block mb-2 text-base font-medium">Titulo de la tienda</label>
-                                    <x-input type="text" name="title" id="title" data-validate/>
+                                                <input type="hidden" name="id" id="id">
 
-                                    <label class="inline-block mb-2 text-base font-medium">Dirección (en caso no tener
-                                        dirección
-                                        fisica dejar vacio)</label>
-                                    <x-input type="text" name="address" id="address" data-validate />
+                                                <label class="inline-block mb-2 text-base font-medium">Correo
+                                                    Electronico</label>
+                                                <x-input type="text" name="email" id="email" data-validate />
 
-                                    <label class="inline-block mb-2 text-base font-medium">Descripción</label>
-                                    <textarea
-                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                         rows="3" name="description" id="description"></textarea>
-                                </div>
+                                                <label class="inline-block mb-2 text-base font-medium">RUC</label>
+                                                <x-input type="text" name="ruc" id="ruc" data-validate />
 
-                                <div class="w-full md:w-2/4 mx-auto">
-                                    <label class="inline-block mb-2 text-base font-medium">Logo</label>
+                                                <label class="inline-block mb-2 text-base font-medium">Titulo de la
+                                                    tienda</label>
+                                                <x-input type="text" name="title" id="title" data-validate />
 
-                                    <div class="dropzone-container">
-                                        <div class="dropzoneAdd">
-                                            Arrastra tus imágenes aquí.
+                                                <label class="inline-block mb-2 text-base font-medium">Dirección (en caso
+                                                    no tener
+                                                    dirección
+                                                    fisica dejar vacio)</label>
+                                                <x-input type="text" name="address" id="address" data-validate />
+
+                                                <label class="inline-block mb-2 text-base font-medium">Descripción</label>
+                                                <textarea
+                                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                    rows="3" name="description" id="description"></textarea>
+                                            </div>
+
+                                            <div class="w-full md:w-2/4 mx-auto">
+                                                <label class="inline-block mb-2 text-base font-medium">Logo</label>
+
+                                                <div class="dropzone-container">
+                                                    <div class="dropzoneAdd">
+                                                        Arrastra tus imágenes aquí.
+                                                    </div>
+                                                    <div id="dropzone-preview" class="dropzone-previews"></div>
+                                                </div>
+
+                                            </div>
+
                                         </div>
-                                        <div id="dropzone-preview" class="dropzone-previews"></div>
-                                    </div>
 
+                                        <div class="text-right">
+                                            <x-button type="submit" color="primary" class="mt-3" description="Guardar"
+                                                :outline="false" />
+                                        </div>
+
+                                    </form>
+                                    </class=>
                                 </div>
-
                             </div>
-
-                            <div class="text-right">
-                                <x-button type="submit" color="primary" class="mt-3" description="Guardar"
-                                    :outline="false" />
+                            <div class="tab-pane hidden" id="ProfileIcon">
+                                <p class="mb-0">
+                                    You've probably heard that opposites attract. The same is true for fonts. Don't be
+                                    afraid to combine font styles that are different but complementary, like sans serif with
+                                    serif, short with tall, or decorative with simple. Qui photo booth letterpress, commodo
+                                    enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR.
+                                </p>
                             </div>
-
-                        </form>
-                        </class=>
+                        </div>
                     </div>
+
                 </div>
             </div>
             <!-- container-fluid -->

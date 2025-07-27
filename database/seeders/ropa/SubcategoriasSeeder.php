@@ -19,52 +19,24 @@ class SubcategoriasSeeder extends Seeder
 
         $subcategorias = [
             [
+                'description' => 'Tops',
+                'filename' => 'subcategorias/Tops.webp',
+            ],
+            [
                 'description' => 'Blusas',
-                'filename' => 'Subcategorias/Blusas.webp',
-            ],
-            [
-                'description' => 'Camisas',
-                'filename' => 'Subcategorias/Camisas.webp',
-            ],
-            [
-                'description' => 'Deportivos',
-                'filename' => 'Subcategorias/Deportivos.webp',
-            ],
-            [
-                'description' => 'Gorras',
-                'filename' => 'Subcategorias/Gorras.webp',
-            ],
-            [
-                'description' => 'Jeans',
-                'filename' => 'Subcategorias/Jeans.webp',
-            ],
-            [
-                'description' => 'Polos',
-                'filename' => 'Subcategorias/Polos.webp',
+                'filename' => 'subcategorias/Blusas.webp',
             ],
             [
                 'description' => 'Sacos',
-                'filename' => 'Subcategorias/Sacos.webp',
+                'filename' => 'subcategorias/Sacos.webp',
             ],
-            [
-                'description' => 'Tacos',
-                'filename' => 'Subcategorias/Tacos.webp',
-            ],
-            [
-                'description' => 'Tops',
-                'filename' => 'Subcategorias/Tops.webp',
-            ],
-            [
-                'description' => 'Vestidos',
-                'filename' => 'Subcategorias/Vestidos.webp',
-            ],
-            [
+             [
                 'description' => 'Zapatos',
-                'filename' => 'Subcategorias/Zapatos.webp',
+                'filename' => 'subcategorias/Zapatos.webp',
             ],
-                        [
-                'description' => 'Abrigos',
-                'filename' => 'Subcategorias/Abrigos.webp',
+            [
+                'description' => 'Camisas',
+                'filename' => 'subcategorias/Camisas.webp',
             ],
         ];
 

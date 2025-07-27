@@ -93,7 +93,7 @@
         <div>
             <h5 class="title-page mb-16">Nuestros Productos</h5>
         </div>
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-5 ">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-5 " style="padding-bottom: 3rem;">
             <div class="hidden lg:col-span-3 lg:block">
                 <div class="card">
                     <div class="card-body">

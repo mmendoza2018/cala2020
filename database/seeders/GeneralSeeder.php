@@ -12,17 +12,27 @@ class GeneralSeeder extends Seeder
    
     public function run()
     {
+
+        $nombre = config('tienda.name');
+        $description = config('tienda.description');
+        $usarMarcas = config('tienda.active_brand');
+        $usarSubcategorias = config('tienda.active_subcategory');
+        $address = config('tienda.address');
+        $email = config('tienda.email');
+        $imagePath = config('tienda.logo_path');
+
         General::create([
-            'title' => 'Mimesoft',
+            'title' => $nombre,
             'code' => Str::uuid(),
-            'business_name' => 'Mimesoft Technologies',
+            'business_name' => '-',
             'ruc' => '12345678901',
-            'address' => '123 Calle Principal, Ciudad Ejemplo',
-            'email' => 'contacto@mimesoft.com',
-            'description' => 'Mimesoft es una empresa innovadora que desarrolla soluciones tecnológicas avanzadas para sus clientes.',
-            'brand_is_active' => true,
-            'subcategory_is_active' => true,
+            'address' => $address,
+            'email' => $email,
+            'description' => $description,
+            'brand_is_active' => $usarMarcas,
+            'subcategory_is_active' => $usarSubcategorias,
             'status' => 1,
+            "logo" => $imagePath
         ]);
     }
 }

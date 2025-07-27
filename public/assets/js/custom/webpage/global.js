@@ -423,19 +423,24 @@ const searchProducts = async (element = null, containerProducts) => {
                     card.className = "flex gap-2 product";
 
                     card.innerHTML = `
-                    <div class="flex items-center justify-center w-12 h-12 rounded-md bg-slate-100 shrink-0 dark:bg-zink-500">
-                        <img src="${firstImage}" alt="" class="h-8">
-                    </div>
-                    <div class="overflow-hidden grow">
-                        <a href="${baseUrl}/productos/${product.slug}" class="transition-all duration-200 ease-linear hover:text-custom-500">
-                            <h6 class="mb-1 text-15">${product.title}</h6>
-                        </a>
-                        <div class="flex items-end mb-2">
-                            <h5 class="text-base product-price" style="margin-top: 0">S/<span>${product.product_attributes[0]?.default_price ?? "0.00"}</span></h5>
-                            <div class="font-normal rtl:mr-1 ltr:ml-1 text-slate-500 dark:text-zink-200">(${product.product_brand.description})</div>
+                        <div class="flex items-center justify-center w-12 h-12 rounded-md bg-slate-100 shrink-0 dark:bg-zink-500">
+                            <img src="${firstImage}" alt="" class="h-8">
                         </div>
-                    </div>
-                `;
+                        <div class="overflow-hidden grow">
+                            <a href="${baseUrl}/productos/${product.slug}" class="transition-all duration-200 ease-linear hover:text-custom-500">
+                                <h6 class="mb-1 text-15">${product.title}</h6>
+                            </a>
+                            <div class="flex items-end mb-2">
+                                <h5 class="text-base product-price" style="margin-top: 0">S/<span>${product.product_attributes[0]?.default_price ?? "0.00"}</span></h5>
+                                ${product?.product_brand
+                                                ? `<div class="font-normal rtl:mr-1 ltr:ml-1 text-slate-500 dark:text-zink-200">
+                                            (${product.product_brand.description})
+                                        </div>`
+                                                : ''
+                                            }
+                            </div>
+                        </div>
+                    `;
 
                     container.appendChild(card);
                 });
