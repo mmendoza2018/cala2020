@@ -129,8 +129,8 @@
                     <div class="slide slide-config-custom active" data-slide="1">
                         <h2>Información General</h2>
                         <hr>
-                        <input type="text" placeholder="Nombre de la tienda" name="name_store" autocomplete="off"/>
-                        <input type="text" placeholder="Descripción breve" name="description" autocomplete="off"/>
+                        <input type="text" placeholder="Nombre de la tienda" name="name_store" autocomplete="off" />
+                        <input type="text" placeholder="Descripción breve" name="description" autocomplete="off" />
                         <div id="dropzoneContainerAdd" class="dropzone-container">
                             <div id="dropzoneAdd">
                                 Sube tu Logo aqui.
@@ -143,8 +143,10 @@
                         <h2>Datos de Contacto</h2>
                         <hr>
                         <input type="text" placeholder="Número de WhatsApp" autocomplete="off" name="phone_number" />
-                        <input type="email" required placeholder="Correo electrónico (opcional)" name="email" autocomplete="off"/>
-                        <input type="text" placeholder="Dirección física (si aplica)" name="adress" autocomplete="off" />
+                        <input type="email" required placeholder="Correo electrónico (opcional)" name="email"
+                            autocomplete="off" />
+                        <input type="text" placeholder="Dirección física (si aplica)" name="adress"
+                            autocomplete="off" />
                     </div>
 
                     <div class="slide slide-config-custom" data-slide="3">
@@ -211,8 +213,30 @@
         const slides = document.querySelectorAll(".slide");
         const prevBtn = document.getElementById("prevBtn");
         const nextBtn = document.getElementById("nextBtn");
-
         let currentSlide = 0;
+
+        const toastAlert = (
+            title = "Toast por defecto",
+            icon = "success",
+            position = "bottom-end"
+        ) => {
+            const Toast = Swal.mixin({
+                toast: true,
+                position,
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                },
+            });
+            Toast.fire({
+                icon,
+                title,
+            });
+        };
+
 
         function animateSlideOut(index) {
             return gsap.to(slides[index], {
@@ -258,7 +282,7 @@
 
         nextBtn.addEventListener("click", () => {
             const isPenultimate = currentSlide === slides.length - 2;
-
+            console.log('(luismi): currentSlide :>> ', currentSlide);
             const valid = validateCurrentSlide();
             if (!valid) return;
 
@@ -359,9 +383,10 @@
 
             // Limpiar estados previos
             [...inputs, ...selects].forEach(el => {
-                el.style.boxShadow = 'inset 0 2px 6px rgba(0, 0, 0, 0.1)'; // Estilo normal
+                el.style.boxShadow = 'inset 0 2px 6px rgba(0, 0, 0, 0.1)';
             });
 
+            // Validación general
             inputs.forEach(input => {
                 if (input.value.trim() === '') {
                     input.style.boxShadow = '0 0 0 2px red';
@@ -375,6 +400,30 @@
                     isValid = false;
                 }
             });
+
+            // Validación específica para el slide 1 (índice 1)
+            if (currentSlide === 1) {
+                const phone = currentSlideEl.querySelector("input[name='phone_number']");
+                const email = currentSlideEl.querySelector("input[name='email']");
+
+                const phoneValue = phone?.value.trim();
+                const emailValue = email?.value.trim();
+
+                const phoneValid = /^\d{9}$/.test(phoneValue);
+                const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue);
+
+                if (!phoneValid) {
+                    phone.style.boxShadow = '0 0 0 2px red';
+                    isValid = false;
+                    toastAlert("El Numero no es valido", "warning")
+                }
+
+                if (!emailValid) {
+                    email.style.boxShadow = '0 0 0 2px red';
+                    isValid = false;
+                    toastAlert("El correo no es valido", "warning")
+                }
+            }
 
             return isValid;
         }
@@ -408,16 +457,20 @@
                 if (data.success) {
                     setTimeout(() => {
                         Swal.fire({
-                            position: "center",
-                            icon: "success",
-                            title: "Tienda Creada Correctamente",
-                            showConfirmButton: false,
-                            timer: 2000,
-                        });
-                        setTimeout(() => {
+                            icon: 'success',
+                            title: '¡Tienda creada con éxito!',
+                            html: `
+                                <p>Hemos enviado un correo a <strong>${data?.email}</strong> con tus credenciales.</p>
+                                <p>Revisa tu bandeja de entrada o la carpeta de <strong>SPAM</strong>.</p>
+                                <p>Desde allí podrás acceder a tu panel de administración y comenzar a personalizar tu tienda.</p>
+                            `,
+                            confirmButtonText: 'Entendido',
+                            allowOutsideClick: false, // evita que cierren haciendo clic fuera
+                            allowEscapeKey: false, // evita que cierren con "Esc"
+                        }).then(() => {
                             let baseUrl = document.querySelector(`[data-base_url]`).dataset.base_url;
                             location.href = baseUrl;
-                        }, 2100);
+                        });
                     }, 5000);
                 } else {
                     boxAlertValidation(data.errors)

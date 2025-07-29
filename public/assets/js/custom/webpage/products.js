@@ -277,10 +277,10 @@ const renderProductShoppingCartModal = (data) => {
             clone.querySelector('.imgShoppingCartModal').src = `${baseUrl}/storage/uploads/${baseCodeCompany}/${product.image}`;
             clone.querySelector('.descriptionShoppingCartModal').textContent = `${product.title} | ${product.brand}`;
             clone.querySelector('.descriptionShoppingCartModal').parentNode.href = `${product.slug}`;
-            clone.querySelector('.priceShoppingCartModal').textContent = `S/${product.price.toFixed(2)}`;
+            clone.querySelector('.priceShoppingCartModal').textContent = `S/${product.price}`;
             clone.querySelector('.quantityShoppingCartModal').value = product.quantity;
             clone.querySelector('.subtotalShoppingCartModal').textContent = `S/ ${subtotalProduct}`;
-            console.log('(luismi): product.price.toFixed(2) :>> ', product.price.toFixed(2));
+            console.log('(luismi): product.price.toFixed(2) :>> ', product.price);
             // Asignamos los atributos dinámicamente
             const attributesList = clone.querySelector('.attributesShoppingCartModal');
             attributesList.innerHTML = ''; // Limpiamos la lista de atributos antes de añadir nuevos

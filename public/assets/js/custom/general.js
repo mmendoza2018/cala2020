@@ -121,14 +121,42 @@ document.addEventListener("submit", async (e) => {
         }
 
         formData.append("logo", fileToUpload);
-        formData.append('_method', 'PUT');
+        formData.append('_method', 'PATCH');
 
         try {
-            let response = await customFetch(ROUTES.GENERAL_STORE + `/update`, "POST", formData)
+            let response = await customFetch(ROUTES.GENERAL_STORE + `/1`, "POST", formData)
             if (response.status === "success") {
                 boxAlert("Actualizado con exito!", "success")
                 setTimeout(() => {
                     location.reload();
+                }, 1500);
+            } else {
+                boxAlertValidation(response.errors)
+            }
+        } catch (error) {
+            console.error('Error de red:', error);
+        }
+    }
+
+    if (e.target.matches("#formAddproductConfigGeneral")) {
+
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+        if (!formData.has('subcategory_is_active')) {
+            formData.append('subcategory_is_active', '0');
+        }
+        if (!formData.has('brand_is_active')) {
+            formData.append('brand_is_active', '0');
+        }
+        formData.append('_method', 'PATCH');
+
+        try {
+            let response = await customFetch(ROUTES.GENERAL_STORE + `/1`, "POST", formData)
+            if (response.status === "success") {
+                boxAlert("Actualizado con exito!", "success")
+                setTimeout(() => {
+                    //location.reload();
                 }, 1500);
             } else {
                 boxAlertValidation(response.errors)

@@ -51,7 +51,6 @@
                 <x-side-li-submenu description="SubCategorias" data-side_key="product_subcategory_index" url="product_subcategory.index" />
                 <x-side-li-submenu description="Marcas" data-side_key="product_brand_index" url="product_brand.index" />
                 <x-side-li-submenu description="Variantes" data-side_key="attribute_group_index" url="attribute_group.index" />
-                <x-side-li-submenu description="General" data-side_key="product_general_index" url="product_general.index" />
             </x-side-li-menu2>
 
             <x-side-li-submenu2 description="Tienda">

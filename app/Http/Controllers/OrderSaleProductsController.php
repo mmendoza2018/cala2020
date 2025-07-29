@@ -25,4 +25,17 @@ class OrderSaleProductsController extends Controller
             return ApiResponse::success($orders, "Registro encontrado.");
         }
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:PENDING,PAID,CANCELLED',
+        ]);
+
+        $order = EcommerceSaleProduct::findOrFail($id);
+        $order->status = $request->status;
+        $order->save();
+
+        return ApiResponse::success($order, "Registro encontrado.");
+    }
 }

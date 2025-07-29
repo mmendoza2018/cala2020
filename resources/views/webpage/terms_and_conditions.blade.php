@@ -3,9 +3,9 @@
     <link rel="stylesheet" href="{{ URL::to('assets/libs/splide/dist/css/splide.min.css') }}">
 @endsection
 @section('content')
-    <div>
+    <div style="min-height: 90vh; margin-top: 100px">
         <div class="about-section pt-120 pb-100 mt-50 n0-bg overflow-hidden winbg">
-            <div class="container">
+            <div  class="container 2xl:max-w-[87.5rem] px-4 mx-auto">
                 <h2 class="text-center mb-5">Términos y Condiciones</h2>
                 <b>1. Aceptación de los Términos</b>
                 <p>

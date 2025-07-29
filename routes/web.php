@@ -33,6 +33,7 @@ use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\ThemesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebPageController;
+use App\Http\Middleware\CheckStoreConfigured;
 use App\Http\Middleware\CheckUserType;
 use App\Models\AttentionNumber;
 use Illuminate\Support\Facades\Artisan;
@@ -60,7 +61,7 @@ Route::get('/migrate-fresh', function () {
 
 
 /* routes webpage */
-Route::prefix('/')->group(function () {
+Route::middleware(CheckStoreConfigured::class)->group(function () {
     Route::get('iniciar-sesion', [WebPageController::class, 'login'])->name('webpage.login');
     Route::get('configuracion-tienda', [WebPageController::class, 'configStore'])->name('webpage.config_store');
 
@@ -100,10 +101,13 @@ Route::prefix('configStore')->group(function () {
 
     Route::post('/create', [ConfigStoreController::class, 'createStore'])->name('product.create_store');
     Route::get('/reset', [ConfigStoreController::class, 'resetConfig'])->name('product.reset_store');
-
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', CheckUserType::class . ':admin_panel']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => [
+    'auth:admin',
+    CheckUserType::class . ':admin_panel',
+    CheckStoreConfigured::class,
+]], function () {
 
     // Rutas de productos
     Route::prefix('productos')->group(function () {
@@ -169,7 +173,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', CheckUserType:
     });
 
     Route::prefix('general-tienda')->group(function () {
-        Route::put('{id}', [GeneralController::class, 'update'])->name('store_general.update');
+        Route::patch('{id}', [GeneralController::class, 'update'])->name('store_general.update');
         Route::get('/{id}', [GeneralController::class, 'show'])->name('store_general.show');
         Route::get('/', [GeneralController::class, 'index'])->name('store_general.index');
     });
@@ -232,6 +236,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', CheckUserType:
     Route::prefix('ordenes')->group(function () {
         Route::get('/', [OrderSaleProductsController::class, 'index'])->name('orders.index');
         Route::get('/{id}', [OrderSaleProductsController::class, 'show'])->name('orders.show');
+        Route::post('/update-status/{id}', [OrderSaleProductsController::class, 'updateStatus'])->name('orders.update_status');
     });
 
     Route::prefix('usuarios')->group(function () {
@@ -246,33 +251,39 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', CheckUserType:
 
 Auth::routes(['verify' => true]);
 
-Route::group(['namespace' => 'App\Http\Controllers\Auth'], function () {
-    // -----------------------------login----------------------------------------//
-    Route::controller(LoginController::class)->group(function () {
-        Route::get('/login', 'login')->name('login');
-        Route::post('/login', 'authenticate');
-        Route::get('/logout', 'logout')->name('logout');
-        Route::get('logout/page', 'logoutPage')->name('logout/page');
-    });
+Route::group(
+    [
+        'namespace' => 'App\Http\Controllers\Auth',
+        'middleware' => [CheckStoreConfigured::class]
+    ],
+    function () {
+        // -----------------------------login----------------------------------------//
+        Route::controller(LoginController::class)->group(function () {
+            Route::get('/login', 'login')->name('login');
+            Route::post('/login', 'authenticate');
+            Route::get('/logout', 'logout')->name('logout');
+            Route::get('logout/page', 'logoutPage')->name('logout/page');
+        });
 
-    // ------------------------------ register ----------------------------------//
-    Route::controller(RegisterController::class)->group(function () {
-        Route::get('/register', 'register')->name('register');
-        Route::post('/register', 'storeUser')->name('register');
-    });
+        // ------------------------------ register ----------------------------------//
+        Route::controller(RegisterController::class)->group(function () {
+            Route::get('/register', 'register')->name('register');
+            Route::post('/register', 'storeUser')->name('register');
+        });
 
-    // ----------------------------- forget password ----------------------------//
-    Route::controller(ForgotPasswordController::class)->group(function () {
-        Route::get('forget-password', 'getEmail')->name('forget-password');
-        Route::post('forget-password', 'postEmail')->name('forget-password');
-    });
+        // ----------------------------- forget password ----------------------------//
+        Route::controller(ForgotPasswordController::class)->group(function () {
+            Route::get('forget-password', 'getEmail')->name('forget-password');
+            Route::post('forget-password', 'postEmail')->name('forget-password');
+        });
 
-    // ----------------------------- reset password -----------------------------//
-    Route::controller(ResetPasswordController::class)->group(function () {
-        Route::get('reset-password/{token}', 'getPassword');
-        Route::post('reset-password', 'updatePassword');
-    });
-});
+        // ----------------------------- reset password -----------------------------//
+        Route::controller(ResetPasswordController::class)->group(function () {
+            Route::get('reset-password/{token}', 'getPassword');
+            Route::post('reset-password', 'updatePassword');
+        });
+    }
+);
 
 // ------------------------------ AuthPage ----------------------------------//
 Route::group(['namespace' => 'App\Http\Controllers\AuthPage', 'prefix' => 'page'], function () {

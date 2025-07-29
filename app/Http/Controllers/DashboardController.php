@@ -55,6 +55,9 @@ class DashboardController extends Controller
         $totalEcommerceSale = EcommerceSaleProduct::whereBetween('created_at', [$startDate, $endDate])->where('status', 'PAID')
             ->sum('total');
 
+        $totalQuantityEcommerceSale = EcommerceSaleProduct::whereBetween('created_at', [$startDate, $endDate])->where('status', 'PAID')
+            ->sum('quantity');
+
 
         $culqiCommissionPercentage = 3.44 / 100; // 3.44% commission
         $culqiCommissionAmount = $totalEcommerceSale * $culqiCommissionPercentage;
@@ -62,9 +65,9 @@ class DashboardController extends Controller
         $totalWithCulqiCommission = number_format($totalEcommerceSale - $culqiCommissionAmount, 2);
 
 
-        $quantityEcommerceSale = DB::table('ecommerce_sale_product_details')
+        /* $quantityEcommerceSale = DB::table('ecommerce_sale_product_details')
             ->whereBetween('created_at', [$startDate, $endDate])
-            ->sum('quantity');
+            ->sum('quantity'); */
 
         $arrayFinal["age"] = $agePercentages;
         $arrayFinal["department"] = $departmentPercentages;
@@ -72,7 +75,7 @@ class DashboardController extends Controller
         $arrayFinal["product"] = $salesByProduct;
         $arrayFinal["totalEcommerceSales"] = $totalEcommerceSale;
         $arrayFinal["totalWithCulqiCommission"] = $totalWithCulqiCommission;
-        $arrayFinal["quantityEcommerceSale"] = $quantityEcommerceSale;
+        $arrayFinal["quantityEcommerceSale"] = $totalQuantityEcommerceSale;
 
         return ApiResponse::success($arrayFinal, "Consulta exitosa.");
     }
@@ -342,7 +345,7 @@ class DashboardController extends Controller
             DB::raw('SUM(total) as total_sales')
         )
             ->whereYear('created_at', $currentYear)
-            ->where('status', 'PAID') 
+            ->where('status', 'PAID')
             ->groupBy(DB::raw('MONTH(created_at)'))
             ->get();
 

@@ -29,68 +29,50 @@ class GeneralController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $rules = [
-            "title" => "required|string|max:255",
-            "business_name" => "required|string|max:255",
-            "ruc" => "required|string|max:20",
-            "address" => "required|string|max:255",
-            "email" => "required|email|max:255",
-            "description" => "nullable|string",
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+            "title" => "sometimes|string|max:255",
+            "business_name" => "sometimes|string|max:255",
+            "ruc" => "sometimes|string|max:20",
+            "address" => "sometimes|string|max:255",
+            "email" => "sometimes|email|max:255",
+            "description" => "sometimes|nullable|string",
+            'logo' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg',
+            'subcategory_is_active' => 'sometimes|in:0,1',
+            'brand_is_active' => 'sometimes|in:0,1',
         ];
 
-        // Definir los nombres amigables de los atributos
         $attributes = [
-            "title" => "Titulo",
+            "title" => "Título",
             "business_name" => "Razón social",
             "ruc" => "RUC",
             "address" => "Dirección",
-            "email" => "Correo electronico",
+            "email" => "Correo electrónico",
             "description" => "Descripción",
             "logo" => "Imagen",
+            "subcategory_is_active" => "Subcategoria check",
+            "brand_is_active" => "Marca check",
         ];
 
-        // Crear el validador manualmente
         $validator = Validator::make($request->all(), $rules);
         $validator->setAttributeNames($attributes);
 
-        // Validar los datos
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
             return ApiResponse::error("Validation Error", $errors, 202);
         }
 
-        $general = General::first();
-
+        $general = General::findOrFail($id);
         $validatedData = $validator->validated();
 
-        $logoPath = null;
-        $logo = $request->file('logo');
-        $path = $logo->getClientOriginalName();
-
-        // Si la imagen ya existe, actualiza su información
-        if ($path != $general->logo) {
+        // Si se envió logo, procesarlo
+        if ($request->hasFile('logo')) {
+            $logo = $request->file('logo');
             $path = $logo->store('uploads/' . getCompanyCode(), 'public');
-            $logoPath = basename($path);
-        } else {
-            $logoPath = $general->logo;
+            $validatedData['logo'] = basename($path);
         }
 
-        $generalData = [
-            "title" => $validatedData["title"],
-            "business_name" => $validatedData["business_name"],
-            "ruc" => $validatedData["ruc"],
-            "address" => $validatedData["address"],
-            "email" => $validatedData["email"],
-            "description" => $validatedData["description"],
-            "logo" => $logoPath,
-        ];
+        $general->update($validatedData);
 
-        $general->update($generalData);
-
-        $general = General::latest()->first();
-
-        return ApiResponse::success($general, "Agregado con exito");
+        return ApiResponse::success($general->fresh(), "Actualizado con éxito");
     }
 }

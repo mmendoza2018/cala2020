@@ -70,17 +70,27 @@ splide.mount();
 
 
 
-var splideCategories = new Splide('#splideCategories', {
-    type: 'loop',
-    drag: 'free',
-    perPage: 3,
-    autoplay: true,
-    interval: 2000, // ⏱ Tiempo entre movimientos en milisegundos (3000ms = 3s)
-    pauseOnHover: true, // pausa si el usuario pasa el mouse encima
-});
-
-splideCategories.mount();
-
+new Splide('#splideCategories', {
+  type: 'loop',
+  drag: 'free',
+  perPage: 3,        // valor por defecto para pantallas grandes
+  focus: 0,          // quitar centrado fuera de breakpoints
+  gap: '1rem',
+  breakpoints: {
+    1024: {
+      perPage: 2,
+      focus: 'center',  // centrado solo en tablets
+    },
+    768: {
+      perPage: 2,
+      focus: 'center',  // centrado solo en móviles
+    },
+    512: {
+      perPage: 1,
+      focus: 'center',  // centrado solo en móviles
+    },
+  }
+}).mount();
 
 /* tabs */
 

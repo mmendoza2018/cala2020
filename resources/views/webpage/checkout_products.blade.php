@@ -3,7 +3,7 @@
 @section('content')
     <!-- ==== Checkout Section ==== -->
     <section class="pt-120 pb-120 mt-50 n0-bg overflow-hidden p-3" style="margin-top: 75px; background-color: #f9fafb">
-        <div class="container">
+        <div  class="container 2xl:max-w-[87.5rem] px-4 mx-auto">
             <div class="relative min-h-screen group-data-[sidebar-size=sm]:min-h-sm">
                 <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
 
@@ -20,15 +20,6 @@
                                                 <input type="text" id="firstNameInput"
                                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-slate-300 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300"
                                                     placeholder="Ingrese su Nombre..." name="first_name" data-validate>
-
-                                                    
-
-
-
-
-
-
-
 
                                             </div><!--end col-->
                                             <div class="xl:col-span-4">
@@ -67,7 +58,8 @@
                                                     class="inline-block mb-2 text-base font-medium">Dirección</label>
                                                 <input type="text" id="streetAddressInput"
                                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-slate-300 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300"
-                                                    placeholder="Av. Arequipa 123, Miraflores, Lima" name="address" data-validate>
+                                                    placeholder="Av. Arequipa 123, Miraflores, Lima" name="address"
+                                                    data-validate>
                                             </div><!--end col-->
                                             <div class="xl:col-span-4">
                                                 <label for="townCityInput"
@@ -109,7 +101,7 @@
                                                 <div class="flex items-center gap-3">
                                                     <input id="deliveryOption{{ $contador }}"
                                                         class="border rounded-full appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-purple-500 checked:border-purple-500 dark:checked:bg-purple-500 dark:checked:border-purple-500 checked:disabled:bg-purple-400 checked:disabled:border-purple-400 peer"
-                                                        type="radio" name="deliveryChoose" value="express-delivery"
+                                                        type="radio" name="deliveryChoose" value="{{ $payment->description }}"
                                                         checked="">
                                                     <label for="deliveryOption{{ $contador }}"
                                                         class="flex flex-col gap-4 p-5 border rounded-md cursor-pointer md:flex-row border-slate-200 dark:border-zink-500 peer-checked:border-purple-500 dark:peer-checked:border-purple-700 grow">

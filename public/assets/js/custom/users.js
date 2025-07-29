@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (document.getElementById("tableProducts") !== null) {
         dataTableProducts = $("#tableProducts").DataTable({
             info: false,
+            language: languageDataTable
         });
     }
 });

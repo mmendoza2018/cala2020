@@ -34,14 +34,33 @@
                         </thead>
                         <tbody>
                             @foreach ($orders as $order)
+                                @php
+                                    $status = $order->status;
+                                    $statusClass = match ($status) {
+                                        'PAID' => 'bg-green-100 text-green-800',
+                                        'PENDING' => 'bg-yellow-100 text-yellow-800',
+                                        'CANCELLED' => 'bg-red-100 text-red-800',
+                                        default => '',
+                                    };
+                                @endphp
                                 <tr>
                                     <td>{{ $order->code }}</td>
                                     <td>{{ $order->details->count() }} </td>
                                     <td>{{ number_format($order->total, 2) }}</td>
-                                    <td>{{ $order->status === "PAID" ? "Completado" : "Pendiente" }} </td>
+                                    <td>
+                                        <select class="form-select {{ $statusClass }} order-status-select" data-id="{{ $order->id }}">
+                                            <option value="PENDING" {{ $status === 'PENDING' ? 'selected' : '' }}>Pendiente
+                                            </option>
+                                            <option value="PAID" {{ $status === 'PAID' ? 'selected' : '' }}>Completado
+                                            </option>
+                                            <option value="CANCELLED" {{ $status === 'CANCELLED' ? 'selected' : '' }}>
+                                                Cancelado</option>
+                                        </select>
+                                    </td>
                                     <td>{{ $order->created_at }}</td>
                                     <td class="text-center">
-                                        <a href="#" data-modal-target="modalOrdersDetail" onclick="getOrdersDetail('{{ $order->id }}')">
+                                        <a href="#" data-modal-target="modalOrdersDetail"
+                                            onclick="getOrdersDetail('{{ $order->id }}')">
                                             <i class="ri-edit-box-fill ri-xl cursor-pointer"></i>
                                         </a>
                                     </td>
@@ -74,10 +93,13 @@
                     <thead class="ltr:text-left rtl:text-right ">
                         <tr>
                             <th class="px-3.5 py-2.5 font-semibold border border-slate-200 dark:border-zink-500">#</th>
-                            <th class="px-3.5 py-2.5 font-semibold border border-slate-200 dark:border-zink-500">Descripción</th>
+                            <th class="px-3.5 py-2.5 font-semibold border border-slate-200 dark:border-zink-500">Descripción
+                            </th>
                             <th class="px-3.5 py-2.5 font-semibold border border-slate-200 dark:border-zink-500">Precio</th>
-                            <th class="px-3.5 py-2.5 font-semibold border border-slate-200 dark:border-zink-500">Cantidad</th>
-                            <th class="px-3.5 py-2.5 font-semibold border border-slate-200 dark:border-zink-500">Subtotal</th>
+                            <th class="px-3.5 py-2.5 font-semibold border border-slate-200 dark:border-zink-500">Cantidad
+                            </th>
+                            <th class="px-3.5 py-2.5 font-semibold border border-slate-200 dark:border-zink-500">Subtotal
+                            </th>
                         </tr>
                     </thead>
                     <tbody id="detailSaleEcommerce">

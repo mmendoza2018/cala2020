@@ -47,7 +47,6 @@
                                 
                             </div>
                         </form>
-                        </class=>
                     </div>
                 </div>
             </div>

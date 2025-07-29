@@ -102,12 +102,38 @@
                                 </div>
                             </div>
                             <div class="tab-pane hidden" id="ProfileIcon">
-                                <p class="mb-0">
-                                    You've probably heard that opposites attract. The same is true for fonts. Don't be
-                                    afraid to combine font styles that are different but complementary, like sans serif with
-                                    serif, short with tall, or decorative with simple. Qui photo booth letterpress, commodo
-                                    enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR.
-                                </p>
+                                <div class="w-full md:w-1/4 mx-auto shadow p-5">
+                                    <form id="formAddproductConfigGeneral">
+                                        <div class="flex flex-col gap-2">
+                                            <hr>
+                                            <div class="flex items-center gap-2">
+                                                <input id="checkboxDefault1"
+                                                    class="border rounded-sm appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400"
+                                                    type="checkbox" value="1" checked="" name="subcategory_is_active">
+                                                <label for="checkboxDefault1" class="align-middle" data-tooltip="default"
+                                                    data-tooltip-content="Al activar la opción SUBCATEGORIA tendras la funcionalidad de añadir SUBCATEGORIAS a tus productos en todos los apartados del catalogo">
+                                                    Subcategoria habilitada
+                                                </label>
+                                            </div>
+
+                                            <hr>
+
+                                            <div class="flex items-center gap-2">
+                                                <input id="checkboxDefault2"
+                                                    class="border rounded-sm appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400"
+                                                    type="checkbox" value="1" checked="" name="brand_is_active">
+                                                <label for="checkboxDefault2" class="align-middle" data-tooltip="default"
+                                                    data-tooltip-content="Al activar la opción MARCA tendras la funcionalidad de añadir MARCAS a tus productos en todos los apartados del catalogo">
+                                                    Marca habilitada
+                                                </label>
+                                            </div>
+                                            <hr>
+
+                                            <x-button type="submit" color="primary" class="mt-3" description="Guardar"
+                                                :outline="false" />
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>

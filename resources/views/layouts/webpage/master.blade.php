@@ -178,7 +178,7 @@
 
                                     <div class="flex items-center mb-2">
                                         <h5 class="text-base priceShoppingCartModal">
-                                            $<span>{{ number_format($product['price'], 2) }}</span></h5>
+                                            S/ <span>{{ number_format($product['price'], 2) }}</span></h5>
                                     </div>
 
                                     <!-- Precio y cantidad -->
@@ -233,7 +233,7 @@
                     </tbody>
                 </table>
                 <div class="flex items-center justify-between gap-3">
-                    <a href="apps-ecommerce-product-grid.html"
+                    <a href="#" data-drawer-close="cartSidePenal"
                         class="w-full text-white btn bg-slate-500 border-slate-500 hover:text-white hover:bg-slate-600 hover:border-slate-600 focus:text-white focus:bg-slate-600 focus:border-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:border-slate-600 active:ring active:ring-slate-100 dark:ring-slate-400/10">Seguir
                         Comprando</a>
                     <a href="{{ route('web_page.checkoutProducts') }}"
@@ -265,7 +265,7 @@
                 <div class="attributesShoppingCartModal  text-sm text-slate-500 dark:text-zink-300 mb-2">
                 </div>
                 <div class="flex items-center mb-2">
-                    <h5 class="text-base priceShoppingCartModal"> $<span>155.32</span></h5>
+                    <h5 class="text-base priceShoppingCartModal"> S/ <span>155.32</span></h5>
                 </div>
                 <div class="flex items-center justify-between gap-3">
                     <div
@@ -327,13 +327,13 @@
                 <h3>Legal</h3>
                 <div class="border1"></div> <!--for the underline -->
                 <ul>
-                    <a href="#">
+                    <a href="{{ route('webpage.complaintsBook') }}">
                         <li>Libro de reclamaciones</li>
                     </a>
-                    <a href="#">
+                    <a href="{{ route('webpage.termsAndConditions') }}">
                         <li>terminos y condiciones</li>
                     </a>
-                    <a href="#">
+                    <a href="{{ route('webpage.changePolicies') }}">
                         <li>Politicas de reembolso</li>
                     </a>
                 </ul>

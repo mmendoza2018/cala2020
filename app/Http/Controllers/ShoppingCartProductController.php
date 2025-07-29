@@ -78,7 +78,7 @@ class ShoppingCartProductController extends Controller
                 'brand' => $product->productBrand->description ?? '', // Si hay un campo brand
                 'slug' => $product->slug ?? '', // Si hay un campo brand
                 'attributes_combination' => $productVariant->attributesCombination,
-                'price' => intval($productVariant->default_price),
+                'price' => floatval($productVariant->default_price),
                 'quantity' => $quantity,
                 'subtotal' => $quantity * $productVariant->default_price, // Calcular el subtotal
             ];
@@ -157,6 +157,7 @@ class ShoppingCartProductController extends Controller
             "state" => "required|string|max:255",
             "city" => "required|string|max:255",
             "district" => "required|string|max:255",
+            "deliveryChoose" => "required|string|max:255",
         ];
 
         // Definir los nombres amigables de los atributos
@@ -169,7 +170,8 @@ class ShoppingCartProductController extends Controller
             "address" => "Dirección",
             "state" => "Provincia",
             "city" => "Departamento",
-            "district" => "distrito"
+            "district" => "distrito",
+            "deliveryChoose" => "Metodo Pago"
         ];
 
         // Crear el validador manualmente
@@ -199,7 +201,7 @@ class ShoppingCartProductController extends Controller
 
         $ecommerceSaleInsert = EcommerceSaleProduct::create([
             "code" => '-',
-            "payment_method" => "",
+            "payment_method" => $validatedData["deliveryChoose"],
             "quantity" => $totalQuantityProduct,
             "total" => $total,
             "status" => "PENDING",
@@ -286,13 +288,13 @@ class ShoppingCartProductController extends Controller
                 }
             }
 
-            $message .= "Precio Unitario: S/ {$product['price']}\n";
+            $message .= "Precio Unitario: S/ " . number_format($product['price'], 2) . "\n";
             $message .= "Cantidad: {$product['quantity']}\n";
             $message .= "Subtotal: S/ {$product['subtotal']}\n\n";
 
             $totalGeneral += $product['subtotal'];
             $totalCantidad += $product['quantity'];
-            $contadorProducts ++;
+            $contadorProducts++;
         }
 
         $message .= "*RESUMEN DE LA ORDEN:*\n";
@@ -301,7 +303,7 @@ class ShoppingCartProductController extends Controller
 
         $message .= "Total de Productos: {$totalCantidad}\n";
         $message .= "Total a Pagar: *S/ {$totalGeneral}*\n\n";
-        $message .= "Método de Pago: A coordinar\n";
+        $message .= "Método de Pago: {$data['deliveryChoose']}\n";
         $message .= "Estado: PENDIENTE\n";
 
         $urlWhatsapp = "https://wa.me/{$empresaPhone}?text=" . rawurlencode($message);

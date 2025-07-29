@@ -265,20 +265,23 @@ window.addEventListener("load", () => {
                 $(".message-whatsapp").css("display", "none");
                 $(".notificacion-whatsapp").css("display", "block").animsition('in');
 
-                // 🟩 Mostrar caja de agentes después de 1 segundo
-                setTimeout(() => {
-                    const agentesBox = document.querySelector('.box-whatsapp-agentes');
-                    agentesBox.classList.add('show');
-                    agentesBox.classList.remove('hidden_box');
+                const clave = 'usuarioYaActivo';
 
-                    // 🟥 Ocultar la caja después de 5 segundos
+                if (!localStorage.getItem(clave)) {
                     setTimeout(() => {
-                        agentesBox.classList.remove('show');
-                        agentesBox.classList.add('hidden_box');
-                    }, 5000);
+                        const agentesBox = document.querySelector('.box-whatsapp-agentes');
+                        agentesBox.classList.add('show');
+                        agentesBox.classList.remove('hidden_box');
 
-                }, 1000);
+                        // 🟥 Ocultar la caja después de 5 segundos
+                        setTimeout(() => {
+                            agentesBox.classList.remove('show');
+                            agentesBox.classList.add('hidden_box');
+                        }, 5000);
 
+                    }, 1000);
+                    localStorage.setItem(clave, '1');
+                }
             }, 5000);
 
         }, 3000);
@@ -433,11 +436,11 @@ const searchProducts = async (element = null, containerProducts) => {
                             <div class="flex items-end mb-2">
                                 <h5 class="text-base product-price" style="margin-top: 0">S/<span>${product.product_attributes[0]?.default_price ?? "0.00"}</span></h5>
                                 ${product?.product_brand
-                                                ? `<div class="font-normal rtl:mr-1 ltr:ml-1 text-slate-500 dark:text-zink-200">
+                            ? `<div class="font-normal rtl:mr-1 ltr:ml-1 text-slate-500 dark:text-zink-200">
                                             (${product.product_brand.description})
                                         </div>`
-                                                : ''
-                                            }
+                            : ''
+                        }
                             </div>
                         </div>
                     `;

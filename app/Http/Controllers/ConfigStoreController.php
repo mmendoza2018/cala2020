@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ApiResponse;
+use App\Mail\CredentialsCreated;
 use App\Models\AttentionNumber;
 use App\Models\General;
 use App\Models\Theme;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class ConfigStoreController extends Controller
 {
@@ -78,6 +82,22 @@ class ConfigStoreController extends Controller
             'status' => 1,
             'logo' => null, // lo dejamos null temporalmente
         ]);
+        
+        $passwordRandom = "admin_" .  Str::random(5);
+         $user = User::create([
+            'user_id' => 'admin',
+            'names' => $general->title,
+            'surnames' => '',
+            'address' => 'admin',
+            'phone' => 'admin',
+            'email' => $general->email,
+            'join_date' => now(),
+            'status' => 'active',
+            'role_name' => 'admin', // O usa el paquete de roles/permissions si aplicas roles por paquetes
+            'avatar' => 'default.png',
+            'password' => Hash::make($passwordRandom), // Cambia a una contraseña más segura
+            'user_type' => 'admin_panel', // Especificar el tipo de usuario como admin
+        ]);
 
         if ($request->hasFile('logo')) {
             $logo = $request->file('logo');
@@ -124,10 +144,13 @@ class ConfigStoreController extends Controller
         }
 
         General::where('id', 1)->update(['config_finished' => 1]);
+        $panelUrl = url('/login'); 
+        Mail::to($validatedData['email'])->send(new CredentialsCreated($validatedData['email'], $passwordRandom, $panelUrl));
 
         return response()->json([
             'success' => true,
             'redirect' => url('/tienda'),
+            'email' => $validatedData['email'],
             'message' => 'Tienda configurada y estructura generada correctamente.'
         ]);
     }
@@ -135,7 +158,7 @@ class ConfigStoreController extends Controller
     private function resolverSeeder($tipo)
     {
         $seeders = [
-            'Database\\Seeders\\UserSeeder',
+             'Database\\Seeders\\PaymentMethodTableSeeder'
         ];
 
         $active_brand = config('tienda.active_brand');

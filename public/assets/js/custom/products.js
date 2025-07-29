@@ -11,7 +11,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                     targets: 3, // Índice de la columna del botón
                     className: 'text-center' // Aplica clase a toda la columna (si es necesario)
                 }
-            ]
+            ],
+            language: languageDataTable
         });
     }
 
@@ -113,6 +114,34 @@ const generateInpoutsToUpload = (description = '', status = false) => {
     return inpoutsToUpload;
 }
 
+const validaVariantesUnicas = (rows) => {
+    const combinations = new Set();
+    let hasDuplicate = false;
+
+    rows.forEach(row => {
+        const selects = row.querySelectorAll('select[name="variant"]');
+        if (selects.length < 2) return; // Evitar errores si faltan selects
+
+        const val1 = selects[0].value;
+        const val2 = selects[1].value;
+
+        if (!val1 || !val2) return; // Aún no seleccionados
+
+        const comboKey = `${val1}-${val2}`;
+
+        if (combinations.has(comboKey)) {
+            hasDuplicate = true;
+            row.style.backgroundColor = '#fee2e2'; // marcar visualmente
+        } else {
+            combinations.add(comboKey);
+            row.style.backgroundColor = ''; // limpiar marca previa
+        }
+    });
+
+
+    return hasDuplicate;
+}
+
 document.addEventListener("submit", async (e) => {
     if (e.target.matches("#formAddProducts")) {
         e.preventDefault();
@@ -134,10 +163,16 @@ document.addEventListener("submit", async (e) => {
             return toastAlert(validateRadioVariants[1], "warning")
         }
 
+        let rowsVariants = document.querySelectorAll("#containerProductVariants tr")
+        if (validaVariantesUnicas(rowsVariants)) {
+            toastAlert("No puede existir dos combinaciones del mismo tipo", "warning");
+            return;
+        }
+
         let editorElement = document.querySelector(".ck-editor__editable");
         let contenido = editorElement.innerHTML;
 
-        const variants = []; // Array para almacenar todas las variantes
+        const variants = [];
 
         // Seleccionamos todas las filas de combinaciones
         const rows = document.querySelectorAll('#containerProductVariants tr');
@@ -212,6 +247,12 @@ document.addEventListener("submit", async (e) => {
         let validateRadioVariants = validateUniqueRadio();
         if (!validateRadioVariants[0]) {
             return toastAlert(validateRadioVariants[1], "warning")
+        }
+
+        let rowsVariants = document.querySelectorAll("#containerProductVariants tr")
+        if (validaVariantesUnicas(rowsVariants)) {
+            toastAlert("No puede existir dos combinaciones del mismo tipo", "warning");
+            return;
         }
 
         // Verifica todos los checkboxes

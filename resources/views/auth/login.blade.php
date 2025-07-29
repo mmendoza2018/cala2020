@@ -3,8 +3,8 @@
     <div class="mb-0 w-screen lg:mx-auto lg:w-[500px] card shadow-lg border-none shadow-slate-100 relative">
         <div class="!px-10 !py-12 card-body">
             <a href="#!">
-                <img src="{{ URL::to('assets/images/logo/logo.png') }}" alt="" class="hidden h-16 mx-auto dark:block">
-                <img src="{{ URL::to('assets/images/logo/logo.png') }}" alt="" class="block h-16 mx-auto dark:hidden">
+                <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $generalInfo->logo) }}" alt="" class="hidden h-16 mx-auto dark:block">
+                <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $generalInfo->logo) }}" alt="" class="block h-16 mx-auto dark:hidden">
             </a>
 
             <div class="mt-8 text-center">

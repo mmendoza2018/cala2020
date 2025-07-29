@@ -5,6 +5,7 @@ window.addEventListener("load", () => {
     if (document.getElementById("tableTickets") !== null) {
         dataTableTickets = $("#tableTickets").DataTable({
             info: false,
+            language: languageDataTable
         });
     }
     initializeChoices();

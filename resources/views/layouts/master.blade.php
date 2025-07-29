@@ -37,19 +37,19 @@
                 <a href="{{ route('dashboard.index') }}"
                     class="group-data-[sidebar=dark]:hidden group-data-[sidebar=brand]:hidden group-data-[sidebar=modern]:hidden">
                     <span class="hidden group-data-[sidebar-size=sm]:block">
-                        <img src="{{ URL::to('assets/images/logo/logo.png') }}" alt="" class="h-16 mx-auto">
+                        <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $generalInfo->logo) }}" alt="" class="h-16 mx-auto">
                     </span>
                     <span class="group-data-[sidebar-size=sm]:hidden">
-                        <img src="{{ URL::to('assets/images/logo/logo.png') }}" alt="" class="h-16 mx-auto">
+                        <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $generalInfo->logo) }}" alt="" class="h-16 mx-auto">
                     </span>
                 </a>
                 <a href="{{ route('dashboard.index') }}"
                     class="hidden group-data-[sidebar=dark]:block group-data-[sidebar=brand]:block group-data-[sidebar=modern]:block">
                     <span class="hidden group-data-[sidebar-size=sm]:block">
-                        <img src="{{ URL::to('assets/images/logo/logo.png') }}" alt="" class="h-16 mx-auto">
+                        <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $generalInfo->logo) }}" alt="" class="h-16 mx-auto">
                     </span>
                     <span class="group-data-[sidebar-size=sm]:hidden">
-                        <img src="{{ URL::to('assets/images/logo/logo.png') }}" alt="" class="h-16 mx-auto">
+                        <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $generalInfo->logo) }}" alt="" class="h-16 mx-auto">
                     </span>
                 </a>
                 <button type="button" class="hidden p-0 float-end" id="vertical-hover">
@@ -78,22 +78,22 @@
                             class="items-center justify-center hidden px-5 text-center h-header group-data-[layout=horizontal]:md:flex group-data-[layout=horizontal]:ltr::pl-0 group-data-[layout=horizontal]:rtl:pr-0">
                             <a href="{{ route('dashboard.index') }}">
                                 <span class="hidden">
-                                    <img src="{{ URL::to('assets/images/logo.png') }}" alt=""
+                                    <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $generalInfo->logo) }}" alt=""
                                         class="h-6 mx-auto">
                                 </span>
                                 <span class="group-data-[topbar=dark]:hidden group-data-[topbar=brand]:hidden">
-                                    <img src="{{ URL::to('assets/images/logo-dark.png') }}" alt=""
+                                    <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $generalInfo->logo) }}" alt=""
                                         class="h-6 mx-auto">
                                 </span>
                             </a>
                             <a href="{{ route('dashboard.index') }}"
                                 class="hidden group-data-[topbar=dark]:block group-data-[topbar=brand]:block">
                                 <span class="group-data-[topbar=dark]:hidden group-data-[topbar=brand]:hidden">
-                                    <img src="{{ URL::to('assets/images/logo.png') }}" alt=""
+                                    <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $generalInfo->logo) }}" alt=""
                                         class="h-6 mx-auto">
                                 </span>
                                 <span class="group-data-[topbar=dark]:block group-data-[topbar=brand]:block">
-                                    <img src="{{ URL::to('assets/images/logo-light.png') }}" alt=""
+                                    <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $generalInfo->logo) }}" alt=""
                                         class="h-6 mx-auto">
                                 </span>
                             </a>

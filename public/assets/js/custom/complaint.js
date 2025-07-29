@@ -1,6 +1,7 @@
 window.addEventListener("load", () => {
     dataTableComplaints = $("#tableComplaints").DataTable({
         info: false,
+        language: languageDataTable
     });
 });
 

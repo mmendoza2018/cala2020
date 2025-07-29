@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     getDataforCharts();
 });
 // Función para renderizar el gráfico con los datos
-const generateChartAge = (data) => {
+/* const generateChartAge = (data) => {
 
     if (ageChart) ageChart.destroy();
 
@@ -48,10 +48,10 @@ const generateChartAge = (data) => {
     // Crear el gráfico con los datos
     ageChart = new ApexCharts(document.querySelector("#agePercentilesChart"), options);
     ageChart.render();
-}
+} */
 
 // Función para inicializar el gráfico
-const generateChartDepartment = (data) => {
+/* const generateChartDepartment = (data) => {
 
     if (departmentChart) departmentChart.destroy();
 
@@ -113,7 +113,7 @@ const generateChartDepartment = (data) => {
     // Renderizar el gráfico
     departmentChart = new ApexCharts(document.querySelector("#departmentsChart"), options);
     departmentChart.render();
-};
+}; */
 
 const getDataforCharts = async () => {
     try {
@@ -128,14 +128,15 @@ const getDataforCharts = async () => {
             //const { Femenino, Masculino } = data.gender;
 
             //generateChartGender(Femenino, Masculino);
-            generateChartDepartment(data.department);
-            generateChartAge(data.age);
+            //generateChartDepartment(data.department);
+           // generateChartAge(data.age);
             generateChartByCategory(data.category)
             generateChartByProduct(data.product)
 
             document.getElementById("totalEcommerceSales").textContent = data.totalEcommerceSales;
-            document.getElementById("totalWithCulqiCommission").textContent = data.totalWithCulqiCommission;
+            //document.getElementById("totalWithCulqiCommission").textContent = data.totalWithCulqiCommission;
             document.getElementById("quantityEcommerceSale").textContent = data.quantityEcommerceSale;
+            //quantityEcommerceSale
 
         } else {
             boxAlertValidation(response.errors)

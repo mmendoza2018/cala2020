@@ -9,7 +9,7 @@
 
 <body>
     <div class="mb-1">
-        <img src="{{ public_path('assets/images/logo/logo.png') }}" alt="" style="width: 100px">
+        <img src="{{ public_path('storage/uploads/' . $generalInfo->code . '/' . $generalInfo->logo) }}" alt="" style="width: 100px; margin-bottom: 5px">
         <div class="mb-3">
             <p class="m-0 p-0">
                 <span class="fw-bold">N° de reclamo:</span>
@@ -17,15 +17,15 @@
             </p>
             <p class="m-0">
                 <span class="fw-bold">RUC:</span>
-                <span class="m-0">10708050429</span>
+                <span class="m-0">{{ $generalInfo->ruc }}</span>
             </p>
             <p class="m-0">
                 <span class="fw-bold">Razon social: </span>
-                <span class="m-0">Anthony Wilson Becerra Villalobos</span>
+                <span class="m-0">{{ $generalInfo->business_name }}</span>
             </p>
             <p class="m-0">
                 <span class="fw-bold">Dirección comercial:</span>
-                <span class="m-0">Jr. Francisco Navarrete 472 - Tumbes</span>
+                <span class="m-0">{{ $generalInfo->address }}</span>
             </p>
             <p class="m-0">
                 <span class="fw-bold">Fecha de emisión del reclamo:</span>

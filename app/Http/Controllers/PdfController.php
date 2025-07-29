@@ -11,7 +11,8 @@ class PdfController extends Controller
 {
     function complaint(ComplaintsBook $complaintsBook)
     {
-        $pdf = PDF::loadView("admin.pdfs.complaint", ["complaintsBook" => $complaintsBook], [], [
+        $generalInfo = \App\Models\General::first();
+        $pdf = PDF::loadView("admin.pdfs.complaint", ["complaintsBook" => $complaintsBook, "generalInfo" => $generalInfo], [], [
             'format' => 'A4-P' // 'A4-L' para landscape (horizontal), 'A4' para portrait (vertical)
         ]);
 

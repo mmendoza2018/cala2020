@@ -8,6 +8,7 @@ window.addEventListener("load", () => {
                 targets: 2, // Índice de la columna del botón
                 className: 'text-center' // Aplica clase a toda la columna (si es necesario)
             }
-        ]
+        ],
+        language: languageDataTable
     });
 });

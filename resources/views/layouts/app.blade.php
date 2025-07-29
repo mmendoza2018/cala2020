@@ -19,7 +19,7 @@
     {!! Toastr::message() !!}
     
     <div class="relative">
-        <div class="absolute hidden opacity-50 ltr:-left-16 rtl:-right-16 -top-10 md:block">
+        <div class="absolute hidden opacity-50 ltr:-left-16 rtl:-right-16 -top-10 md:block" style="z-index: -8">
             <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 125 316" width="125" height="316">
                 <title>&lt;Group&gt;</title>
                 <g id="&lt;Group&gt;">
@@ -39,7 +39,7 @@
             </svg>
         </div>
         
-        <div class="absolute hidden -rotate-180 opacity-50 ltr:-right-16 rtl:-left-16 -bottom-10 md:block">
+        <div class="absolute hidden -rotate-180 opacity-50 ltr:-right-16 rtl:-left-16 -bottom-10 md:block" style="z-index: -8">
             <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 125 316" width="125" height="316">
                 <title>&lt;Group&gt;</title>
                 <g id="&lt;Group&gt;">

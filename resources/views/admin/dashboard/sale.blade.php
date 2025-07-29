@@ -31,11 +31,11 @@
                     <x-input type="date" name="stock" placeholder="2" id="endDate" onchange="getDataforCharts()" />
                 </div>
                 <div class="w-full md:w-2/4 mt-3">
-                    <x-button type="submit" color="success" class="mt-3" description="Generar excel (Transacciones)"
+                   {{--  <x-button type="submit" color="success" class="mt-3" description="Generar excel (Transacciones)"
                         onclick="exportEcommerceSaleTransaction()" :outline="false" />
                     <x-button type="submit" color="success" class="mt-3"
                         description="Generar excel (Productos & categorias)" onclick="exportEcommerceSaleByProduct()"
-                        :outline="false" />
+                        :outline="false" /> --}}
                 </div>
             </div>
 
@@ -53,7 +53,7 @@
                     </div>
                 </div><!--end col-->
 
-                <div class="card p-3">
+                {{-- <div class="card p-3">
                     <div class="text-center card-body">
                         <div
                             class="flex items-center justify-center mx-auto rounded-full size-14 bg-green-100 text-green-500 dark:bg-green-500/20">
@@ -65,7 +65,7 @@
                         <p class="text-slate-500 dark:text-zink-200">Monto total de productos vendidos (con comisión izipay)
                         </p>
                     </div>
-                </div><!--end col-->
+                </div> --}}
 
                 <div class="card p-3">
                     <div class="text-center card-body">
@@ -81,14 +81,14 @@
 
             </div>
 
-            <div class="w-full card mt-5">
+            {{-- <div class="w-full card mt-5">
                 <div id="departmentsChart"></div>
-            </div>
+            </div> --}}
 
             <div id="graficos" class="grid grid-cols-1 md:grid-cols-2 gap-x-5 mt-5">
-                <div class="w-full card ">
+                {{-- <div class="w-full card ">
                     <div id="agePercentilesChart"></div>
-                </div>
+                </div> --}}
 
                 <div class="w-full card p-3">
                     <table id="tableCategory" class="w-full">
@@ -104,10 +104,8 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-5 mt-5">
-                <div class="w-full card p-3">
+                 <div class="w-full card p-3">
                     <table id="tableProduct" class="w-full">
                         <thead>
                             <tr>
@@ -122,7 +120,6 @@
                     </table>
                 </div>
             </div>
-
 
             <!--end grid-->
         </div>
