@@ -171,7 +171,8 @@
                             <option value="Ropa">Ropa</option>
                             <option value="Tecnologia">Tecnología</option>
                             <option value="Hogar">Hogar</option>
-                            <option value="Iniciar desde 0">Hogar</option>
+                            <option value="Init">Iniciar desde 0</option>
+                            <option value="Demo" style="display: none">DEMO</option>
                         </select>
                     </div>
 

@@ -112,9 +112,9 @@ class ProductController extends Controller
             "featured" => "",
             "min_stock" => "required",
             "status_on_website" => "required",
-            'product_brand_id' => 'required|integer|exists:product_brands,id',
+            'product_brand_id' => 'sometimes|integer|exists:product_brands,id',
             "category_product_id" => "required",
-            "subcategory_product_id" => "required",
+            "subcategory_product_id" => "sometimes",
         ];
 
         // Definir los nombres amigables de los atributos
@@ -167,10 +167,10 @@ class ProductController extends Controller
             "slug" => $slug,
             "min_stock" => $validatedData["min_stock"],
             "status_on_website" => $validatedData["status_on_website"],
-            "product_brand_id" => $validatedData["product_brand_id"],
+            "product_brand_id" => $validatedData["product_brand_id"] ?? null,
             "category_product_id" => $validatedData["category_product_id"],
             "featured" => $validatedData["featured"] ?? 0,
-            "subcategory_product_id" => $validatedData["subcategory_product_id"],
+            "subcategory_product_id" => $validatedData["subcategory_product_id"] ?? null,
             "user_id" => Auth::guard('admin')->id()
         ]);
 
@@ -227,9 +227,9 @@ class ProductController extends Controller
             "min_stock" => "required",
             "status_on_website" => "required",
             "featured" => "",
-            'product_brand_id' => 'required|integer|exists:product_brands,id',
+            'product_brand_id' => 'sometimes|integer|exists:product_brands,id',
             "category_product_id" => "required",
-            "subcategory_product_id" => "required",
+            "subcategory_product_id" => "sometimes",
         ];
 
         // Definir los nombres amigables de los atributos
@@ -339,9 +339,9 @@ class ProductController extends Controller
             "slug" => $slug,
             "min_stock" => $validatedData["min_stock"],
             "status_on_website" => $validatedData["status_on_website"],
-            "product_brand_id" => $validatedData["product_brand_id"],
+            "product_brand_id" => $validatedData["product_brand_id"] ?? null,
             "category_product_id" => $validatedData["category_product_id"],
-            "subcategory_product_id" => $validatedData["subcategory_product_id"],
+            "subcategory_product_id" => $validatedData["subcategory_product_id"] ?? null,
             "featured" => $validatedData["featured"],
             "user_id" => Auth::guard('admin')->id()
         ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders\ropademo;
+namespace Database\Seeders\demo;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;

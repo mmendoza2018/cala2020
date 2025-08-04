@@ -359,7 +359,8 @@
         <hr>
         <!--   Footer Bottom start  -->
         <div class="footer-bottom">
-            Derechos reservados &copy; MimeSoft 2020
+            Derechos reservados &copy; 
+            <a href="https://mime-soft.com/" target="_blank" style="list-style: none; text-decoration: none">Mime-Soft 2020</a>
         </div>
     </div>
 

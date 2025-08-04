@@ -34,17 +34,18 @@
                                 @error('title')
                                     <p class="mt-0 text-sm text-red-500">{{ $message }}</p>
                                 @enderror
-
-                                <label class="inline-block mb-2 text-base font-medium">Marca</label>
-                                <x-select data-custom_select2 name="product_brand_id" data-validate>
-                                    <option value="">Selecciona una opción</option>
-                                    @foreach ($productBrands as $brand)
-                                        <option value="{{ $brand->id }}"
-                                            {{ $brand->id == $product->product_brand_id ? 'selected' : '' }}>
-                                            {{ $brand->description }}
-                                        </option>
-                                    @endforeach
-                                </x-select>
+                                @if ($generalInfo->brand_is_active)
+                                    <label class="inline-block mb-2 text-base font-medium">Marca</label>
+                                    <x-select data-custom_select2 name="product_brand_id" data-validate>
+                                        <option value="">Selecciona una opción</option>
+                                        @foreach ($productBrands as $brand)
+                                            <option value="{{ $brand->id }}"
+                                                {{ $brand->id == $product->product_brand_id ? 'selected' : '' }}>
+                                                {{ $brand->description }}
+                                            </option>
+                                        @endforeach
+                                    </x-select>
+                                @endif
 
                                 <label class="inline-block text-base font-medium">Categoría</label>
                                 <x-select data-custom_select2 name="category_product_id" data-validate>
@@ -56,17 +57,18 @@
                                         </option>
                                     @endforeach
                                 </x-select>
-
-                                <label class="inline-block mb-2 text-base font-medium">Sub Categoría</label>
-                                <x-select data-custom_select2 name="subcategory_product_id" data-validate>
-                                    <option value="">Selecciona una opción</option>
-                                    @foreach ($subCategoryProducts as $subcategory)
-                                        <option value="{{ $subcategory->id }}"
-                                            {{ $subcategory->id == $product->subcategory_product_id ? 'selected' : '' }}>
-                                            {{ $subcategory->description }}
-                                        </option>
-                                    @endforeach
-                                </x-select>
+                                @if ($generalInfo->subcategory_is_active)
+                                    <label class="inline-block mb-2 text-base font-medium">Sub Categoría</label>
+                                    <x-select data-custom_select2 name="subcategory_product_id" data-validate>
+                                        <option value="">Selecciona una opción</option>
+                                        @foreach ($subCategoryProducts as $subcategory)
+                                            <option value="{{ $subcategory->id }}"
+                                                {{ $subcategory->id == $product->subcategory_product_id ? 'selected' : '' }}>
+                                                {{ $subcategory->description }}
+                                            </option>
+                                        @endforeach
+                                    </x-select>
+                                @endif
                             </div>
                             <div class="w-full md:w-2/4">
 
@@ -181,8 +183,9 @@
                                                 </td>
                                                 <td
                                                     class="px-3.5 py-2.5 font-semibold border-b border-custom-200 dark:border-custom-900">
-                                                    <x-input type="number" name="stock" placeholder="2" class=""
-                                                        data-validate value="{{ $productAttribute->stock }}" />
+                                                    <x-input type="number" name="stock" placeholder="2"
+                                                        class="" data-validate
+                                                        value="{{ $productAttribute->stock }}" />
                                                 </td>
                                                 <td
                                                     class="px-3.5 py-2.5 font-semibold border-b border-custom-200 dark:border-custom-900 text-center">

@@ -29,14 +29,15 @@
                                 @error('title')
                                     <p class="mt-0 text-sm text-red-500">{{ $message }}</p>
                                 @enderror
-
-                                <label class="inline-block mb-2 text-base font-medium">Marca</label>
-                                <x-select data-custom_select2 name="product_brand_id" data-validate>
-                                    <option value="">Selecciona una opción</option>
-                                    @foreach ($productBrands as $brand)
-                                        <option value="{{ $brand->id }}">{{ $brand->description }}</option>
-                                    @endforeach
-                                </x-select>
+                                @if ($generalInfo->brand_is_active)
+                                    <label class="inline-block mb-2 text-base font-medium">Marca</label>
+                                    <x-select data-custom_select2 name="product_brand_id" data-validate>
+                                        <option value="">Selecciona una opción</option>
+                                        @foreach ($productBrands as $brand)
+                                            <option value="{{ $brand->id }}">{{ $brand->description }}</option>
+                                        @endforeach
+                                    </x-select>
+                                @endif
 
                                 <label class="inline-block mb-2 text-base font-medium">Categoría</label>
                                 <x-select data-custom_select2 name="category_product_id" data-validate>
@@ -45,14 +46,15 @@
                                         <option value="{{ $category->id }}">{{ $category->description }}</option>
                                     @endforeach
                                 </x-select>
-
-                                <label class="inline-block mb-2 text-base font-medium">Sub Categoría</label>
-                                <x-select data-custom_select2 name="subcategory_product_id" data-validate>
-                                    <option value="">Selecciona una opción</option>
-                                    @foreach ($subCategoryProducts as $subcategory)
-                                        <option value="{{ $subcategory->id }}">{{ $subcategory->description }}</option>
-                                    @endforeach
-                                </x-select>
+                                @if ($generalInfo->subcategory_is_active)
+                                    <label class="inline-block mb-2 text-base font-medium">Sub Categoría</label>
+                                    <x-select data-custom_select2 name="subcategory_product_id" data-validate>
+                                        <option value="">Selecciona una opción</option>
+                                        @foreach ($subCategoryProducts as $subcategory)
+                                            <option value="{{ $subcategory->id }}">{{ $subcategory->description }}</option>
+                                        @endforeach
+                                    </x-select>
+                                @endif
 
                                 <div id="containerFile">
 

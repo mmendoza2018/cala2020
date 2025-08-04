@@ -217,7 +217,7 @@ const renderProductShoppingCart = (data) => {
             // Set values
             img.src = `${baseUrl}/storage/uploads/${baseCodeCompany}/${product.image}`;
             img.alt = product.title;
-            titleLink.textContent = `${product.title} | ${product.brand}`;
+            titleLink.textContent = `${product.title} ${product.brand ? ' | ' + product.brand: ''}`;
             titleLink.href = `productos/${product.slug}`;
 
             // Clear and fill attribute blocks (as "Calidad", "Color", etc.)
@@ -275,7 +275,7 @@ const renderProductShoppingCartModal = (data) => {
             let subtotalProduct = parseFloat(product.quantity * product.price).toFixed(2);
             // Asignamos los valores correspondientes
             clone.querySelector('.imgShoppingCartModal').src = `${baseUrl}/storage/uploads/${baseCodeCompany}/${product.image}`;
-            clone.querySelector('.descriptionShoppingCartModal').textContent = `${product.title} | ${product.brand}`;
+            clone.querySelector('.descriptionShoppingCartModal').textContent = `${product.title} ${product.brand ? ' | ' + product.brand : '' }`;
             clone.querySelector('.descriptionShoppingCartModal').parentNode.href = `${product.slug}`;
             clone.querySelector('.priceShoppingCartModal').textContent = `S/${product.price}`;
             clone.querySelector('.quantityShoppingCartModal').value = product.quantity;
@@ -384,7 +384,7 @@ const removeProductShoppingCart = async (element) => {
 
 /* Fin funciones para ver los del carrito de compras  */
 
-$(document).on('click', '.pagination a', function (e) {
+/* $(document).on('click', '.pagination a', function (e) {
 
     e.preventDefault();
     const searchQuery = $('#searchInputQuery').val();
@@ -406,6 +406,59 @@ $(document).on('click', '.pagination a', function (e) {
             $('#productList').html(data);
         }
     });
+}); */
+document.addEventListener("DOMContentLoaded", function () {
+    const checkboxGroups = {
+        'brand-checkbox': 'brands[]',
+        'category-checkbox': 'categories[]',
+        'subcategory-checkbox': 'subcategories[]'
+    };
+
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Marcar checkboxes si están en los parámetros
+    for (const className in checkboxGroups) {
+        const paramName = checkboxGroups[className];
+        const selectedValues = urlParams.getAll(paramName);
+
+        document.querySelectorAll(`.${className}`).forEach((checkbox) => {
+            if (selectedValues.includes(checkbox.value)) {
+                checkbox.checked = true;
+            }
+
+            // Escuchar cambios para actualizar la URL
+            checkbox.addEventListener('change', () => {
+                const value = checkbox.value;
+
+                // Modificar los parámetros
+                if (checkbox.checked) {
+                    urlParams.append(paramName, value);
+                } else {
+                    // Quitar solo ese valor
+                    const newValues = urlParams.getAll(paramName).filter(v => v !== value);
+                    urlParams.delete(paramName);
+                    newValues.forEach(v => urlParams.append(paramName, v));
+                }
+
+                // Resetear a página 1 para evitar errores
+                urlParams.set('page', 1);
+
+                // Actualizar la URL sin recargar
+                const newUrl = window.location.pathname + '?' + urlParams.toString();
+                window.location.href = newUrl;
+            });
+        });
+    }
+});
+
+$(document).on('click', '.pagination a', function (e) {
+    e.preventDefault();
+
+    const pageUrl = new URL($(this).attr('href'));
+    const page = pageUrl.searchParams.get('page');
+
+    // Llama a la función fetchProducts y forzamos a que use esa página
+    fetchProducts(null, null, false, true, page);
 });
 
 
@@ -440,7 +493,7 @@ $(document).ready(function () {
         fetchProducts(null, true, false, false);
     }
 
-    function fetchProducts(category = null, favorite = null, updateUrl = false, paginate = true) {
+    function fetchProducts(category = null, favorite = null, updateUrl = false, paginate = true, page = 1) {
         const searchQuery = $('#searchInputQuery').val();
         const selectedOrder = document.getElementById("inputFiltersProduct")?.dataset?.value;
         let selectedBrands = [];
@@ -470,12 +523,13 @@ $(document).ready(function () {
             favorites = favorite;
         }
 
-        // Construir los parámetros GET
         const params = new URLSearchParams();
         if (searchQuery) params.append('search', searchQuery);
         if (selectedOrder) params.append('order', selectedOrder);
         if (favorites) params.append('favorites', favorites);
         if (paginate) params.append('paginate', paginate);
+        if (page) params.append('page', page);
+
         selectedBrands.forEach(b => params.append('brands[]', b));
         selectedCategories.forEach(c => params.append('categories[]', c));
         selectedSubCategories.forEach(c => params.append('subcategories[]', c));
@@ -484,12 +538,10 @@ $(document).ready(function () {
         const queryString = params.toString();
         const finalUrl = `${urlPath}?${queryString}`;
 
-        // Condición: solo actualiza la URL si updateUrl es true
         if (updateUrl) {
             window.history.pushState({}, '', finalUrl);
         }
 
-        // Petición AJAX
         $.ajax({
             url: finalUrl,
             type: 'GET',
@@ -499,7 +551,65 @@ $(document).ready(function () {
         });
     }
 
+    function fetchProductsFromUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQuery = urlParams.get('search') || '';
+        const selectedOrder = urlParams.get('order') || '';
+        const favorites = urlParams.get('favorites') || '';
+        const paginate = urlParams.get('paginate') !== 'false';
+
+        const selectedBrands = urlParams.getAll('brands[]');
+        const selectedCategories = urlParams.getAll('categories[]');
+        const selectedSubCategories = urlParams.getAll('subcategories[]');
+
+        fetchProductsWithParams({
+            searchQuery,
+            selectedOrder,
+            favorites,
+            paginate,
+            selectedBrands,
+            selectedCategories,
+            selectedSubCategories
+        });
+    }
+
+    function fetchProductsWithParams({
+        searchQuery,
+        selectedOrder,
+        favorites,
+        paginate,
+        selectedBrands,
+        selectedCategories,
+        selectedSubCategories
+    }) {
+        const params = new URLSearchParams();
+
+        if (searchQuery) params.append('search', searchQuery);
+        if (selectedOrder) params.append('order', selectedOrder);
+        if (favorites) params.append('favorites', favorites);
+        if (paginate) params.append('paginate', paginate);
+        selectedBrands.forEach(b => params.append('brands[]', b));
+        selectedCategories.forEach(c => params.append('categories[]', c));
+        selectedSubCategories.forEach(sc => params.append('subcategories[]', sc));
+
+        const finalUrl = `${window.location.pathname}?${params.toString()}`;
+
+        $.ajax({
+            url: finalUrl,
+            type: 'GET',
+            success: function (data) {
+                $('#cardGridView').html(data);
+            }
+        });
+    }
+
+
 });
+
+window.addEventListener('popstate', function (event) {
+    fetchProductsFromUrl();
+});
+
 
 
 new Splide('#splideRelatedProducts', {

@@ -107,10 +107,10 @@
                                         <div class="flex flex-col gap-2">
                                             <hr>
                                             <div class="flex items-center gap-2">
-                                                <input id="checkboxDefault1"
+                                                <input
                                                     class="border rounded-sm appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400"
-                                                    type="checkbox" value="1" checked="" name="subcategory_is_active">
-                                                <label for="checkboxDefault1" class="align-middle" data-tooltip="default"
+                                                    type="checkbox" value="1" name="subcategory_is_active" id="subcategory_is_active">
+                                                <label for="subcategory_is_active" class="align-middle" data-tooltip="default"
                                                     data-tooltip-content="Al activar la opción SUBCATEGORIA tendras la funcionalidad de añadir SUBCATEGORIAS a tus productos en todos los apartados del catalogo">
                                                     Subcategoria habilitada
                                                 </label>
@@ -119,10 +119,10 @@
                                             <hr>
 
                                             <div class="flex items-center gap-2">
-                                                <input id="checkboxDefault2"
+                                                <input
                                                     class="border rounded-sm appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400"
-                                                    type="checkbox" value="1" checked="" name="brand_is_active">
-                                                <label for="checkboxDefault2" class="align-middle" data-tooltip="default"
+                                                    type="checkbox" value="1" name="brand_is_active" id="brand_is_active">
+                                                <label for="brand_is_active" class="align-middle" data-tooltip="default"
                                                     data-tooltip-content="Al activar la opción MARCA tendras la funcionalidad de añadir MARCAS a tus productos en todos los apartados del catalogo">
                                                     Marca habilitada
                                                 </label>

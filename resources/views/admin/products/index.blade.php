@@ -28,7 +28,9 @@
                                 <th>Imagen</th>
                                 <th>Nombre</th>
                                 <th>Categoría</th>
-                                <th>Marca</th>
+                                @if ($generalInfo->brand_is_active)
+                                    <th>Marca</th>
+                                @endif
                                 <th>Min. Stock</th>
                                 <th>Website</th>
                                 <th>Opciones</th>
@@ -41,13 +43,16 @@
                                     <td>
                                         @foreach ($product->productImages as $image)
                                             @if ($image->is_main)
-                                                <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $image->image_name) }}" class="h-10 h-16 rounded-md" style="width: 4rem">
+                                                <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $image->image_name) }}"
+                                                    class="h-10 h-16 rounded-md" style="width: 4rem">
                                             @endif
                                         @endforeach
                                     </td>
                                     <td>{{ $product->title }}</td>
                                     <td>{{ $product->categoryProduct->description }}</td>
-                                    <td>{{ $product->productBrand?->description }}</td>
+                                    @if ($generalInfo->brand_is_active)
+                                        <td>{{ $product->productBrand?->description }}</td>
+                                    @endif
                                     <td>{{ $product->min_stock }}</td>
                                     <td>
                                         <x-badge color="{{ $product->status_on_website ? 'success' : 'danger' }}"

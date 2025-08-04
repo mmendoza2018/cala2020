@@ -126,7 +126,11 @@ class ConfigStoreController extends Controller
         ]);
 
         // Determinar qué Seeder ejecutar
-        $seederClasses = $this->resolverSeeder($validatedData['type_store'], true, true);
+        if ($validatedData['type_store'] !== "Init")  {
+            $seederClasses = $this->resolverSeeder($validatedData['type_store'], true, true);
+        } else {
+            $seederClasses = [];
+        }
 
         if (!$seederClasses) {
             return response()->json([
@@ -221,6 +225,23 @@ class ConfigStoreController extends Controller
             $seeders[] = 'Database\\Seeders\\ropa\\AttributeGroupSeeder';
             $seeders[] = 'Database\\Seeders\\ropa\\AttributeSeeder';
             $seeders[] = 'Database\\Seeders\\ropa\\ProductoSeeder';
+
+            // Seeders globales al final
+            $seeders[] = 'Database\\Seeders\\LegalitySeeder';
+            $seeders[] = 'Database\\Seeders\\PromotionsSeeder';
+
+            return $seeders;
+        }
+
+        if ($tipo === 'Demo') {
+
+            $seeders[] = 'Database\\Seeders\\demo\\SubcategoriasSeeder';
+            $seeders[] = 'Database\\Seeders\\demo\\CategoriasSeeder';
+            $seeders[] = 'Database\\Seeders\\demo\\BannerSeeder';
+
+            $seeders[] = 'Database\\Seeders\\demo\\AttributeGroupSeeder';
+            $seeders[] = 'Database\\Seeders\\demo\\AttributeSeeder';
+            $seeders[] = 'Database\\Seeders\\demo\\ProductoSeeder';
 
             // Seeders globales al final
             $seeders[] = 'Database\\Seeders\\LegalitySeeder';

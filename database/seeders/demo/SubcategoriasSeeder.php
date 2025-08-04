@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders\ropademo;
+namespace Database\Seeders\demo;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
@@ -20,51 +20,51 @@ class SubcategoriasSeeder extends Seeder
         $subcategorias = [
             [
                 'description' => 'Blusas',
-                'filename' => 'Subcategorias/Blusas.webp',
+                'filename' => 'subcategorias/Blusas.webp',
             ],
             [
                 'description' => 'Camisas',
-                'filename' => 'Subcategorias/Camisas.webp',
+                'filename' => 'subcategorias/Camisas.webp',
             ],
             [
                 'description' => 'Deportivos',
-                'filename' => 'Subcategorias/Deportivos.webp',
+                'filename' => 'subcategorias/Deportivos.webp',
             ],
             [
                 'description' => 'Gorras',
-                'filename' => 'Subcategorias/Gorras.webp',
+                'filename' => 'subcategorias/Gorras.webp',
             ],
             [
                 'description' => 'Jeans',
-                'filename' => 'Subcategorias/Jeans.webp',
+                'filename' => 'subcategorias/Jeans.webp',
             ],
             [
                 'description' => 'Polos',
-                'filename' => 'Subcategorias/Polos.webp',
+                'filename' => 'subcategorias/Polos.webp',
             ],
             [
                 'description' => 'Sacos',
-                'filename' => 'Subcategorias/Sacos.webp',
+                'filename' => 'subcategorias/Sacos.webp',
             ],
             [
                 'description' => 'Tacos',
-                'filename' => 'Subcategorias/Tacos.webp',
+                'filename' => 'subcategorias/Tacos.webp',
             ],
             [
                 'description' => 'Tops',
-                'filename' => 'Subcategorias/Tops.webp',
+                'filename' => 'subcategorias/Tops.webp',
             ],
             [
                 'description' => 'Vestidos',
-                'filename' => 'Subcategorias/Vestidos.webp',
+                'filename' => 'subcategorias/Vestidos.webp',
             ],
             [
                 'description' => 'Zapatos',
-                'filename' => 'Subcategorias/Zapatos.webp',
+                'filename' => 'subcategorias/Zapatos.webp',
             ],
                         [
                 'description' => 'Abrigos',
-                'filename' => 'Subcategorias/Abrigos.webp',
+                'filename' => 'subcategorias/Abrigos.webp',
             ],
         ];
 

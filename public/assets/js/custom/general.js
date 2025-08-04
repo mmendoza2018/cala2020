@@ -10,6 +10,8 @@ const initDropzone = async () => {
 
     let file = await getGeneralInfo();
 
+    console.log('(luismi): file :>> ', file);
+
     document.getElementById("id").value = file.id;
     document.getElementById("title").value = file.title;
     document.getElementById("business_name").value = file.business_name;
@@ -17,6 +19,10 @@ const initDropzone = async () => {
     document.getElementById("address").value = file.address;
     document.getElementById("email").value = file.email;
     document.getElementById("description").value = file.description;
+
+    /* marcas y subcategorias */
+    document.getElementById("subcategory_is_active").checked = file.subcategory_is_active === 1 ? true : false;
+    document.getElementById("brand_is_active").checked = file.brand_is_active === 1 ? true : false;
     let logoImg = file.logo_file[0];
 
     const previewTemplate = document.querySelector("#preview-template").innerHTML;

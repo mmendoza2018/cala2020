@@ -12,7 +12,8 @@
                 <ul class="splide__list">
                     @foreach ($banners as $banner)
                         <li class="splide__slide">
-                            <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $banner->image_name) }}" class="slide-img">
+                            <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $banner->image_name) }}"
+                                class="slide-img">
                         </li>
                     @endforeach
                 </ul>
@@ -29,7 +30,8 @@
                                 @foreach ($categories as $category)
                                     <li class="splide__slide">
                                         <figure class="effect-apollo">
-                                            <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $category->imagen) }}" />
+                                            <img
+                                                src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $category->imagen) }}" />
                                             <figcaption>
                                                 <p>{{ $category->description }}</p>
                                             </figcaption>
@@ -95,30 +97,32 @@
                     <ul class="splide__list">
                         @foreach ($promotions as $promotion)
                             <li class="splide__slide">
-                                <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $promotion->image_name) }}" />
+                                <img
+                                    src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $promotion->image_name) }}" />
                             </li>
                         @endforeach
                     </ul>
                 </div>
             </div>
         </section>
-
-        <section class="container mt-14 mb-16 py-10">
-            <div>
-                <h5 class="title-page mb-16">Marcas</h5>
-            </div>
-            <div class="splide splide_brands" id="splideBrands">
-                <div class="splide__track">
-                    <ul class="splide__list">
-                        @foreach ($brands as $brand)
-                            <li class="splide__slide">
-                                <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $brand->imagen) }}" />
-                            </li>
-                        @endforeach
-                    </ul>
+        @if ($generalInfo->brand_is_active)
+            <section class="container mt-14 mb-16 py-10">
+                <div>
+                    <h5 class="title-page mb-16">Marcas</h5>
                 </div>
-            </div>
-        </section>
+                <div class="splide splide_brands" id="splideBrands">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            @foreach ($brands as $brand)
+                                <li class="splide__slide">
+                                    <img src="{{ asset('storage/uploads/' . getCompanyCode() . '/' . $brand->imagen) }}" />
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        @endif
     </div>
 @endsection
 
