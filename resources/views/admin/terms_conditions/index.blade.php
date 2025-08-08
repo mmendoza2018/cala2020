@@ -20,11 +20,13 @@
                 </ul>
             </div>
             <div class="card bg-white">
-                <div class="card-body">5
+                <div class="card-body">
                     <div style="max-width: 1200px; margin: auto;">
-                        <div class="ckeditor-classic">
-                            {!! $terminos->description !!}
-                        </div>
+                        @if ($terminos && $terminos->description)
+                            <div class="ckeditor-classic">
+                                {!! $terminos->description !!}
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

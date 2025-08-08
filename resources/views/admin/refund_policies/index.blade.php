@@ -22,9 +22,11 @@
             <div class="card bg-white">
                 <div class="card-body">
                     <div style="max-width: 1200px; margin: auto;">
-                        <div class="ckeditor-classic">
-                            {!! $politicas->description !!}
-                        </div>
+                        @if ($politicas && $politicas->description)
+                            <div class="ckeditor-classic">
+                                {!! $politicas->description !!}
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

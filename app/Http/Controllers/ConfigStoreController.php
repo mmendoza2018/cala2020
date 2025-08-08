@@ -82,9 +82,9 @@ class ConfigStoreController extends Controller
             'status' => 1,
             'logo' => null, // lo dejamos null temporalmente
         ]);
-        
+
         $passwordRandom = "admin_" .  Str::random(5);
-         $user = User::create([
+        $user = User::create([
             'user_id' => 'admin',
             'names' => $general->title,
             'surnames' => '',
@@ -125,30 +125,31 @@ class ConfigStoreController extends Controller
             'status' => 1
         ]);
 
-        // Determinar qué Seeder ejecutar
-        if ($validatedData['type_store'] !== "Init")  {
-            $seederClasses = $this->resolverSeeder($validatedData['type_store'], true, true);
+        if ($validatedData['type_store'] === "Init") {
+            // No necesitas seeders, pasa directo a la configuración
+            $seederClasses = null;
         } else {
-            $seederClasses = [];
+            $seederClasses = $this->resolverSeeder($validatedData['type_store'], true, true);
+
+            if (!$seederClasses) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'La configuración de tienda no está soportada.'
+                ], 400);
+            }
+
+            // Ejecutar seeders
+            foreach ($seederClasses as $seederClass) {
+                Artisan::call('db:seed', [
+                    '--class' => $seederClass,
+                    '--force' => true
+                ]);
+            }
         }
 
-        if (!$seederClasses) {
-            return response()->json([
-                'success' => false,
-                'message' => 'La configuración de tienda no está soportada.'
-            ], 400);
-        }
-
-        // Ejecutar el Seeder correspondiente
-        foreach ($seederClasses as $seederClass) {
-            Artisan::call('db:seed', [
-                '--class' => $seederClass,
-                '--force' => true
-            ]);
-        }
-
+        // Configuración final (común a Init y demás)
         General::where('id', 1)->update(['config_finished' => 1]);
-        $panelUrl = url('/login'); 
+        $panelUrl = url('/login');
         Mail::to($validatedData['email'])->send(new CredentialsCreated($validatedData['email'], $passwordRandom, $panelUrl));
 
         return response()->json([
@@ -162,7 +163,7 @@ class ConfigStoreController extends Controller
     private function resolverSeeder($tipo)
     {
         $seeders = [
-             'Database\\Seeders\\PaymentMethodTableSeeder'
+            'Database\\Seeders\\PaymentMethodTableSeeder'
         ];
 
         $active_brand = config('tienda.active_brand');
