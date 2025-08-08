@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Ruleta biker</title>
+    <title>MIME-SOFT</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <!-- Layout config Js -->
     <script src="{{ URL::to('assets/js/layout.js') }}"></script>
