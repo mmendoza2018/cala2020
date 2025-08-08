@@ -21,4 +21,6 @@ let ROUTES = {
     BANNERS: `/admin/banners`,
     PROMOTIONS: `/admin/promotions`,
     SEARCH_PRODUCTS: `/search-products`,
+    TERMS_CONDITIONS: `/admin/terminos-condiciones`,
+    REFUND_POLICIES: `/admin/politicas-reembolso`
 };

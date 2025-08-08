@@ -21,12 +21,14 @@
             </div>
             <div class="card bg-white">
                 <div class="card-body">
-                    <div style="max-width: 1200px; margin: auto;">
-                        @if ($terminos && $terminos->description)
-                            <div class="ckeditor-classic">
-                                {!! $terminos->description !!}
-                            </div>
-                        @endif
+                    <div style="max-width: 1200px; margin: auto;" data-type_legality="TERMINOS_Y_CONDICIONES">
+                        <textarea name="description" class="ckeditor-classic">
+                            {!! $terminos->description ?? '' !!}
+                        </textarea>
+                        <div style="text-align: end">
+                            <x-button type="button" color="primary" class="mt-3 btnLegalities" description="Guardar"
+                                :outline="false" />
+                        </div>
                     </div>
                 </div>
             </div>

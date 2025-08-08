@@ -153,9 +153,11 @@ Route::group(['prefix' => 'admin', 'middleware' => [
 
     Route::prefix('terminos-condiciones')->group(function () {
         Route::get('/', [LegalityController::class, 'terminosCondiciones'])->name('terms_conditions.index');
+        Route::post('/store', [LegalityController::class, 'store'])->name('terms_conditions.store');
     });
     Route::prefix('politicas-reembolso')->group(function () {
         Route::get('/', [LegalityController::class, 'politicasReembolso'])->name('refund_policies.index');
+        Route::post('/store', [LegalityController::class, 'store'])->name('refund_policies.store');
     });
 
     Route::prefix('marca-productos')->group(function () {
