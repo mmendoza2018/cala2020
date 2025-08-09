@@ -203,12 +203,12 @@
         </div>
     </div>
     <!-- end main content -->
- {{--    <div class="fixed items-center hidden bottom-6 right-12 h-header group-data-[navbar=hidden]:flex">
+    <div class="fixed items-center hidden bottom-6 right-12 h-header group-data-[navbar=hidden]:flex">
         <button data-drawer-target="customizerButton" type="button"
             class="inline-flex items-center justify-center w-12 h-12 p-0 transition-all duration-200 ease-linear rounded-md shadow-lg text-sky-50 bg-sky-500">
             <i data-lucide="settings" class="inline-block w-5 h-5"></i>
         </button>
-    </div> --}}
+    </div>
 
     <div id="customizerButton" drawer-end=""
         class="fixed inset-y-0 flex flex-col w-full transition-transform duration-300 ease-in-out transform bg-white shadow ltr:right-0 rtl:left-0 md:w-96 z-drawer show dark:bg-zink-600">
