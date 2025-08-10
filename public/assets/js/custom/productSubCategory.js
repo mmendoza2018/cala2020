@@ -56,7 +56,7 @@ document.addEventListener("submit", async (e) => {
 
                 $row.attr('data-table', data.id);
             } else {
-                boxAlertValidation(result.errors)
+                boxAlertValidation(response.errors)
             }
         } catch (error) {
             console.error('Error de red:', error);
@@ -102,7 +102,7 @@ document.addEventListener("submit", async (e) => {
                     .data([data.id, img, data.description, data.code, btnAct])
                     .draw(false);
             } else {
-                boxAlertValidation(result.errors)
+                boxAlertValidation(response.errors)
             }
         } catch (error) {
             console.error('Error de red:', error);
@@ -124,7 +124,7 @@ const getProductSubCategory = async (id) => {
             document.getElementById("code").value = data.code;
             document.getElementById("status").value = data.status;
         } else {
-            boxAlertValidation(result.errors)
+            boxAlertValidation(response.errors)
         }
     } catch (error) {
         console.log('error :>> ', error);

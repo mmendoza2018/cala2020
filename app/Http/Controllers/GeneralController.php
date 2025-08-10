@@ -36,7 +36,7 @@ class GeneralController extends Controller
             "address" => "sometimes|string|max:255",
             "email" => "sometimes|email|max:255",
             "description" => "sometimes|nullable|string",
-            'logo' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg',
+            'logo' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg,webp,bmp,ico,tiff',
             'subcategory_is_active' => 'sometimes|in:0,1',
             'brand_is_active' => 'sometimes|in:0,1',
         ];

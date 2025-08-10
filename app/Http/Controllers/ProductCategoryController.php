@@ -37,7 +37,7 @@ class ProductCategoryController extends Controller
         $rules = [
             "description" => "required|string|min:2",
             "code" => "required",
-            "imagen" => "nullable|file|mimetypes:image/jpeg,image/png,image/jpg,image/gif,image/svg+xml",
+            "imagen" => "nullable|file|mimetypes:image/jpeg,image/pjpeg,image/png,image/gif,image/svg+xml,image/webp,image/bmp,image/x-icon,image/tiff",
         ];
 
         // Definir los nombres amigables de los atributos

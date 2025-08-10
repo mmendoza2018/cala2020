@@ -6,7 +6,6 @@ window.addEventListener("load", () => {
 
 })
 
-
 document.addEventListener("submit", async (e) => {
     if (e.target.matches("#formActSocialNetwork")) {
         e.preventDefault();
@@ -124,6 +123,7 @@ const agregarTemplate = (idTemplate, idContainer, data = null) => {
 };
 
 const createDropZone = (element, data) => {
+    console.log('(luismi): data :>> ', data);
     const zoneElement = element.querySelector(".dropzoneAdd");
     const previewElement = element.querySelector("#dropzone-preview");
     const previewTemplate = document.querySelector("#preview-template").innerHTML;
@@ -164,13 +164,13 @@ const createDropZone = (element, data) => {
         let mockFile = {
             name: data.image,
             size: data.size,
-            url: '/storage/uploads/' + data.image,
+            url: '/storage/uploads/' + baseCodeCompany + "/" +data.image,
             isMock: true
         };
 
         // Emitir los eventos de Dropzone para añadir el archivo
         dropzoneAdd.emit("addedfile", mockFile);
-        dropzoneAdd.emit("thumbnail", mockFile, '/storage/uploads/' + data.image);
+        dropzoneAdd.emit("thumbnail", mockFile, '/storage/uploads/' + baseCodeCompany + "/" +data.image);
         dropzoneAdd.emit("complete", mockFile);
 
         // Añadir el archivo a la lista de archivos de Dropzone
